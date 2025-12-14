@@ -1,6 +1,7 @@
 ---
-import GardenLogo from '../components/GardenLogo.astro';
+
 import Nav from '../components/Nav.astro';
+import '../styles/global.css';
 ---
 
 <html lang="en">
@@ -9,17 +10,36 @@ import Nav from '../components/Nav.astro';
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
-		<title>About - Al Firous</title>
+		<title>Garden - Al Firous</title>
+        <style>
+            body {
+                background-color: var(--flexoki-cyan-900);
+                color: var(--flexoki-paper);
+            }
+            nav {
+                background: var(--flexoki-cyan-300);
+            }
+            a, a:visited {
+                    color: var(--flexoki-cyan-100) !important;
+            }
+            @layer components, pages;
+
+            @layer pages {
+                a, a:visited {
+                        color: var(--flexoki-cyan-100) a:visited;
+                }
+            }
+        </style>
 	</head>
 	<body>
         <header>
-            <GardenLogo />
+            
             <Nav /> 
         </header>
         <main>
             <section class="hero">
                 <h1>Garden</h1>
-                <p>Notes, documentation, etc.</p>
+                <p><a href="/">Notes</a>, documentation, etc.</p>
             </section>
         </main>
 	</body>
