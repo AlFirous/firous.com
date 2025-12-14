@@ -1,0 +1,26 @@
+---
+import GardenLogo from '../components/GardenLogo.astro';
+import Nav from '../components/Nav.astro';
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>About - Al Firous</title>
+	</head>
+	<body>
+        <header>
+            <GardenLogo />
+            <Nav /> 
+        </header>
+        <main>
+            <section class="hero">
+                <h1>Garden</h1>
+                <p>Notes, documentation, etc.</p>
+            </section>
+        </main>
+	</body>
+</html>
