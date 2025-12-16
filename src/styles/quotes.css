@@ -22,6 +22,10 @@ section {
     grid-column: 4/10;
 }
 
+section:has(blockquote) {
+    margin-block-start: calc(3 * var(--spacing));
+}
+
 h1 {
     font-size: 1em;
     margin: 0;
