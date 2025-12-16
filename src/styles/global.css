@@ -132,7 +132,7 @@ footer nav {
     opacity: 1;
     position: absolute;
     width: calc(100% - 2 * var(--spacing));
-    height: 100vh;
+    height: 100cqi;
     top: 0;
     left: 50%;
     transform: translateX(-50%);
