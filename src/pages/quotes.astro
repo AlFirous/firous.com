@@ -1,0 +1,44 @@
+---
+import { getCollection } from 'astro:content';
+import Logo from '../components/Logo.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import Grid from '../components/Grid.astro';
+import '../styles/quotes.css';
+
+const quotes = await getCollection('quotes');
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Quotes - Al Firous</title>
+	</head>
+	<body>
+        <header>
+            <Logo />
+            <Nav /> 
+        </header>
+        <main>
+            <section>
+                <h1>Quotes</h1>
+            </section>
+            <section>
+                {await Promise.all(quotes.map(async (quote) => {
+                    const { Content } = await quote.render();
+                    return (
+                        <figure>
+                            <Content />
+                            {quote.data.modified && <time>{quote.data.modified.toLocaleDateString()}</time>}
+                        </figure>
+                    );
+                }))}
+            </section>
+        </main>
+        <Footer />
+        <Grid />
+	</body>
+</html>

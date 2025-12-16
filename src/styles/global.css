@@ -89,6 +89,7 @@
 body {
     margin: var(--spacing);
     padding: 0;
+    margin-block-end: 0;
 }
 
 main {
@@ -114,12 +115,17 @@ nav ul li {
 }
 
 footer {
-    position: absolute;
-    bottom: 0;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
 }
 
 footer p {
     margin-block: var(--spacing);
+}
+
+footer nav {
+    align-content: center;
 }
 
 .grid {
@@ -140,7 +146,9 @@ footer p {
 
 
 .column {
-    border-inline: 1px solid red;
+    border-inline: 1px solid var(--flexoki-red-500);
     height: 100%;
     width: 100%;
+    border-style: dashed;
+    border-block: 0;
 }

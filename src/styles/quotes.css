@@ -1,0 +1,79 @@
+body {
+    background-color: var(--flexoki-cyan-950);
+    color: var(--flexoki-orange-50);
+}
+
+a, a:visited {
+    color: var(--flexoki-orange-300);
+    text-decoration: none;
+}
+
+main {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(12, 1fr);
+    grid-auto-rows: auto;
+    gap: var(--spacing);
+    max-width: 100%;
+    padding: 0;
+}
+
+section {
+    grid-column: 4/10;
+}
+
+h1 {
+    font-size: 1em;
+    margin: 0;
+    line-height: .8;
+    margin-block-start: calc(-1 * 1em);
+}
+
+figure {
+    margin: 0;
+    margin-block: var(--spacing);
+    height: fit-content;
+    overflow: hidden;
+}
+
+blockquote {
+    margin: 0;
+}
+
+blockquote p {
+    font-size: 1.5rem;
+}
+
+p strong {
+    color: var(--flexoki-paper);
+    font-weight: normal;
+    font-family: sans-serif;
+    font-size: 1.25rem;
+}
+
+figcaption,
+figure > p {
+    text-align: right;
+}
+
+time {
+    visibility: hidden;
+}
+
+/* QUOTATION */
+figure:before,
+figure:after {
+    font-family: 'EB Garamond';
+    font-size: 3rem;
+    color: var(--flexoki-cyan-600);
+}
+figure:before {
+    content: "“";
+}
+figure:after {
+    content: "”";
+    text-align: right;
+    float: right;
+    margin-top: 2rem;
+}
+/* QUOTATION END */
