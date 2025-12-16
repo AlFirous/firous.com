@@ -1,7 +1,9 @@
 ---
-
+import GardenLogo from '../components/GardenLogo.astro';
 import Nav from '../components/Nav.astro';
-import '../styles/global.css';
+import Footer from '../components/Footer.astro';
+import Grid from '../components/Grid.astro';
+import '../styles/garden.css';
 ---
 
 <html lang="en">
@@ -11,29 +13,10 @@ import '../styles/global.css';
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
 		<title>Garden - Al Firous</title>
-        <style>
-            body {
-                background-color: var(--flexoki-cyan-900);
-                color: var(--flexoki-paper);
-            }
-            nav {
-                background: var(--flexoki-cyan-300);
-            }
-            a, a:visited {
-                    color: var(--flexoki-cyan-100) !important;
-            }
-            @layer components, pages;
-
-            @layer pages {
-                a, a:visited {
-                        color: var(--flexoki-cyan-100) a:visited;
-                }
-            }
-        </style>
 	</head>
 	<body>
         <header>
-            
+            <GardenLogo />
             <Nav /> 
         </header>
         <main>
@@ -42,5 +25,15 @@ import '../styles/global.css';
                 <p><a href="/">Notes</a>, documentation, etc.</p>
             </section>
         </main>
+        <Footer />
+        <Grid />
 	</body>
 </html>
+
+<!-- Override components css 
+<style is:global>
+    a, a:visited {
+        color: var(--flexoki-cyan-100);
+    }
+</style>
+-->

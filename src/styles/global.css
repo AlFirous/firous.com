@@ -1,4 +1,6 @@
 :root {
+    --spacing: 30px;
+
     --flexoki-black: #100F0F;
     --flexoki-black-rgb: 16,15,15;
     --flexoki-paper: #FFFCF0;
@@ -82,4 +84,63 @@
     --flexoki-blue-850: #133051;
     --flexoki-blue-900: #12253B;
     --flexoki-blue-950: #101A24;
+}
+
+body {
+    margin: var(--spacing);
+    padding: 0;
+}
+
+main {
+    display: grid;
+    gap: 2rem;
+    padding: 2rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+nav ul {
+    margin-block: 0;
+    padding-inline-start: 0;
+}
+nav ul li {
+    display: inline;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+}
+
+footer p {
+    margin-block: var(--spacing);
+}
+
+.grid {
+    opacity: 1;
+    position: absolute;
+    width: calc(100% - 2 * var(--spacing));
+    height: 100vh;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+    gap: var(--spacing);
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+
+.column {
+    border-inline: 1px solid red;
+    height: 100%;
+    width: 100%;
 }
