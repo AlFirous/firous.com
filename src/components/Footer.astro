@@ -1,9 +1,10 @@
 ---
-
+// obtain release version (https://ryan-schachte.com/blog/including_version_data/)
+import { version } from "../../package.json";
 ---
 
 <footer>
-    <p><a href="https://firous.netlify.app">Production</a>.</p>
+    <p><a href="https://firous.netlify.app">Production</a>. <a href="https://github.com/AlFirous/firous.com" class="version">Version: {version}</a></p>
     <nav>
         <a href="/quotes">Quotes</a>
     </nav>        

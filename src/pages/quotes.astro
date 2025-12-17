@@ -5,6 +5,7 @@ import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import Grid from '../components/Grid.astro';
 import '../styles/quotes.css';
+import { Font } from 'astro:assets';
 
 const quotes = await getCollection('quotes');
 ---
@@ -16,6 +17,10 @@ const quotes = await getCollection('quotes');
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
 		<title>Quotes - Al Firous</title>
+
+        <Font cssVariable="--font-garamond" preload />
+        <Font cssVariable="--font-inter" preload />
+        <Font cssVariable="--font-fraunces" preload />  
 	</head>
 	<body>
         <header>
@@ -25,6 +30,7 @@ const quotes = await getCollection('quotes');
         <main>
             <section>
                 <h1>Quotes</h1>
+                <p>Logophiles, a lover of words.</p>
             </section>
             <section>
                 {await Promise.all(quotes.map(async (quote) => {

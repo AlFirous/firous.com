@@ -1,3 +1,5 @@
+@import '../styles/variables.css';
+
 body {
     background-color: var(--flexoki-cyan-950);
     color: var(--flexoki-orange-50);
@@ -6,6 +8,15 @@ body {
 a, a:visited {
     color: var(--flexoki-orange-300);
     text-decoration: none;
+    transition: 300ms ease-in-out;
+
+    &:hover, &:focus, &:active {
+        color: var(--flexoki-orange-150);
+    }   
+}
+
+p.tagline {
+    color: var(--flexoki-cyan-600);
 }
 
 main {
@@ -20,17 +31,32 @@ main {
 
 section {
     grid-column: 4/10;
-}
+    
+    &:has(blockquote) {
+        margin-block-start: calc(3 * var(--spacing));
+    }
 
-section:has(blockquote) {
-    margin-block-start: calc(3 * var(--spacing));
+    &:has(h1) {
+        display: flex;
+        flex-direction: column;
+        margin-top: calc(-1.13 * calc(2em + calc(var(--spacing) / 5)));
+        gap: calc(var(--spacing) / 5);
+    }
 }
 
 h1 {
-    font-size: 1em;
+    font-weight: 400;
     margin: 0;
-    line-height: .8;
-    margin-block-start: calc(-1 * 1em);
+    font-family: var(--font-fraunces);
+    font-size: 1em;
+    font-size-adjust: ex-height 0.5;
+}
+
+h1 + p {
+    font-family: var(--font-inter);
+    font-size-adjust: ex-height 0.5;
+    margin: 0;
+    color: var(--flexoki-cyan-600);
 }
 
 figure {
@@ -40,19 +66,28 @@ figure {
     overflow: hidden;
 }
 
+figure a {
+    border-bottom: 1px dashed var(--flexoki-cyan-600);
+
+    &:hover, &:focus, &:active { 
+        border-color: var(--flexoki-cyan-300);
+    }
+}
+
 blockquote {
     margin: 0;
 }
 
 blockquote p {
-    font-size: 1.5rem;
+    font-family: var(--font-garamond), serif;
+    font-size-adjust: var(--font-garamond-adjust);
 }
 
 p strong {
     color: var(--flexoki-paper);
     font-weight: normal;
-    font-family: sans-serif;
-    font-size: 1.25rem;
+    font-family: var(--font-inter);
+    font-size-adjust: var(--font-garamond-adjust);
 }
 
 figcaption,

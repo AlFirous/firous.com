@@ -1,3 +1,4 @@
 {
-    "chat.mcp.gallery.enabled": true
+    "chat.mcp.gallery.enabled": true,
+    "markdown.validate.enabled": true
 }
