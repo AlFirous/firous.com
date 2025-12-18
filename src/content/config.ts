@@ -6,9 +6,7 @@ const quotes = defineCollection({
     title: z.string(),
     created: z.coerce.date(),
     modified: z.coerce.date().optional(),
-    type: z.string().optional(),
     tags: z.array(z.string()).optional(),
-    cssclasses: z.array(z.string()).optional(),
   }),
 });
 

@@ -1,11 +1,28 @@
 ---
 import { Font } from 'astro:assets';
+
+const { title, description, image } = Astro.props;
+const siteTitle = 'Al Firous';
+const fullTitle = `${title} — ${siteTitle}`;
 ---
 
-<Font cssVariable="--font-garamond" preload />
-<Font cssVariable="--font-inter" preload />
-<Font cssVariable="--font-fraunces" preload />
+<head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
 
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} /> 
+    
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.url} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={image || '/default-og-image.jpg'} />
+
+    <Font cssVariable="--font-inter" preload />
+</head>
 <style>
 /*
 :root {

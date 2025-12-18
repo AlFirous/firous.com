@@ -1,0 +1,35 @@
+---
+import Global from '../layouts/Global.astro';
+
+const pages = import.meta.glob('./**/*.astro', { eager: true });
+
+const pageList = Object.entries(pages)
+  .filter(([path]) => !path.includes('pages.astro'))
+  .map(([path, module]) => {
+    const name = path
+      .split('/')
+      .pop()
+      ?.replace('.astro', '')
+      .replace(/([A-Z])/g, ' $1')
+      .trim() || '';
+    const url = path
+      .replace('./index.astro', '')
+      .replace('.astro', '')
+      .replace(/^\.\/?/, '/');
+
+    return { name, url, description: (module as any).frontmatter?.description || 'No description available' };
+  })
+  .sort((a, b) => a.name.localeCompare(b.name));
+---
+
+<Global title="Pages">
+    <main>
+        <h1>Pages</h1>
+        {pageList.map(page => (
+            <article>
+                <a href={page.url}>{page.name}</a>
+                <p>{page.description}</p>
+            </article>
+        ))}
+    </main>
+</Global>

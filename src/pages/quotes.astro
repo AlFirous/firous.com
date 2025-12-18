@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
+import Head from '../components/Head.astro';
 import Logo from '../components/Logo.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
@@ -8,20 +9,18 @@ import '../styles/quotes.css';
 import { Font } from 'astro:assets';
 
 const quotes = await getCollection('quotes');
+
+const { 
+    title = "Quotes", 
+    description = "A collection of quotes from writing, speech, or any form of words.", 
+} = Astro.props;
 ---
 
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Quotes - Al Firous</title>
-
+	<Head title={title} description={description}>  
         <Font cssVariable="--font-garamond" preload />
-        <Font cssVariable="--font-inter" preload />
         <Font cssVariable="--font-fraunces" preload />  
-	</head>
+	</Head>
 	<body>
         <header>
             <Logo />
