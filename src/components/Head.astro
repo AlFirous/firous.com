@@ -19,9 +19,22 @@ const fullTitle = `${title} — ${siteTitle}`;
     <meta property="og:url" content={Astro.url} />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={image || '/default-og-image.jpg'} />
+    <meta property="og:image" content={image || '/default-image.jpg'} />
+
+    <link href="https://instagram.com/AlFirous" rel="me">
+    <link href="https://linkedin.com/in/AlFirous" rel="me">
+    <link href="https://twitter.com/AlFirous" rel="me">
+    <link href="https://facebook.com/AlFirous" rel="me">
+    <link href="https://mastodon.social/@AlFirous" rel="me">
+    <link href="https://pinterest.com/AlFirous" rel="me">
+    <link href="https://cosmos.so/AlFirous" rel="me">
+    <link href="https://letterboxd.com/AlFirous" rel="me">
+    <link href="https://youtube.com/@AlFirous" rel="me">
+    <link href="https://behance.net/AlFirous" rel="me">
+    <link href="https://dribbble.com/AlFirous" rel="me">
 
     <Font cssVariable="--font-inter" preload />
+    <slot />
 </head>
 <style>
 /*

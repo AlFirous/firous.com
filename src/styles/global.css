@@ -1,7 +1,24 @@
+@import './variables.css';
+
 body {
     margin: var(--spacing);
     padding: 0;
     margin-block-end: 0;
+}
+
+body.theme-dark {
+    background-color:black;
+    color: white;
+}
+
+.theme-dark a,
+.theme-dark a:visited {
+    color: white;
+    opacity: 0.8;
+}
+
+.theme-dark a:hover {
+    opacity: 1;
 }
 
 main {

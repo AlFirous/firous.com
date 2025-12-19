@@ -1,18 +1,33 @@
 ---
+import Head from '../components/Head.astro';
+import Logo from '../components/Logo.astro';
 import Nav from '../components/Nav.astro';
+import '../styles/global.css';
+import '../styles/home.css';
 ---
 
 <html lang="en">
 	<head>
-		<meta charset="utf-8" />
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="theme-color" content="#ffffff" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Al Firous</title>
+
+		<title>Al Firous - Multidisciplinary Designer</title>
+		<meta name="description" content="Multidisciplinary designer with background in engineering. Currently focusing on crafting brand, product, and website. While adherent to form follows function philosophy." />
+		<meta name="keywords" content="Al Firous, AlFirous, Alfirous, alfirous, Firous, firous, AFRS, afrs, @AlFirous, @alfirous, @firous, @AFRS, @afrs" />
+		<meta name="author" content="Al Firous" />
+		<meta name="robots" content="index, follow" />
+		<meta name="googlebot" content="index, follow" />
+		
+		<meta property="og:title" content="Al Firous - Multidisciplinary Designer" />
+		<meta property="og:description" content="Multidisciplinary designer with background in engineering. Currently focusing on crafting brand, product, and website. While adherent to form follows function philosophy." />
+		<meta property="og:image" content="" />
+
+		<link rel="canonical" href={Astro.url} />
 	</head>
 	<body>
 		<header>
-			<Nav /> 
 		</header>
 		<main>
 			<h1>Al Firous</h1>

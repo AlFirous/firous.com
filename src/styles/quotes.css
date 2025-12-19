@@ -81,6 +81,7 @@ blockquote {
 blockquote p {
     font-family: var(--font-garamond), serif;
     font-size-adjust: var(--font-garamond-adjust);
+    line-height: 180%;
 }
 
 p strong {
@@ -92,7 +93,10 @@ p strong {
 
 figcaption,
 figure > p {
+    font-family: var(--font-inter), sans-serif;
+    font-size: 0.9rem;
     text-align: right;
+    text-transform: capitalize;
 }
 
 time {

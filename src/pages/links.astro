@@ -1,0 +1,32 @@
+---
+import Head from "../components/Head.astro";
+import Logo from "../components/Logo.astro";
+import Nav from "../components/Nav.astro";
+import "../styles/global.css";
+import "../styles/links.css";
+---
+
+<html lang="en">
+    <Head title="Links" description="Collection of links to my social media profiles and other relevant sites." image="/image.jpg" />
+    <body class="theme-dark">
+        <header>
+            <Logo />
+            <Nav />
+        </header>
+        <main>
+            <section>
+                <h1>Links</h1>
+                <p>Where to Find Me Elsewhere</p>
+                <nav>
+                    <ul>    
+                        <li><a href="https://twitter.com/AlFirous" target="_blank" rel="me">Twitter</a></li>
+                        <li><a href="https://www.instagram.com/AlFirous" target="_blank" rel="me">Instagram</a></li>
+                        <li><a href="https://www.linkedin.com/in/AlFirous" target="_blank" rel="me">LinkedIn</a></li>
+                        <li><a href="https://www.letterboxd.com/AlFirous" target="_blank" rel="me">Letterboxd</a></li>
+                        <li><a href="https://www.cosmos.so/AlFirous" target="_blank" rel="me">Cosmos</a></li>
+                    </ul>
+                </nav>
+            </section>
+        </main>
+    </body>
+</html>

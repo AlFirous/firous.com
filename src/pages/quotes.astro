@@ -10,16 +10,13 @@ import { Font } from 'astro:assets';
 
 const quotes = await getCollection('quotes');
 
-const { 
-    title = "Quotes", 
-    description = "A collection of quotes from writing, speech, or any form of words.", 
-} = Astro.props;
+const title = "Quotes"; 
+const description = "A collection of quotes from writing, speech, or any form of words.";
 ---
 
 <html lang="en">
 	<Head title={title} description={description}>  
         <Font cssVariable="--font-garamond" preload />
-        <Font cssVariable="--font-fraunces" preload />  
 	</Head>
 	<body>
         <header>

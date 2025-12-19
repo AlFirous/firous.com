@@ -1,0 +1,9 @@
+body {
+    background-color: black;
+    color: white;
+}
+
+a,
+a:visited {
+    color: gray;
+}
