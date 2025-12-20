@@ -29,7 +29,7 @@ main {
     padding: 0;
 }
 
-section {
+main section {
     grid-column: 4/10;
     
     &:has(blockquote) {
