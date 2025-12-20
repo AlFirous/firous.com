@@ -1,5 +1,10 @@
 ---
 import '../styles/global.css';
+
+import { getCollection } from 'astro:content';
+
+const allQuotes = await getCollection('quotes');
+const totalQuotes = allQuotes.length;
 ---
 
 <nav>
@@ -17,7 +22,7 @@ import '../styles/global.css';
         <ul>
             <li><a href="/frames">Frames</a></li>
             <li><a href="/monstresia">Monstresia</a></li>
-            <li><a href="/quotes">Quotes</a></li>
+            <li><a href="/quotes">Quotes ({totalQuotes})</a></li>
             <li><a href="/pages">Pages</a></li> 
         </ul>
     </section>
