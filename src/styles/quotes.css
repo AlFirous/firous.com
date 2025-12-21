@@ -42,6 +42,11 @@ main section {
         margin-top: calc(-1.13 * calc(2em + calc(var(--spacing) / 5)));
         gap: calc(var(--spacing) / 5);
     }
+    
+    /* MOBILE */
+    @media (max-width: 767px) {
+        grid-column: 2/12;
+    }
 }
 
 h1 {
