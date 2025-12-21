@@ -41,11 +41,17 @@ main section {
         flex-direction: column;
         margin-top: calc(-1.13 * calc(2em + calc(var(--spacing) / 5)));
         gap: calc(var(--spacing) / 5);
+        
+        @media (max-width: 767px) {
+            flex-direction: row;
+            margin-top: var(--spacing);
+            outline: solid red;
+        }
     }
     
     /* MOBILE */
     @media (max-width: 767px) {
-        grid-column: 2/12;
+        grid-column: 1/13;
     }
 }
 
@@ -85,6 +91,7 @@ blockquote {
 
 blockquote p {
     font-family: var(--font-garamond), serif;
+    font-size: 1rem;
     font-size-adjust: var(--font-garamond-adjust);
     line-height: 180%;
 }
