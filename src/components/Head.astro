@@ -1,5 +1,6 @@
 ---
 import { Font } from 'astro:assets';
+import { ClientRouter } from "astro:transitions";
 
 const { title, description, image } = Astro.props;
 const siteTitle = 'Al Firous';
@@ -35,6 +36,8 @@ const fullTitle = `${title} — ${siteTitle}`;
 
     <Font cssVariable="--font-inter" preload />
     <slot />
+
+    <ClientRouter />
 </head>
 <style>
 /*
