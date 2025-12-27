@@ -1,4 +1,6 @@
 ---
+import { ClientRouter } from "astro:transitions";
+
 import GardenLogo from '../components/GardenLogo.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
@@ -13,6 +15,8 @@ import '../styles/garden.css';
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
 		<title>Garden - Al Firous</title>
+
+			<ClientRouter />
 	</head>
 	<body>
         <header>
