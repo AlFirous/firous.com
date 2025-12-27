@@ -1,4 +1,6 @@
 ---
+import { ClientRouter } from "astro:transitions";
+
 import Head from '../components/Head.astro';
 import Logo from '../components/Logo.astro';
 import Nav from '../components/Nav.astro';
@@ -25,6 +27,8 @@ import '../styles/home.css';
 		<meta property="og:image" content="" />
 
 		<link rel="canonical" href={Astro.url} />
+
+			<ClientRouter />
 	</head>
 	<body>
 		<header>
