@@ -6,5 +6,7 @@
 - JavaScript
 - Markdown
 - MDX
----
-More detail at (Colophon)[https://firous.com/colophon]
+
+
+
+More detail at [Colophon](https://firous.com/colophon).
