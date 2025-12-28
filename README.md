@@ -1,1 +1,8 @@
-Build in public and perpetual development for https://firous.com
+# Tech Stack
+- Astro
+- HTML
+- CSS
+- JavaScript
+- Markdown
+- MDX
+More detail at (Colophon)[https://firous.com/colophon]
