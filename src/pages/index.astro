@@ -1,11 +1,9 @@
 ---
-import { ClientRouter } from "astro:transitions";
-
-import Head from '../components/Head.astro';
-import Logo from '../components/Logo.astro';
 import Nav from '../components/Nav.astro';
 import '../styles/global.css';
 import '../styles/home.css';
+
+import { Font } from 'astro:assets';
 ---
 
 <html lang="en">
@@ -28,12 +26,14 @@ import '../styles/home.css';
 
 		<link rel="canonical" href={Astro.url} />
 
-			<ClientRouter />
+		<Font cssVariable="--font-editorial-new" preload />
+		<Font cssVariable="--font-neue-montreal" preload />
+
 	</head>
 	<body>
 		<main>
 			<h1>Al Firous</h1>
-   			<p>Multidisciplinary designer with background in technology. Currently focusing on crafting brand, product, and website. While adherent to form follows function philosophy.</p>
+   			<p>Multidisciplinary <strong>designer</strong> with background in <em>technology</em>. Currently focusing on crafting brand, product, and website. While adherent to form follows <em>function</em> philosophy.</p>
 			<Nav />
 		</main>
 	</body>
