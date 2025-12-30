@@ -1,5 +1,11 @@
 @import './variables.css';
 
+:root, body {
+    font-size: var(--font-size-medium);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
+}
+
 body {
     margin: var(--spacing);
     padding: 0;
@@ -30,47 +36,107 @@ main {
 }
 
 header {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+
+    @media (max-width: 767px) {
+        grid-template-columns: 1fr 1fr;
+        grid-auto-rows: auto;
+    }
+
+    gap: var(--spacing);
 }
 
 header * {
     font-family: var(--font-inter);
-    font-size-adjust: ex-height 0.5;
+    font-size: calc(var(--font-size) - 3px);
+    font-size: var(--font-size-small);
+    font-weight: normal;
 }
 
-.logo-container {
+header > * {
     display: flex;
     gap: calc(var(--spacing) / 5);
     flex-direction: column;
 }
 
-.logo-container p {
+logo-container {
+    grid-column: span 3;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-auto-rows: auto;
+    gap: var(--spacing);
+}
+
+logo-monogram a span {
+    display: block !important;
+    width: var(--size);
+    height: var(--size);
+    background: white;
+}
+
+logo-wordmark {
+    display: flex;
+    gap: calc(var(--spacing) / 5);
+    flex-direction: column;
+    grid-column: span 2;
+}
+
+logo-container p {
     margin: 0;
 }
 
 header nav {
-    display: flex;
-    gap: calc(var(--spacing) / 5);
-    flex-direction: column;
+    @media (min-width: 768px) {
+        order: 3;
+    }
+    
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: var(--spacing);
+    grid-column: span 3;
 }
 
 header nav ul {
-    margin-block: 0;
-    padding-inline-start: 0;
-    
-    &:first-child {
-        text-align: right;
-    }
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--spacing) / 5);
 }
 
 header nav ul li {
-    display: inline;
+    list-style: none;
+}
 
-    &:not(:last-child)::after {
-        content: ",";
+header nav button {
+    all: unset;
+    width: var(--size);
+    height: var(--size);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    justify-self: right;
+}
+
+header nav button .bar {
+    height: calc(var(--size) / 10);
+    width: 100%;
+    display: block;
+    background: white;
+}
+
+page-title {
+
+    @media (min-width: 768px) {
+        order: 2;
     }
+    grid-column: span 6;
+}
+
+page-title h1,
+page-title p {
+    margin: 0;
 }
 
 footer {
@@ -78,6 +144,12 @@ footer {
     flex-direction: column;
     margin-block-start: calc(3 * var(--spacing));
     gap: var(--spacing);
+    font-family: var(--font-inter);
+}
+
+footer * {
+    font-size: var(--font-size-small);
+    font-weight: normal;
 }
 
 footer > section:first-child {
@@ -85,6 +157,27 @@ footer > section:first-child {
     grid-template-columns: repeat(12, 1fr);
     grid-auto-rows: auto;
     gap: var(--spacing);
+    
+    @media (max-width: 767px) {
+        display: flex;
+        flex-direction: column;   
+    }
+}
+
+footer-epilogue {
+    grid-column: 1 / 7;
+}
+
+footer h3 {
+    margin: 0 0 calc(var(--spacing) / 2);
+}
+
+footer p {
+    margin: 0;
+}
+
+footer nav a {
+    text-decoration: none;
 }
 
 footer > section:last-child p {
@@ -96,16 +189,6 @@ footer nav {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: var(--spacing);
-}
-
-footer nav section > * {
-    font-family: var(--font-inter), sans-serif;
-    font-weight: normal;
-    font-size: 1rem;
-}
-
-footer section section h3 {
-    margin: 0 0 calc(var(--spacing) / 2);
 }
 
 footer nav ul {
@@ -122,14 +205,34 @@ footer > section:last-child {
     justify-content: space-between;
 }
 
-.grid {
+footer-signature {
+    margin: var(--spacing) calc(-1 * var(--spacing)) calc(-1 * var(--spacing));
+    overflow: hidden;
+    height: calc(100vw / 4);
+}
+
+footer-signature img {
+    width: 100%;
+    object-fit: cover;
+    object-position: top;
+    height: 100%;
+}
+
+svg {
+    width: 100%;
+    object-fit: fill;
+    height: auto;
+    fill: white;
+}
+
+grid-12 {
     position: absolute;
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
     margin: 0 auto;
     gap: var(--spacing);
     opacity: 0.15;
@@ -137,7 +240,7 @@ footer > section:last-child {
 }
 
 
-.grid .column {
+grid-item {
     border-inline: 1px solid var(--flexoki-red-500);
     height: 100%;
     width: 100%;

@@ -19,6 +19,10 @@ p.tagline {
     color: var(--flexoki-cyan-600);
 }
 
+h1 {
+    color: var(--flexoki-paper);
+}
+
 main {
     display: grid;
     width: 100%;
@@ -55,26 +59,10 @@ main section {
     }
 }
 
-h1 {
-    font-weight: 400;
-    margin: 0;
-    font-family: var(--font-fraunces);
-    font-size: 1em;
-    font-size-adjust: ex-height 0.5;
-}
-
-h1 + p {
-    font-family: var(--font-inter);
-    font-size-adjust: ex-height 0.5;
-    margin: 0;
-    color: var(--flexoki-cyan-600);
-}
-
 figure {
     margin: 0;
-    margin-block: var(--spacing);
-    height: fit-content;
-    overflow: hidden;
+    margin-block: calc(6* var(--spacing));
+    height: fit-content
 }
 
 figure a {
@@ -87,11 +75,23 @@ figure a {
 
 blockquote {
     margin: 0;
+    font-family: var(--font-garamond);
+    font-size-adjust: .545;
+    position: relative;
+    
+    &::before {
+         content: "“";
+         position: absolute;
+         left: calc(var(--spacing) * -1);
+         top: calc(var(--spacing) / -3);
+         font-size: 2.4rem;
+         color: var(--flexoki-cyan-600);
+    } 
 }
 
 blockquote p {
-    font-family: var(--font-garamond), serif;
-    font-size: 1rem;
+    font-family: var(--font-garamond);
+    font-size: var(--font-size-medium);
     font-size-adjust: var(--font-garamond-adjust);
     line-height: 180%;
 }
@@ -100,13 +100,12 @@ p strong {
     color: var(--flexoki-paper);
     font-weight: normal;
     font-family: var(--font-inter);
-    font-size-adjust: var(--font-garamond-adjust);
 }
 
 figcaption,
 figure > p {
-    font-family: var(--font-inter), sans-serif;
-    font-size: 0.9rem;
+    font-family: var(--font-inter);
+    font-size: var(--font-size-small);
     text-align: right;
     text-transform: capitalize;
 }
@@ -115,7 +114,7 @@ time {
     visibility: hidden;
 }
 
-/* QUOTATION */
+/* QUOTATION from Obsidian
 figure:before,
 figure:after {
     font-family: 'EB Garamond';
@@ -131,4 +130,8 @@ figure:after {
     float: right;
     margin-top: 2rem;
 }
-/* QUOTATION END */
+ QUOTATION END */
+
+ svg {
+    fill: var(--flexoki-cyan-900);
+}
