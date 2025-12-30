@@ -1,5 +1,3 @@
-@import '../styles/variables.css';
-
 body {
     background-color: var(--flexoki-cyan-950);
     color: var(--flexoki-orange-50);
