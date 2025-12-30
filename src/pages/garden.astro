@@ -1,25 +1,15 @@
 ---
-import Head from '../components/Head.astro';
-import Header from "../components/Header.astro";
-import Footer from '../components/Footer.astro';
-import Grid from '../components/Grid.astro';
+import '../styles/global.css';
 import '../styles/garden.css';
+import GardenLayout from '../layouts/GardenLayout.astro';
 
 const title = "Garden"; 
 const description = "Notes, documentation, and miscellaneous writings.";
 ---
 
-<html lang="en">
-	<Head title={title} description={description} />
-	<body>
-        <Header title={title} description={description} />
-        <main>
-            <section class="hero">
-                <h1>Garden</h1>
-                <p><a href="/">Notes</a>, documentation, etc.</p>
-            </section>
-        </main>
-        <Footer />
-        <Grid />
-	</body>
-</html>
+<GardenLayout title={title} description={description}>
+    <section class="hero">
+        <h1>Garden</h1>
+        <p><a href="/">Notes</a>, documentation, etc.</p>
+    </section>
+</GardenLayout>
