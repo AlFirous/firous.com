@@ -13,6 +13,10 @@ a, a:visited {
     }   
 }
 
+header * {
+    font-family: var(--font-inter);
+}
+
 p.tagline {
     color: var(--flexoki-cyan-600);
 }
@@ -120,6 +124,10 @@ figure:after {
 }
  QUOTATION END */
 
- svg {
+footer {
+    font-family: var(--font-inter);
+}
+
+svg {
     fill: var(--flexoki-cyan-900);
 }

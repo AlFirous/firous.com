@@ -38,21 +38,15 @@ main {
 
 header {
     display: grid;
-    grid-template-columns: repeat(12, 1fr);
-
-    @media (max-width: 767px) {
-        grid-template-columns: 1fr 1fr;
-        grid-auto-rows: auto;
-    }
-
+    grid-template-columns: var(--grid-12);
     gap: var(--spacing);
 }
 
 header * {
-    font-family: var(--font-inter);
     font-size: calc(var(--font-size) - 3px);
-    font-size: var(--font-size-small);
+    font-size: var(--font-size-medium);
     font-weight: normal;
+    text-decoration: none;
 }
 
 header > * {
@@ -67,6 +61,11 @@ logo-container {
     grid-template-columns: 1fr 1fr 1fr;
     grid-auto-rows: auto;
     gap: var(--spacing);
+
+    @media (max-width: 767px) {
+        grid-column: span 11;
+        grid-template-columns: repeat(11, 1fr)
+    }
 }
 
 logo-monogram a span {
@@ -81,6 +80,10 @@ logo-wordmark {
     gap: calc(var(--spacing) / 5);
     flex-direction: column;
     grid-column: span 2;
+
+    @media (max-width: 767px) {
+        grid-column: span 10;
+    }
 }
 
 logo-container p {
@@ -96,6 +99,11 @@ header nav {
     grid-template-columns: 1fr 1fr 1fr;
     gap: var(--spacing);
     grid-column: span 3;
+
+    @media (max-width: 767px) {
+        grid-column: span 1;
+        display: flex;
+    }
 }
 
 header nav ul {
@@ -104,6 +112,10 @@ header nav ul {
     display: flex;
     flex-direction: column;
     gap: calc(var(--spacing) / 5);
+
+    @media (max-width: 767px) {
+        display: none;
+    }
 }
 
 header nav ul li {
@@ -145,12 +157,12 @@ footer {
     flex-direction: column;
     margin-block-start: calc(3 * var(--spacing));
     gap: var(--spacing);
-    font-family: var(--font-inter);
 }
 
 footer * {
     font-size: var(--font-size-small);
     font-weight: normal;
+    line-height: var(--line-height-small);
 }
 
 footer > section:first-child {
@@ -161,12 +173,13 @@ footer > section:first-child {
     
     @media (max-width: 767px) {
         display: flex;
-        flex-direction: column;   
+        flex-direction: column;  
+        gap: calc(var(--spacing) * 1.5); 
     }
 }
 
 footer-epilogue {
-    grid-column: 1 / 7;
+    grid-column: span 5;
 }
 
 footer h3 {
@@ -175,6 +188,7 @@ footer h3 {
 
 footer p {
     margin: 0;
+    line-height: var(--line-height-small);
 }
 
 footer nav a {

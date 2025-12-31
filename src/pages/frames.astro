@@ -1,0 +1,40 @@
+---
+import FramesLayout from "../layouts/FramesLayout.astro";
+
+import "../styles/frames.css"
+
+import { Font } from 'astro:assets';
+---
+
+<FramesLayout title="Frames" description="Hobby photography and cinematography by Al Firous" image="https://firous.com/wp-content/uploads/2025/05/IMG_9744_KP800V4_SQU.jpg">
+    <Font slot="in-head" cssVariable="--font-editorial-new" preload />
+    <Font slot="in-head" cssVariable="--font-neue-montreal" preload />
+    <section class="frames-hero">
+        <frames-title>
+            <h1><span>Every</span> <span>frame</span> <span>may</span> <span>have</span> <span>a</span> <span>story</span></h1>
+            <p>Hobby photography and cinematography by Al Firous</p>
+        </frames-title>
+        <frames-featured>
+        <article class="frames-featured">
+            <a href="/">
+                <img src="https://firous.com/wp-content/uploads/2025/05/IMG_9744_KP800V4_SQU.jpg"/>
+                <h2>Curious Green Lizard</h2>
+            </a>
+        </article>
+        </frames-featured>
+    </section>
+    <section class="frames-gallery">
+        <article></article>
+        <article></article>
+        <article></article>
+        <article></article>
+        <article></article>
+        <article></article>
+        <article></article>
+        <article></article>
+        <article></article>
+        <article></article>
+        <article></article>
+        <article></article>
+    </section>
+</FramesLayout>

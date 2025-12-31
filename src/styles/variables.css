@@ -3,7 +3,22 @@
     /* 15px @ 320px viewport → 45px @ 2560px viewport */
     --fluid-size: clamp(15px, 1.339vw + 10.714px, 45px);
     --spacing: var(--fluid-size);
+    --spacing-vertical: calc(var(--fluid-size) * 2);
     --size: var(--fluid-size);
+    --grid-12: repeat(12, 1fr);
+    --grid-9: repeat(9, 1fr);
+    --grid-6: repeat(6, 1fr);
+    --grid-3: 1fr 1fr 1fr;
+
+    --grid: var(--grid-12);
+
+    @media (max-width: 1023px) {
+        --grid: var(--grid-9);
+    }
+
+    @media (max-width: 767px) {
+        --grid: var(--grid-6);
+    }
 
     /* TYPOGRAPHY */
     /* 15px @ 320px viewport → 21px @ 2560px viewport */
@@ -11,6 +26,7 @@
     /* 12px @ 320px viewport → 18px @ 2560px viewport */
     --font-size-small: clamp(12px, 0.268vw + 11.143px, 18px);    
     --font-garamond-adjust: 0.545;
+    --line-height-small: calc(100% + calc(var(--spacing) / 5));
 
     /* COLORS */
     --flexoki-black: #100F0F;
@@ -93,4 +109,8 @@
     --flexoki-blue-850: #133051;
     --flexoki-blue-900: #12253B;
     --flexoki-blue-950: #101A24;
+
+    /* MOTION */
+    --transition-fast: 150ms ease-in-out;
+    --transition-medium: 300ms ease-in-out;
 }
