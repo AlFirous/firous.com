@@ -1,0 +1,231 @@
+<nav aria-label="Social links" class="sr-only">
+  <ul>
+    <li><a href="https://firous.com">Firous</a></li>
+    <li><a href="https://github.com/AlFirous">GitHub</a></li>
+    <li><a href="https://x.com/AlFirous">X</a></li>
+    <li><a href="https://linkedin.com/in/AlFirous">LinkedIn</a></li>
+    <li><a href="https://instagram.com/AlFirous">Instagram</a></li>
+  </ul>
+</nav>
+
+<div id="graph"></div>
+
+<script type="module">
+/* ================= DATA ================= */
+
+const nodes = [
+  { id: "firous.com", url: "https://firous.com", root: true },
+  { id: "GitHub", url: "https://github.com/AlFirous" },
+  { id: "X", url: "https://x.com/AlFirous" },
+  { id: "LinkedIn", url: "https://linkedin.com/in/AlFirous" },
+  { id: "Instagram", url: "https://instagram.com/AlFirous" },
+];
+
+const links = nodes
+  .filter(n => !n.root)
+  .map(n => ({ source: "firous.com", target: n.id }));
+
+/* ================= ICONS (NO 404 EVER) ================= */
+
+const ICON_MAP = {
+  "firous.com": "/icons/firous.svg",
+  "github.com": "/icons/github.svg",
+  "x.com": "/icons/x.svg",
+  "linkedin.com": "/icons/linkedin.svg",
+  "instagram.com": "/icons/instagram.svg",
+};
+
+function domain(url) {
+  try { return new URL(url).hostname.replace("www.", ""); }
+  catch { return null; }
+}
+
+/* ================= SVG SETUP ================= */
+
+const width = window.innerWidth;
+const height = window.innerHeight;
+const svgNS = "http://www.w3.org/2000/svg";
+
+const svg = document.createElementNS(svgNS, "svg");
+svg.setAttribute("width", width);
+svg.setAttribute("height", height);
+document.getElementById("graph").appendChild(svg);
+
+const viewport = document.createElementNS(svgNS, "g");
+svg.appendChild(viewport);
+
+/* ================= VIEW ================= */
+
+const isMobile = matchMedia("(max-width: 768px)").matches;
+let zoom = isMobile ? 1.9 : 1.4;
+let pan = { x: width / 2, y: height / 2 };
+
+function updateView() {
+  viewport.setAttribute(
+    "transform",
+    `translate(${pan.x},${pan.y}) scale(${zoom})`
+  );
+}
+updateView();
+
+/* ================= NODES ================= */
+
+nodes.forEach(n => {
+  n.x = Math.random() * 360 - 180;
+  n.y = Math.random() * 360 - 180;
+  n.vx = n.vy = 0;
+});
+
+const nodeMap = Object.fromEntries(nodes.map(n => [n.id, n]));
+
+/* ================= LINKS ================= */
+
+const linkEls = links.map(l => {
+  const el = document.createElementNS(svgNS, "line");
+  el.setAttribute("stroke", "#333");
+  el.setAttribute("stroke-opacity", "0.4");
+  viewport.appendChild(el);
+  return { el, ...l };
+});
+
+/* ================= NODE RENDER ================= */
+
+const nodeEls = nodes.map(n => {
+  const g = document.createElementNS(svgNS, "g");
+
+  const size = n.root ? 40 : 30;
+  const iconUrl = ICON_MAP[domain(n.url)];
+
+  let icon;
+  if (iconUrl) {
+    icon = document.createElementNS(svgNS, "image");
+    icon.setAttribute("href", iconUrl);
+    icon.setAttribute("width", size);
+    icon.setAttribute("height", size);
+    icon.setAttribute("x", -size / 2);
+    icon.setAttribute("y", -size / 2);
+  } else {
+    icon = document.createElementNS(svgNS, "circle");
+    icon.setAttribute("r", size / 2);
+    icon.setAttribute("fill", "#666");
+  }
+
+  icon.style.cursor = "grab";
+  icon.setAttribute("aria-hidden", "true");
+
+  const label = document.createElementNS(svgNS, "text");
+  label.textContent = n.id;
+  label.setAttribute("text-anchor", "middle");
+  label.setAttribute("fill", "#aaa");
+  label.setAttribute("font-size", "12");
+  label.setAttribute("y", size / 2 + 18);
+  label.style.cursor = "pointer";
+  label.onclick = () => window.open(n.url, "_blank");
+
+  g.append(icon, label);
+  viewport.appendChild(g);
+
+  let dragging = false;
+  icon.onpointerdown = e => {
+    dragging = true;
+    icon.setPointerCapture(e.pointerId);
+  };
+  icon.onpointermove = e => {
+    if (!dragging) return;
+    n.x = (e.clientX - pan.x) / zoom;
+    n.y = (e.clientY - pan.y) / zoom;
+    n.vx = n.vy = 0;
+  };
+  icon.onpointerup = () => dragging = false;
+
+  return { g, n, label };
+});
+
+/* ================= PAN + ZOOM ================= */
+
+svg.onwheel = e => {
+  e.preventDefault();
+  zoom *= e.deltaY > 0 ? 0.9 : 1.1;
+  zoom = Math.min(3, Math.max(0.6, zoom));
+  updateView();
+};
+
+let panning = false;
+svg.onpointerdown = e => {
+  if (e.target !== svg) return;
+  panning = true;
+  pan.sx = e.clientX - pan.x;
+  pan.sy = e.clientY - pan.y;
+};
+svg.onpointermove = e => {
+  if (!panning) return;
+  pan.x = e.clientX - pan.sx;
+  pan.y = e.clientY - pan.sy;
+  updateView();
+};
+svg.onpointerup = () => panning = false;
+
+/* ================= PHYSICS ================= */
+
+function tick() {
+  links.forEach(l => {
+    const a = nodeMap[l.source];
+    const b = nodeMap[l.target];
+    const dx = b.x - a.x;
+    const dy = b.y - a.y;
+    const d = Math.hypot(dx, dy) || 1;
+    const f = (d - 140) * 0.002;
+    a.vx += (dx / d) * f;
+    a.vy += (dy / d) * f;
+    b.vx -= (dx / d) * f;
+    b.vy -= (dy / d) * f;
+  });
+
+  nodes.forEach(n => {
+    n.vx *= 0.88;
+    n.vy *= 0.88;
+    n.x += n.vx;
+    n.y += n.vy;
+  });
+
+  linkEls.forEach(l => {
+    const a = nodeMap[l.source];
+    const b = nodeMap[l.target];
+    l.el.setAttribute("x1", a.x);
+    l.el.setAttribute("y1", a.y);
+    l.el.setAttribute("x2", b.x);
+    l.el.setAttribute("y2", b.y);
+  });
+
+  nodeEls.forEach(({ g, n }) => {
+    g.setAttribute("transform", `translate(${n.x},${n.y})`);
+  });
+
+  requestAnimationFrame(tick);
+}
+
+if (!matchMedia("(prefers-reduced-motion: reduce)").matches) tick();
+</script>
+
+<style>
+#graph {
+  width: 100vw;
+  height: 100vh;
+  background: #0b0b0b;
+  overflow: hidden;
+  touch-action: none;
+}
+text { user-select: none; }
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+}
+
+body, html {
+  margin: 0;
+  padding: 0;
+}
+</style>

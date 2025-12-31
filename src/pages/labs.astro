@@ -1,5 +1,12 @@
 ---
+import Grid from '../components/Grid.astro';
 import Head from '../components/Head.astro';
+import Footer from '../components/Footer.astro';
+
+import '../styles/global.css';
+import '../styles/labs.css';
+
+import { Font } from 'astro:assets';
 
 const title = "Labs"; 
 const description = "Multidisciplinary maker creating out of curiosity and things I wish existed. Experiment, exploration, or proof of concept. Unpolished and imperfect. No rules and boundaries. With or without limitations.";
@@ -7,9 +14,97 @@ const url = "/labs";
 ---
 
 <html lang="en">
-  <Head title={title} description={description} url={url} />
+  <Head title={title} description={description} url={url} >
+    <Font slot="in-head" cssVariable="--font-editorial-new" preload />
+    <Font slot="in-head" cssVariable="--font-neue-montreal" preload />
+  </Head>
   <body>
-    <h1>{title}</h1>
-    <p>Multidisciplinary maker creating out of curiosity and things I wish existed. Experiment, exploration, or proof of concept. Unpolished and imperfect. No rules and boundaries. With or without limitations.</p>
+    <main>
+      <section class="labs-hero">
+        <h1>{title}</h1>
+        <p>Multidisciplinary maker creating out of curiosity and things I wish existed. Experiment, exploration, or proof of concept. Unpolished and imperfect. No rules and boundaries. With or without limitations.</p>
+      </section>
+      <section class="labs-gallery">
+        <article>
+          <project-thumbnail></project-thumbnail>
+          <project-title>
+            <h2>Acme Inc</h2>
+            <p>Brand Identity, Web Design</p>
+          </project-title>
+        </article>
+        <article>
+          <project-thumbnail style="aspect-ratio: 3/4;"></project-thumbnail>
+          <project-title>
+            <h2>Acme Inc</h2>
+            <p>Brand Identity, Web Design</p>
+          </project-title>
+        </article>
+        <article>
+          <project-thumbnail></project-thumbnail>
+          <project-title>
+            <h2>Acme Inc</h2>
+            <p>Brand Identity, Web Design</p>
+          </project-title>
+        </article>
+        <article>
+          <project-thumbnail style="aspect-ratio: 4/3;"></project-thumbnail>
+          <project-title>
+            <h2>Acme Inc</h2>
+            <p>Brand Identity, Web Design</p>
+          </project-title>
+        </article>
+        <article>
+          <project-thumbnail style="aspect-ratio: 16/9;"></project-thumbnail>
+          <project-title>
+            <h2>Acme Inc</h2>
+            <p>Brand Identity, Web Design</p>
+          </project-title>
+        </article>
+        <article>
+          <project-thumbnail></project-thumbnail>
+          <project-title>
+            <h2>Acme Inc</h2>
+            <p>Brand Identity, Web Design</p>
+          </project-title>
+        </article>
+        <article>
+          <project-thumbnail style="aspect-ratio: 4/3;"></project-thumbnail>
+          <project-title>
+            <h2>Acme Inc</h2>
+            <p>Brand Identity, Web Design</p>
+          </project-title>
+        </article>
+        <article>
+          <project-thumbnail></project-thumbnail>
+          <project-title>
+            <h2>Acme Inc</h2>
+            <p>Brand Identity, Web Design</p>
+          </project-title>
+        </article>
+        <article>
+          <project-thumbnail></project-thumbnail>
+          <project-title>
+            <h2>Acme Inc</h2>
+            <p>Brand Identity, Web Design</p>
+          </project-title>
+        </article>
+        <article>
+          <project-thumbnail style="aspect-ratio: 16/9;"></project-thumbnail>
+          <project-title>
+            <h2>Acme Inc</h2>
+            <p>Brand Identity, Web Design</p>
+          </project-title>
+        </article>
+        <article>
+          <project-thumbnail></project-thumbnail>
+          <project-title>
+            <h2>Acme Inc</h2>
+            <p>Brand Identity, Web Design</p>
+          </project-title>
+        </article>
+      </section>
+    </main>
+    <Footer />
+    <Grid />
   </body>
 </html>

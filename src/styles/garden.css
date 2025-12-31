@@ -1,8 +1,35 @@
- body {
-    background-color: var(--flexoki-cyan-950);
+body {
+        background-color: var(--flexoki-cyan-950);
     color: var(--flexoki-paper);
 }
 a, 
 a:visited {
         color: var(--flexoki-cyan-100);
+}
+
+article {
+    grid-column: span 6/8;
+    margin-block: calc(3 * var(--spacing));
+}
+
+article h1 {
+    font-size: var(--font-size-medium);
+    font-weight: normal;
+}
+
+/* TECH */
+.tech {
+    background: var(--flexoki-blue-950);
+}
+
+.tech a,
+.tech a:visited {
+    color: var(--flexoki-orange-400);
+}
+
+.tech .astro-code.Flexoki {
+    padding: var(--spacing);
+    border-radius: .3rem;
+    border: 1px solid var(--flexoki-blue-900);
+    font-size: var(--font-size-small);
 }

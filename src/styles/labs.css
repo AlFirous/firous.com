@@ -1,0 +1,101 @@
+@import './variables.css'; 
+
+body {
+    margin: 0;
+    background: var(--flexoki-paper);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    color: var(--flexoki-black);
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+}
+
+section {
+    padding: var(--spacing);
+}
+
+section.labs-hero {
+    padding: var(--spacing);
+    background: linear-gradient(180deg, var(--flexoki-blue-150) 1%, transparent 90%);
+    height: calc(50vh - 2 * var(--spacing));
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+section.labs-hero h1 {
+    font-family: var(--font-editorial-new);
+    font-size: var(--font-size-medium);
+    font-weight: normal;
+    margin-bottom: calc(-1 * var(--font-size-medium) - 1rem);
+}
+
+section.labs-hero p {
+    font-family: var(--font-neue-montreal);
+    font-size: calc(2 * var(--font-size-medium));
+    line-height: 1.5;
+    text-indent: calc((100% / 12 * 4) + 9px);
+}
+
+section.labs-gallery {
+    display: grid;
+    grid-template-columns: var(--grid);
+    gap: var(--spacing);
+    align-items: end;
+}
+
+section.labs-gallery article {
+    grid-column: span 2;
+    height: fit-content;
+}
+
+section.labs-gallery article project-thumbnail {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: white;
+    margin-bottom: calc(var(--spacing) / 3);
+
+    &:not(:has([style="aspect-ratio: 3/4;"])) {
+        aspect-ratio: 1/1;
+    }
+}
+
+section.labs-gallery article project-title * {
+    font-family: var(--font-neue-montreal);
+}
+
+section.labs-gallery article project-title h2 {
+    font-size: var(--font-size-medium);
+    font-weight: 500;
+}
+
+section.labs-gallery article project-title p {
+    font-size: var(--font-size-small);
+    color: var(--flexoki-400);
+}
+
+footer {
+    background: linear-gradient(360deg, var(--flexoki-orange-600), var(--flexoki-orange-200), var(--flexoki-orange-50), transparent 90%);
+    margin: 0;
+    padding-top: calc(3 * var(--spacing));
+}
+
+footer-signature {
+    margin: var(--spacing) 0 0;
+}
+
+footer svg {
+    fill: var(--flexoki-orange-100);
+}
+
+grid-12 {
+    margin: var(--spacing);
+    z-index: -1;
+}

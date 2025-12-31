@@ -1,5 +1,6 @@
 // @ts-check
 import { defineConfig, fontProviders } from 'astro/config';
+import flexokiTheme from './flexoki.json';
 
 // https://astro.build/config
 export default defineConfig({
@@ -68,5 +69,14 @@ export default defineConfig({
             }
 
         ]
-    }
+    },
+    markdown: {
+        shikiConfig: {
+            theme: {
+                name: "Flexoki",
+                type: "dark",
+                settings: flexokiTheme.tokenColors,
+            }
+        },
+    },
 });
