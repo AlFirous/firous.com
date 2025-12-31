@@ -15,6 +15,10 @@ a:hover, a:focus, a:active {
     color: var(--flexoki-red-100);
 }
 
+header nav {
+    grid-column-end: 13;
+}
+
 h1, h2, p {
     margin: 0;
     padding: 0;
@@ -25,7 +29,7 @@ section.frames-hero {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
     gap: var(--spacing);
-    height: calc(100vh - (3 * var(--font-size-small)) - (2 * calc(var(--spacing) / 5)) - var(--spacing) - .7rem);
+    height: calc(100vh - (3 * var(--font-size-medium)) - (2 * calc(var(--spacing) / 5)) - var(--spacing) - .7rem);
     grid-auto-rows: max-content;
 
     display: flex;
