@@ -44,6 +44,11 @@ header nav {
 
 header nav ul {
     display: inline;
+
+    /* MOBILE */
+    @media (max-width: 767px) {
+        display: none;
+    }
 }
 
 header nav ul li {
@@ -68,11 +73,15 @@ h1 {
 }
 
 main {
-    grid-template-columns: 1fr 1fr 1fr [content-start] 1fr 1fr 1fr 1fr 1fr 1fr [content-end] 1fr 1fr 1fr;
+    grid-template-columns: [col-12-start] 1fr 1fr 1fr [col-6-start] 1fr 1fr 1fr 1fr 1fr 1fr [col-6-end] 1fr 1fr 1fr [col-12-end];
 }
 
 article {
-    grid-column: content;
+    grid-column: col-6;
+
+    @media (max-width: 767px) {
+        grid-column: col-12;
+    }
 }
 
 main section {
@@ -121,6 +130,7 @@ blockquote {
     font-size-adjust: .545;
     position: relative;
     
+    /* CURLY QUOTE
     &::before {
         content: "“";
         position: absolute;
@@ -130,6 +140,7 @@ blockquote {
         font-size-adjust: 1.2;
         color: var(--accent);
     } 
+    */
 }
 
 blockquote p {
@@ -137,6 +148,7 @@ blockquote p {
     font-size: var(--font-size-medium);
     font-size-adjust: var(--font-garamond-adjust);
     line-height: 180%;
+    margin-block: var(--spacing);
 }
 
 p strong {
