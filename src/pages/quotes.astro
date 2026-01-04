@@ -2,28 +2,40 @@
 import { getCollection } from 'astro:content';
 import { Font } from 'astro:assets';
 
-import GardenLayout from '../layouts/GardenLayout.astro';
-
 import '../styles/global.css';
 import '../styles/quotes.css';
+
+import Head from '../components/Head.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Grid from '../components/Grid.astro';
 
 const quotes = await getCollection('quotes');
 
 const title = "Quotes"; 
-const description = "A collection of quotes from writing, speech, or any form of words.";
+const description = "Words that resonates.";
 ---
 
-<GardenLayout title={title} description={description}>
-    <Font slot="in-head" cssVariable="--font-garamond" preload />
-    <meta slot="in-head" name="test" content="Test named slots" />
-    <section>
-        {await Promise.all(quotes.map(async (quote) => {
-            const { Content } = await quote.render();
-            return (
-                <figure>
-                    <Content />
-                </figure>
-            );
-        }))}
-    </section>
-</GardenLayout>
+<html lang="en">
+    <Head title={title} description={description}>
+        <Font cssVariable="--font-garamond" preload />
+        <meta content="Test named slots" />
+    </Head>
+    <body>
+        <Header title={title} description={description} />
+        <main>
+            <article>
+                {await Promise.all(quotes.map(async (quote) => {
+                    const { Content } = await quote.render();
+                    return (
+                        <figure>
+                            <Content />
+                        </figure>
+                    );
+                }))}
+            </article>
+        </main> 
+        <Footer />
+        <Grid />
+    </body>
+</html>

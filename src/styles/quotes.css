@@ -1,28 +1,78 @@
+:root {
+    /* SCOPPED VARIABLE */
+    --accent: var(--cyan-600);
+    --text: var(--800);
+    --muted: var(--600);
+    --highlight: var(--cyan-800);
+    --interaction: var(--cyan-400);
+    --sans: var(--font-inter);
+    --serif: var(--font-garamond);
+}
+
 body {
-    background-color: var(--flexoki-cyan-950);
-    color: var(--flexoki-orange-50);
+    background-color: var(--paper);
+    color: var(--text);
 }
 
 a, a:visited {
-    color: var(--flexoki-orange-300);
+    color: var(--highlight);
     text-decoration: none;
-    transition: 300ms ease-in-out;
+    transition: var(--transition-medium);
 
     &:hover, &:focus, &:active {
-        color: var(--flexoki-orange-150);
+        color: var(--interaction);
     }   
 }
 
 header * {
-    font-family: var(--font-inter);
+    font-family: var(--sans);
 }
 
-p.tagline {
-    color: var(--flexoki-cyan-600);
+header p {
+    color: var(--muted);
+}
+
+logo-monogram a span, header nav button .bar {
+    color: var(--accent);
+}
+
+header nav {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--spacing) / 5);
+}
+
+header nav ul {
+    display: inline;
+}
+
+header nav ul li {
+    display: inline;
+}
+
+header nav ul li:not(:last-child)::after {
+    content: ",";
+}
+
+header nav ul + ul {
+    line-height: 1em;
+}
+
+header nav ul:nth-child(2) * {
+    font-size: var(--font-size-small);
+    color: var(--muted);
 }
 
 h1 {
-    color: var(--flexoki-paper);
+    color: var(--highlight);
+}
+
+main {
+    grid-template-columns: 1fr 1fr 1fr [content-start] 1fr 1fr 1fr 1fr 1fr 1fr [content-end] 1fr 1fr 1fr;
+}
+
+article {
+    grid-column: content;
 }
 
 main section {
@@ -58,45 +108,46 @@ figure {
 }
 
 figure a {
-    border-bottom: 1px dashed var(--flexoki-cyan-600);
+    border-bottom: 1px solid var(--accent);
 
     &:hover, &:focus, &:active { 
-        border-color: var(--flexoki-cyan-300);
+        border-color: var(--interaction);
     }
 }
 
 blockquote {
     margin: 0;
-    font-family: var(--font-garamond);
+    font-family: var(--serif);
     font-size-adjust: .545;
     position: relative;
     
     &::before {
-         content: "“";
-         position: absolute;
-         left: calc(var(--spacing) * -1);
-         top: calc(var(--spacing) / -3);
-         font-size: 2.4rem;
-         color: var(--flexoki-cyan-600);
+        content: "“";
+        position: absolute;
+        left: calc(var(--spacing) * -1);
+        top: calc(var(--spacing) / -3);
+        font-size: var(--font-size-medium);
+        font-size-adjust: 1.2;
+        color: var(--accent);
     } 
 }
 
 blockquote p {
-    font-family: var(--font-garamond);
+    font-family: var(--serif);
     font-size: var(--font-size-medium);
     font-size-adjust: var(--font-garamond-adjust);
     line-height: 180%;
 }
 
 p strong {
-    color: var(--flexoki-paper);
+    color: var(--highlight);
     font-weight: normal;
-    font-family: var(--font-inter);
+    font-family: var(--sans);
 }
 
 figcaption,
 figure > p {
-    font-family: var(--font-inter);
+    font-family: var(--sans);
     font-size: var(--font-size-small);
     text-align: right;
     text-transform: capitalize;
@@ -106,28 +157,18 @@ time {
     visibility: hidden;
 }
 
-/* QUOTATION from Obsidian
-figure:before,
-figure:after {
-    font-family: 'EB Garamond';
-    font-size: 3rem;
-    color: var(--flexoki-cyan-600);
-}
-figure:before {
-    content: "“";
-}
-figure:after {
-    content: "”";
-    text-align: right;
-    float: right;
-    margin-top: 2rem;
-}
- QUOTATION END */
-
 footer {
-    font-family: var(--font-inter);
+    font-family: var(--sans);
+}
+
+footer h3 {
+    color: var(--muted);
 }
 
 svg {
-    fill: var(--flexoki-cyan-900);
+    fill: var(--highlight);
+}
+
+grid-item {
+    border-color: var(--200);
 }

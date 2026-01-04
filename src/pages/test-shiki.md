@@ -7,7 +7,7 @@ tags:
   - Dev
 ---
 
-# Test Shiki (Title Inline)
+# Test Shiki _with_ (Title Inline)
 
 This is markdown file which supported by Astro by default. You can use markdown file from Obsidian in Astro. It can have same frontmatter YAML format.
 

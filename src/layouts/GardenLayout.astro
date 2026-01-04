@@ -9,18 +9,19 @@ import '../styles/garden.css';
 
 const { title, description, image } = Astro.props;
 
-const { frontmatter } = Astro.props;
-const tags = frontmatter.tags || [];
+// const { frontmatter } = Astro.props;
+// const tags = frontmatter.tags || [];
 
 // Convert first tag to lowercase for class name
-const primaryTagClass = tags.length > 0 ? tags[0].toLowerCase() : '';
+// const primaryTagClass = tags.length > 0 ? tags[0].toLowerCase() : '';
 ---
 
 <html lang="en">
   <Head title={title} description={description} image={image}>
     <slot name="in-head" slot="in-head"/>
   </Head>
-  <body class={primaryTagClass}>
+ <!-- <body class={primaryTagClass}> --> 
+  <body>
     <Header title={title} description={description} />
     <main>
       <article>

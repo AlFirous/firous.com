@@ -31,10 +31,128 @@ import { Font } from 'astro:assets';
 
 	</head>
 	<body>
-		<main>
+		<header>
 			<h1>Al Firous</h1>
-   			<p>Multidisciplinary <strong>designer</strong> with background in <em>technology</em>. Currently focusing on crafting brand, product, and website. While adherent to form follows <em>function</em> philosophy.</p>
-			<Nav />
+			<!-- 
+			<my-status>
+				<p>Available</p>
+				<status-badge>
+					<button>
+						<status-icon></status-icon>
+						<span>Freelance</span>
+					</button>
+					<button>
+						<status-icon></status-icon>
+						<span>Fulltime</span>
+					</button>
+				</status-badge>
+			</my-status>
+			-->
+			<nav>
+				<a href="/labs">Labs</a>
+				<a href="/garden">Garden</a>
+			</nav>
+		</header>
+		<main>
+   			<p>Multidisciplinary designer with background in <em>technology</em>. Currently focusing on crafting <span data-state="closed"><button type="button" 
+                class="trigger" 
+                aria-expanded="false" 
+                data-state="closed"
+                onclick="toggle(this)"><strong>brand</strong></button><span class="collapsible-content" data-state="closed"> naming, brand identity</span></span>, <span data-state="closed"><button type="button" 
+                class="trigger" 
+                aria-expanded="false" 
+                data-state="closed"
+                onclick="toggle(this)"><strong>product</strong></button><span class="collapsible-content" data-state="closed"> packaging, product visualization</span></span>, <hide-this>and</hide-this> <span class="website" data-state="closed"><button type="button" 
+                class="trigger" 
+                aria-expanded="false" 
+                data-state="closed"
+                onclick="toggle(this)"><strong>website</strong></button><span class="collapsible-content" data-state="closed"> and web app</span></span>. While adhering to the philosophy, <strong>form follows function</strong>.</p>
+			<p class="location">Based in <span data-state="closed"><button type="button" 
+                class="trigger" 
+                aria-expanded="false" 
+                data-state="closed"
+                onclick="toggle(this)">Indonesia</button><span class="collapsible-content" data-state="closed">, but globally available. Current time is <span class="clock" id="clock"></span> (UTC+7)</span></span>.</p>
 		</main>
+		<footer>
+			<!--
+			<span data-state="closed">
+				<button 
+					type="button" 
+					class="trigger" 
+					aria-expanded="false" 
+					data-state="closed"
+					onclick="toggle(this)">Contact</button>
+				<span class="collapsible-content" data-state="closed"> via email: <a id="myEmail" href="mailto:al@firous.com">al@firous.com</a> (<button onclick="copyEmail()">copy</button>).</span></span>
+			 -->
+			<a href="mailto:al@firous.com" title="al@firous.com">Email</a>
+			<a href="https://www.cosmos.so/AlFirous" target="_blank" rel="me">Cosmos</a>
+			<a href="/resources">Resources</a>
+		</footer>
+		<script is:inline>
+			// @ts-nocheck
+			function toggle(button) {
+				const span = button.parentElement;
+				if (!span) return;
+				
+				const content = span.querySelector(':scope > .collapsible-content');
+				if (!(content instanceof HTMLElement)) return;
+				
+				const isOpen = span.getAttribute('data-state') === 'open';
+				const newState = isOpen ? 'closed' : 'open';
+				
+				span.setAttribute('data-state', newState);
+				button.setAttribute('data-state', newState);
+				button.setAttribute('aria-expanded', String(!isOpen));
+				content.setAttribute('data-state', newState);
+				
+				if (newState === 'open') {
+					content.style.height = content.scrollHeight + 'px';
+				} else {
+					content.style.height = '0px';
+				}
+			}
+
+			// Initialize heights for open collapsibles
+			document.addEventListener('DOMContentLoaded', () => {
+				document.querySelectorAll('.collapsible-content[data-state="open"]').forEach((content) => {
+					if (content instanceof HTMLElement) {
+						content.style.height = content.scrollHeight + 'px';
+					}
+				});
+			});
+
+			// TIME
+			function updateTime() {
+				const now = new Date();
+				const jakartaTime = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Jakarta' }));
+				
+				const hours = String(jakartaTime.getHours()).padStart(2, '0');
+				const minutes = String(jakartaTime.getMinutes()).padStart(2, '0');
+				const seconds = String(jakartaTime.getSeconds()).padStart(2, '0');
+				
+				document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
+			}
+
+			updateTime();
+			setInterval(updateTime, 1000);
+
+			// COPY EMAIL
+			/*
+			function copyEmail() {
+				// 1. Get the email address text from the element
+				const emailAddress = document.getElementById('myEmail').textContent;
+
+				// 2. Use the Clipboard API to write the text to the clipboard
+				navigator.clipboard.writeText(emailAddress).then(() => {
+					// Optional: Provide user feedback that the copy was successful
+					alert('Email address copied: ' + emailAddress);
+				}).catch(err => {
+					// Handle potential errors
+					console.error('Failed to copy email: ', err);
+				});
+			}
+			*/
+
+		</script>
 	</body>
 </html>
