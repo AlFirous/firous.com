@@ -1,7 +1,9 @@
 ---
 import Grid from '../components/Grid.astro';
 import Head from '../components/Head.astro';
-import Footer from '../components/Footer.astro';
+
+import HeaderEditorial from '../components/HeaderEditorial.astro';
+import FooterMinimal from '../components/FooterMinimal.astro';
 
 import '../styles/global.css';
 import '../styles/labs.css';
@@ -19,6 +21,7 @@ const url = "/labs";
     <Font slot="in-head" cssVariable="--font-neue-montreal" preload />
   </Head>
   <body>
+    <HeaderEditorial />
     <main>
       <section class="labs-hero">
         <h1>{title}</h1>
@@ -104,7 +107,7 @@ const url = "/labs";
         </article>
       </section>
     </main>
-    <Footer />
+    <FooterMinimal />
     <Grid />
   </body>
 </html>

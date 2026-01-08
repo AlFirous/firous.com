@@ -13,3 +13,26 @@ const {title, description} = Astro.props;
         <p>{description}</p>
     </page-title>
 </header>
+
+<style is:global>
+logo-container {
+    @media (max-width: 767px) {
+        grid-column: span 7;
+        grid-template-columns: repeat(7, 1fr);
+    }
+}
+
+logo-wordmark {
+    @media (max-width: 767px) {
+        grid-column: span 6;
+    }
+}
+
+page-title {
+    
+    @media (max-width: 767px) {
+        grid-column: span 4;
+        justify-self: right;
+    }
+}
+</style>

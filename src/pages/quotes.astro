@@ -14,10 +14,12 @@ const quotes = await getCollection('quotes');
 
 const title = "Quotes"; 
 const description = "Words that resonates.";
+
+import '../assets/images/The Thinker Painting SQUOOSH.jpg'
 ---
 
 <html lang="en">
-    <Head title={title} description={description}>
+    <Head title={title} description={description} favicon="/favicon-cyan.svg" image="/src/assets/images/The Thinker Painting SQUOOSH.jpg">
         <Font cssVariable="--font-inter" preload />
         <Font cssVariable="--font-garamond" preload />
         <meta content="Test named slots" />

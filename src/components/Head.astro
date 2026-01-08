@@ -1,25 +1,28 @@
 ---
 import { Font } from 'astro:assets';
 
-const { title, description, image } = Astro.props;
-const siteTitle = 'Al Firous';
-const fullTitle = `${title} — ${siteTitle}`;
+const { title, description, image, favicon } = Astro.props;
+const author = 'Al Firous';
+const pageTitle = `${title} — ${author}`;
 ---
 
 <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href={favicon || '/favicon.svg'} />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="black" />
     <meta name="generator" content={Astro.generator} />
 
-    <title>{fullTitle}</title>
+    <title>{pageTitle}</title>
     <meta name="description" content={description} /> 
     
     <meta property="og:type" content="website" />
     <meta property="og:url" content={Astro.url} />
-    <meta property="og:title" content={fullTitle} />
+    <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={image || '/default-image.jpg'} />
+
+    <link rel="canonical" href={Astro.url} />
 
     <link href="https://instagram.com/AlFirous" rel="me">
     <link href="https://linkedin.com/in/AlFirous" rel="me">

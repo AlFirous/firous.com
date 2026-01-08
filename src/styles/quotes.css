@@ -32,14 +32,22 @@ header p {
     color: var(--muted);
 }
 
-logo-monogram a span, header nav button .bar {
-    color: var(--accent);
+logo-container svg path {
+    color: var(--accent) ;
+}
+
+logo-monogram a span, header nav button burger-line {
+    background-color: var(--accent);
 }
 
 header nav {
     display: flex;
     flex-direction: column;
     gap: calc(var(--spacing) / 5);
+    
+    @media (max-width: 767px) {
+        order: 3;
+    }
 }
 
 header nav ul {
@@ -66,6 +74,13 @@ header nav ul + ul {
 header nav ul:nth-child(2) * {
     font-size: var(--font-size-small);
     color: var(--muted);
+}
+
+page-title p {
+
+    @media (max-width: 767px) {
+        display: none;  
+    }
 }
 
 h1 {
@@ -169,6 +184,17 @@ time {
     visibility: hidden;
 }
 
+figure::after {
+    content: "";
+    height: 0.05rem;
+    width: 100%;
+    background: var(--accent);
+    position: absolute;
+    left: 0;
+    opacity: .1;
+    margin-top: calc(3 * var(--spacing));
+}
+
 footer {
     font-family: var(--sans);
 }
@@ -179,8 +205,4 @@ footer h3 {
 
 svg {
     fill: var(--highlight);
-}
-
-grid-item {
-    border-color: var(--200);
 }

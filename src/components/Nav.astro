@@ -1,5 +1,5 @@
 ---
-
+import '../styles/variables.css';
 ---
 
 <nav>
@@ -14,7 +14,15 @@
         <li><a href="/monstresia">Monstresia</a></li>
     </ul>
     <button aria-label="Toggle Menu">
-        <span class="bar"></span>
-        <span class="bar"></span>
+        <burger-line></burger-line>
+        <burger-line></burger-line>
     </button>
 </nav>
+
+<style is:global>
+header nav button burger-line {
+    height: 2px;
+    width: 100%;
+    display: block;
+}
+</style>

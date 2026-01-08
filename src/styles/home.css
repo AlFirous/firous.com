@@ -1,3 +1,7 @@
+:root {
+    --accent: var(--red-400);
+}
+
 body {
     background-color: var(--black);
     color: white;
@@ -17,11 +21,19 @@ a:visited {
 }
 
 a:hover, a:active {
-    color: var(--red-400);
+    color: var(--accent);
 }
 
 header {
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(12, 1fr);
+}
+
+header > * {
+    grid-column: span 3;
+}
+
+a.logomark svg {
+    width: var(--spacing);
 }
 
 status-badge {
@@ -86,23 +98,20 @@ status-badge button span {
 h1 {
     font-size: 1rem;
     font-weight: 400;
-    line-height: 140%;
     margin: 0;
-}
-
-h1 {
-    grid-column: span 2;
+    order: 2;
+    margin-top: -0.2rem;
 }
 
 header nav {
     justify-self: auto;
-    display: grid;
-    grid-column: span 4;
-    grid-template-columns: repeat(4, 1fr);
+    display: block;
+    grid-column: span 6;
+    grid-template-columns: repeat(2, 1fr);
 }
 
 header nav > * {
-    grid-column: span 2;
+    grid-column: span 1;
 }
 
 main p {
@@ -134,30 +143,75 @@ strong {
     font-family: var(--font-editorial-new);
     font-style: normal;
     font-weight: normal;
+    position: relative;
+}
+
+/* MARK UNDERLINE
+strong.brand::after,
+strong.product::after,
+strong.website::after,
+.location button::after {
+    content: "";
+    position: absolute;
+    height: .3rem;
+    width: 100%;
+    left: 0;
+    bottom: calc(var(--spacing) / 8);
+    mask-repeat: no-repeat;
+    mask-position: bottom;
+    background: var(--accent);
+}
+*/
+
+strong.brand::after, strong.product::after, strong.website::after, .location button::after {
+    content: "";
+    position: absolute;
+    height: 100%;
+    width: 120%;
+    left: -10%;
+    bottom: 0;
+    mask-repeat: no-repeat;
+    mask-position: center center;
+    background: var(--red-600);
+    mask-size: 100%;
+    transition: var(--transition-fast);
+}
+
+strong:hover::after {
+    background: var(--paper);
+}
+
+strong.brand::after {
+    mask-image: url(/src/assets/mark-brand.svg);
+}
+
+strong.product::after {
+    mask-image: url(/src/assets/mark-product.svg);
+}
+
+strong.website::after {
+    mask-image: url(/src/assets/mark-website.svg);
+}
+
+.location button::after {
+    mask-image: url(/src/assets/mark-indonesia.svg);
 }
 
 em {
     font-family: var(--font-editorial-new);
 }
 
-/*
-span[data-state="open"]:has(.trigger:hover) .collapsible-content {
-    color: var(--red-600);
-}
-*/
-
 .trigger {
     background: none;
     border: none;
     padding: 0;
     cursor: help;
-    text-decoration: underline 1px dotted var(--red-400);
     transition: var(--transition-fast);
 }
 
 
 .trigger:hover {
-    color: var(--red-400);
+    color: var(--accent);
 }
 
 .trigger:active {
@@ -165,7 +219,7 @@ span[data-state="open"]:has(.trigger:hover) .collapsible-content {
 }
 
 span[data-state="open"]:has(.collapsible-content:hover) .trigger {
-    color: var(--red-400);
+    color: var(--accent);
 }
 
 .collapsible-content {
@@ -194,6 +248,15 @@ p.location {
     font-size: var(--font-size-medium);
 }
 
+.location button {
+    position: relative;
+}
+
+.location button::after {
+    bottom: calc(var(--spacing) / -14);
+    height: .25rem;
+}
+
 #clock {
     font-family: monospace;
 }
@@ -201,7 +264,7 @@ p.location {
 footer {
     position: absolute;
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(12, 1fr);
     gap: var(--spacing);
     right: var(--spacing);
     bottom: var(--spacing);
@@ -209,9 +272,28 @@ footer {
 }
 
 footer > * {
-    grid-column: span 2;
+    grid-column: span 3;
+}
+
+footer-col {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--spacing) / 6);
+}
+
+footer-col:first-child {
+    grid-column: span 6;
+}
+
+footer-col span {
+    color: var(--400);
+}
+
+footer-col * {
+    width: fit-content;
 }
 
 footer button {
     cursor: pointer;
 }
+
