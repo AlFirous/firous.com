@@ -1,0 +1,24 @@
+---
+import Head from "../components/Head.astro";
+import '../styles/global.css'
+import '../styles/404.css';
+import { Font } from "astro:assets";
+
+const title = "404";
+const description = "";
+---
+
+<!doctype html>
+<html lang="en">
+   <Head title={title} description={description} image="https://cdn.firous.com/background/404-mars.webp">
+        <Font cssVariable="--font-neue-montreal" preload />
+        <Font cssVariable="--font-editorial-new" preload />
+   </Head>
+    <body>
+        <main>
+            <h1>Y<i-l>o</i-l>u are st<i-l>r</i-l>anded on 4<i-l>0</i-l>4 p<i-l>a</i-l>ge.</h1>
+            <p>Thi<i-l>n</i-l>gs you wa<i-l>n</i-l>t to see is not he<i-l>r</i-l>e.</p>
+            <p>Go <a href="/">ho<i-l>m</i-l>e</a> or go <a href="/">ra<i-l>n</i-l>dom</a>.</p>
+        </main>
+    </body>
+</html>

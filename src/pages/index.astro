@@ -13,14 +13,21 @@ const title = "Al Firous — Multidisciplinary Designer";
 const description = "Multidisciplinary designer with background in technology. Currently focusing on crafting brand, product, and website. While adhering to the philosophy, form follows function. Based in Indonesia.";
 
 import '../assets/images/OG HOMEPAGE v2026.1.5.png';
+
+const { favicon } = Astro.props;
 ---
 
+<!-- Doctype HTML5 -->
+<!doctype html>
 <html lang="en">
 	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		
+		<meta name="generator" content={Astro.generator} />
 		<meta name="theme-color" content="black" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" type="image/svg+xml" href={favicon || '/favicon.svg'} />
+		<link rel="canonical" href={Astro.url} />
 
 		<title>{title}</title>
 		<meta name="description" content={description} />
