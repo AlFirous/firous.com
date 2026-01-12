@@ -24,7 +24,7 @@ const pageTitle = `${title} — ${author}`;
     <meta property="og:description" content={description} />
     <meta property="og:image" content={image || '/default-image.jpg'} />
 
-    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-title" content="Al Firous">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
@@ -45,5 +45,5 @@ const pageTitle = `${title} — ${author}`;
     <slot name="in-head"/>
 
     <script is:inline defer src="https://cloud.umami.is/script.js" data-website-id="63c7629b-7936-4e5c-bfd3-cd62e5ea5431"></script>
-    <script is:inline src="https://app.rybbit.io/api/script.js" data-site-id="f0588282719c" defer></script>
+    <script is:inline defer src="https://app.rybbit.io/api/script.js" data-site-id="f0588282719c"></script>
 </head>

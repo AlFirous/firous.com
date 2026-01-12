@@ -1,10 +1,10 @@
 body {
-        background-color: var(--flexoki-cyan-950);
+    background-color: var(--flexoki-cyan-950);
     color: var(--flexoki-paper);
 }
-a, 
+a,
 a:visited {
-        color: var(--flexoki-cyan-100);
+    color: var(--flexoki-cyan-100);
 }
 
 article {
@@ -29,7 +29,63 @@ article h1 {
 
 .tech .astro-code.Flexoki {
     padding: var(--spacing);
-    border-radius: .3rem;
+    border-radius: 0.3rem;
     border: 1px solid var(--flexoki-blue-900);
     font-size: var(--font-size-small);
+}
+
+.article-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing);
+    margin-block: calc(3 * var(--spacing));
+}
+
+.article-grid article {
+    grid-column: auto;
+    border: 1px solid var(--flexoki-cyan-900);
+    border-radius: 0.3rem;
+    padding: var(--spacing);
+    margin-block: 0;
+}
+
+.article-grid article h2 {
+    font-size: var(--font-size-large);
+    margin-block: 0;
+    font-weight: normal;
+}
+
+.article-grid article a,
+.article-grid article a:visited {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    height: 100%;
+}
+
+.article-grid .article-meta {
+    font-size: var(--font-size-small);
+    color: var(--flexoki-cyan-300);
+    margin-top: calc(0.5 * var(--spacing));
+}
+
+.article-grid .article-tags {
+    margin-top: calc(0.5 * var(--spacing));
+}
+
+.article-grid .article-tags .tag {
+    display: inline-block;
+    padding: calc(0.2 * var(--spacing)) calc(0.5 * var(--spacing));
+    background-color: var(--flexoki-cyan-800);
+    border-radius: 0.2rem;
+    font-size: var(--font-size-extra-small);
+    margin-right: calc(0.5 * var(--spacing));
+}
+
+.article-grid article img {
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    border-radius: 0.2rem;
+    margin-bottom: var(--spacing);
 }

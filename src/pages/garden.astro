@@ -1,15 +1,93 @@
 ---
+import { getCollection } from 'astro:content';
+
 import '../styles/global.css';
 import '../styles/garden.css';
 import GardenLayout from '../layouts/GardenLayout.astro';
+import Head from '../components/Head.astro';
 
 const title = "Garden"; 
 const description = "Notes, documentation, and miscellaneous writings.";
----
 
-<GardenLayout title={title} description={description}>
-    <section class="hero">
-        <h1>Garden</h1>
-        <p><a href="/">Notes</a>, documentation, etc.</p>
-    </section>
-</GardenLayout>
+// Helper function to parse potentially non-standard date strings
+function robustDateParse(dateValue: string | Date | undefined | null) {
+    if (dateValue instanceof Date) {
+        return dateValue;
+    }
+    if (typeof dateValue !== 'string') {
+        return null;
+    }
+    // Converts 'YYYY-MM-DDTHH:mmAM/PM' into a more parsable format
+    const parsableDateString = dateValue.replace('T', ' ').replace(/([AP]M)/, ' $1');
+    const date = new Date(parsableDateString);
+    if (!isNaN(date.getTime())) {
+        return date;
+    }
+    // Fallback for standard date formats
+    const standardDate = new Date(dateValue);
+    return !isNaN(standardDate.getTime()) ? standardDate : null;
+}
+
+const allPosts = await getCollection('garden');
+
+const gardenPosts = allPosts
+    .map(post => ({
+        slug: post.id.replace(/\.mdx?$/, ''),
+        image: post.data.image,
+        title: post.data.title,
+        tags: post.data.tags,
+        createdDate: robustDateParse(post.data.created),
+    }))
+    .sort((a, b) => {
+        const aDate = a.createdDate;
+        const bDate = b.createdDate;
+
+        // Sort by date descending. Posts without a date are pushed to the end.
+        if (aDate && bDate) {
+            return bDate.getTime() - aDate.getTime();
+        } else if (aDate) {
+            return -1; // a has a date, b does not, so a comes first
+        } else if (bDate) {
+            return 1; // b has a date, a does not, so b comes first
+        }
+        return 0; // Neither has a date, keep original order
+    });
+---
+<!doctype html>
+<html lang="en">
+<Head title={title} description={description} />
+<body>
+    <main>
+        <section class="hero">
+            <h1>Garden</h1>
+            <p><a href="/">Notes</a>, documentation, etc.</p>
+        </section>
+        <section class="article-grid">
+            {gardenPosts.map(post => {
+                return (
+                    <article>
+                        <a href={`/garden/${post.slug}/`}>
+                            {post.image && <img src={post.image} alt={post.title} />}
+                            <h2>{post.title}</h2>
+                            <div class="article-meta">
+                                {post.createdDate && (
+                                    <time datetime={post.createdDate.toISOString()}>
+                                        {post.createdDate.toLocaleDateString('en-us', { year: 'numeric', month: 'short', day: 'numeric' })}
+                                    </time>
+                                )}
+                                {post.tags && post.tags.length > 0 && (
+                                    <div class="article-tags">
+                                        {post.tags.map(tag => (
+                                            <span class="tag">{tag}</span>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                        </a>
+                    </article>
+                )
+            })}
+        </section>
+    </main>
+</body>
+</html>
