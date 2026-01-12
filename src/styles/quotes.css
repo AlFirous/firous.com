@@ -14,14 +14,17 @@ body {
     color: var(--text);
 }
 
-a, a:visited {
+a,
+a:visited {
     color: var(--highlight);
     text-decoration: none;
     transition: var(--transition-medium);
 
-    &:hover, &:focus, &:active {
+    &:hover,
+    &:focus,
+    &:active {
         color: var(--interaction);
-    }   
+    }
 }
 
 header * {
@@ -33,10 +36,11 @@ header p {
 }
 
 logo-container svg path {
-    color: var(--accent) ;
+    color: var(--accent);
 }
 
-logo-monogram a span, header nav button burger-line {
+logo-monogram a span,
+header nav button burger-line {
     background-color: var(--accent);
 }
 
@@ -44,7 +48,7 @@ header nav {
     display: flex;
     flex-direction: column;
     gap: calc(var(--spacing) / 5);
-    
+
     @media (max-width: 767px) {
         order: 3;
     }
@@ -77,9 +81,8 @@ header nav ul:nth-child(2) * {
 }
 
 page-title p {
-
     @media (max-width: 767px) {
-        display: none;  
+        display: none;
     }
 }
 
@@ -101,7 +104,7 @@ article {
 
 main section {
     grid-column: 4/10;
-    
+
     &:has(blockquote) {
         margin-block-start: calc(3 * var(--spacing));
     }
@@ -111,14 +114,14 @@ main section {
         flex-direction: column;
         margin-top: calc(-1.13 * calc(2em + calc(var(--spacing) / 5)));
         gap: calc(var(--spacing) / 5);
-        
+
         @media (max-width: 767px) {
             flex-direction: row;
             margin-top: var(--spacing);
             outline: solid red;
         }
     }
-    
+
     /* MOBILE */
     @media (max-width: 767px) {
         grid-column: 1/13;
@@ -127,14 +130,16 @@ main section {
 
 figure {
     margin: 0;
-    margin-block: calc(6* var(--spacing));
-    height: fit-content
+    margin-block: calc(6 * var(--spacing));
+    height: fit-content;
 }
 
 figure a {
     border-bottom: 1px solid var(--accent);
 
-    &:hover, &:focus, &:active { 
+    &:hover,
+    &:focus,
+    &:active {
         border-color: var(--interaction);
     }
 }
@@ -142,9 +147,9 @@ figure a {
 blockquote {
     margin: 0;
     font-family: var(--serif);
-    font-size-adjust: .545;
+    font-size-adjust: 0.545;
     position: relative;
-    
+
     /* CURLY QUOTE
     &::before {
         content: "“";
@@ -186,12 +191,12 @@ time {
 
 figure::after {
     content: "";
-    height: 0.05rem;
+    height: 0;
     width: 100%;
-    background: var(--accent);
+    border-bottom: 1px dashed var(--cyan-50);
     position: absolute;
     left: 0;
-    opacity: .1;
+    opacity: 1;
     margin-top: calc(3 * var(--spacing));
 }
 

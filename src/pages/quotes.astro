@@ -1,5 +1,5 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 import { Font } from 'astro:assets';
 
 import '../styles/global.css';
@@ -10,7 +10,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Grid from '../components/Grid.astro';
 
-const quotes = await getCollection('quotes');
+const quotes = (await getCollection('quotes')).sort((a, b) => b.data.created.getTime() - a.data.created.getTime());
 
 const title = "Quotes"; 
 const description = "Words that resonates.";
@@ -28,14 +28,14 @@ import '../assets/images/The Thinker Painting SQUOOSH.jpg'
         <Header title={title} description={description} />
         <main>
             <article>
-                {await Promise.all(quotes.map(async (quote) => {
-                    const { Content } = await quote.render();
+                {quotes.map(async (quote) => {
+                    const { Content } = await render(quote);
                     return (
                         <figure>
                             <Content />
                         </figure>
                     );
-                }))}
+                })}
             </article>
         </main> 
         <Footer />

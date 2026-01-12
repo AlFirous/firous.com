@@ -9,15 +9,15 @@ const pageTitle = `${title} — ${author}`;
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+
     <meta name="generator" content={Astro.generator} />
     <meta name="theme-color" content="black" />
     <link rel="icon" type="image/svg+xml" href={favicon || '/favicon.svg'} />
     <link rel="canonical" href={Astro.url} />
 
     <title>{pageTitle}</title>
-    <meta name="description" content={description} /> 
-    
+    <meta name="description" content={description} />
+
     <meta property="og:type" content="website" />
     <meta property="og:url" content={Astro.url} />
     <meta property="og:title" content={pageTitle} />
@@ -44,6 +44,6 @@ const pageTitle = `${title} — ${author}`;
     <slot />
     <slot name="in-head"/>
 
-    <script defer src="https://cloud.umami.is/script.js" data-website-id="63c7629b-7936-4e5c-bfd3-cd62e5ea5431"></script>
-    <script src="https://app.rybbit.io/api/script.js" data-site-id="f0588282719c" defer></script>
+    <script is:inline defer src="https://cloud.umami.is/script.js" data-website-id="63c7629b-7936-4e5c-bfd3-cd62e5ea5431"></script>
+    <script is:inline src="https://app.rybbit.io/api/script.js" data-site-id="f0588282719c" defer></script>
 </head>
