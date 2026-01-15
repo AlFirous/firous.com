@@ -35,12 +35,3 @@ Inspired by _Wellness Facts_ from **Severance**.
 
 - [Your note-taking app is not a bookmarking App](https://www.bethmcclelland.com/p/resonance-filter-note-taking-not-bookmarking)
 - [The restless mind of thinkers, how obsession, curiosity, and chaos can be a gift](https://nikuscs.com/blog/11-the-restless-mind-of-thinkers/)
-
----
-
-## Reference
-
-1. [Still dandelioning](https://midnightpond.com/posts/rooting/)
-2. Resonance Filter
-3. Crawlspace
-4. [Info · Old Friends · Engineering Studio](https://www.oldfriends.studio/about) (Team -> paper)

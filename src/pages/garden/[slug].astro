@@ -5,7 +5,7 @@ import GardenLayout from '../../layouts/GardenLayout.astro';
 export async function getStaticPaths() {
   const gardenPosts = await getCollection('garden');
   return gardenPosts.map(post => ({
-    params: { slug: post.id.replace(/\.mdx?$/, '') },
+    params: { slug: post.id.replace(/\.mdx?$/, '').toLowerCase() },
     props: post,
   }));
 }
@@ -14,7 +14,18 @@ const post = Astro.props;
 
 const { Content } = await render(post);
 ---
-<GardenLayout title={post.data.title} description={post.data.description}>
+<GardenLayout title={post.data.title} description={post.data.description} tags={post.data.tags} image={post.data.image}>
     <h1>{post.data.title}</h1>
     <Content />
+    <post-meta>
+        {post.data.created && (
+            <time datetime={new Date(post.data.created).toISOString()} title="Published">{new Date(post.data.created).toLocaleDateString('en-us', { year: 'numeric', month: 'long' })}</time>
+        )}
+        {post.data.created && post.data.modified && new Date(post.data.modified).getTime() !== new Date(post.data.created).getTime() && (
+            <>
+                {' ✧ '}
+                <time datetime={new Date(post.data.modified).toISOString()} title="Updated">{new Date(post.data.modified).toLocaleDateString('en-us', { year: 'numeric', month: 'long' })}</time>
+            </>
+        )}
+    </post-meta>
 </GardenLayout>

@@ -3,8 +3,8 @@ import { getCollection } from 'astro:content';
 
 import '../styles/global.css';
 import '../styles/garden.css';
-import GardenLayout from '../layouts/GardenLayout.astro';
 import Head from '../components/Head.astro';
+import Header from '../components/Header.astro';
 
 const title = "Garden"; 
 const description = "Notes, documentation, and miscellaneous writings.";
@@ -32,7 +32,7 @@ const allPosts = await getCollection('garden');
 
 const gardenPosts = allPosts
     .map(post => ({
-        slug: post.id.replace(/\.mdx?$/, ''),
+        slug: post.id.replace(/\.mdx?$/, '').toLowerCase(),
         image: post.data.image,
         title: post.data.title,
         tags: post.data.tags,
@@ -53,10 +53,12 @@ const gardenPosts = allPosts
         return 0; // Neither has a date, keep original order
     });
 ---
+
 <!doctype html>
 <html lang="en">
 <Head title={title} description={description} />
 <body>
+    <Header />
     <main>
         <section class="hero">
             <h1>Garden</h1>

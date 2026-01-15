@@ -12,7 +12,7 @@ const quotes = defineCollection({
 });
 
 const garden = defineCollection({
-  loader: glob({ pattern: "**/*.md", base: "./src/data/garden" }),
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/data/garden" }),
   schema: z.object({
     title: z.string(),
     description: z.string().optional(),

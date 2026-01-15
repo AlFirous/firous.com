@@ -44,6 +44,8 @@ h4,
 h5,
 h6 {
     text-wrap: balance;
+    font-weight: normal;
+    font-size: 1rem;
 }
 
 a {
@@ -104,17 +106,15 @@ header {
     gap: var(--spacing);
 }
 
+header > * {
+    grid-column: span 3;
+}
+
 header * {
     font-size: calc(var(--font-size) - 3px);
     font-size: var(--font-size-medium);
     font-weight: normal;
     text-decoration: none;
-}
-
-header > * {
-    display: flex;
-    gap: calc(var(--spacing) / 5);
-    flex-direction: column;
 }
 
 header svg {
@@ -127,8 +127,10 @@ header p {
 
 /* ALIGN TEXT WITH LOGO */
 logo-wordmark,
+header.editorial p,
 header nav,
-page-title {
+page-title,
+header.editorial nav-full {
     margin-top: -0.2rem;
 }
 
@@ -171,22 +173,6 @@ logo-container p {
     margin: 0;
 }
 
-header nav {
-    @media (min-width: 768px) {
-        order: 3;
-    }
-
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: var(--spacing);
-    grid-column: span 3;
-
-    @media (max-width: 767px) {
-        grid-column: span 1;
-        display: flex;
-    }
-}
-
 header nav ul {
     margin: 0;
     padding: 0;
@@ -201,6 +187,10 @@ header nav ul {
 
 header nav ul li {
     list-style: none;
+}
+
+header.editorial nav-full {
+    justify-self: right;
 }
 
 header nav button {

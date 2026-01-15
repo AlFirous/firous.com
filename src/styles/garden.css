@@ -1,91 +1,129 @@
 body {
-    background-color: var(--flexoki-cyan-950);
-    color: var(--flexoki-paper);
+  background-color: var(--flexoki-cyan-950);
+  color: var(--flexoki-paper);
 }
 a,
 a:visited {
-    color: var(--flexoki-cyan-100);
+  color: var(--flexoki-cyan-100);
+  transition: var(--transition-medium);
 }
 
 article {
-    grid-column: span 6/8;
-    margin-block: calc(3 * var(--spacing));
+  grid-column: 4 / 10;
+  margin-block: calc(3 * var(--spacing));
 }
 
 article h1 {
-    font-size: var(--font-size-medium);
-    font-weight: normal;
+  font-size: var(--font-size-medium);
+  font-weight: normal;
+  margin-block: calc(3 * var(--spacing));
+}
+
+article h2,
+article p {
+  margin-block: var(--spacing);
+}
+
+article hr {
+  margin-block: calc(3 * var(--spacing));
+  border: 1px solid var(--muted);
+}
+
+post-meta {
+  text-align: center;
+  font-size: var(--font-size-small);
+  font-family: var(--font-inter);
+  color: var(--muted);
+  margin-block: calc(3 * var(--spacing));
+  display: block;
 }
 
 /* TECH */
+html.tech {
+  background: var(--blue-1000);
+  color: var(--paper);
+}
+
 .tech {
-    background: var(--flexoki-blue-950);
+  font-family: var(--font-inter);
+  font-weight: 300;
+  line-height: 150%;
 }
 
-.tech a,
-.tech a:visited {
-    color: var(--flexoki-orange-400);
+.tech a:hover,
+.tech a:active {
+  color: var(--orange-400);
 }
 
-.tech .astro-code.Flexoki {
-    padding: var(--spacing);
-    border-radius: 0.3rem;
-    border: 1px solid var(--flexoki-blue-900);
-    font-size: var(--font-size-small);
+.tech h1 {
+  font-size: var(--font-size-large);
 }
 
-.article-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: var(--spacing);
-    margin-block: calc(3 * var(--spacing));
+.tech .astro-code {
+  padding: var(--spacing);
+  border-radius: 0.3rem;
+  border: 1px solid var(--blue-900);
+  font-size: var(--font-size-small);
+}
+/* TECH END */
+
+/* LIFE */
+html.life {
+  background: var(--cyan-950);
+  color: var(--cyan-50);
+  --accent: var(--cyan-400);
+  --text: var(--cyan-50);
+  --muted: var(--600);
+  --highlight: var(--cyan-50);
+  --interaction: var(--cyan-400);
+  --sans: var(--font-inter);
+  --serif: var(--font-garamond);
 }
 
-.article-grid article {
-    grid-column: auto;
-    border: 1px solid var(--flexoki-cyan-900);
-    border-radius: 0.3rem;
-    padding: var(--spacing);
-    margin-block: 0;
+.life svg,
+.life svg path {
+  fill: var(--text);
+  transition: var(--transition-medium);
 }
 
-.article-grid article h2 {
-    font-size: var(--font-size-large);
-    margin-block: 0;
-    font-weight: normal;
+.life a:hover,
+.life a:active,
+.life svg:hover path {
+  color: var(--accent);
+  fill: var(--accent);
 }
 
-.article-grid article a,
-.article-grid article a:visited {
-    text-decoration: none;
-    color: inherit;
-    display: block;
-    height: 100%;
+.life svg:active {
+  transform: scale(0.95);
 }
 
-.article-grid .article-meta {
-    font-size: var(--font-size-small);
-    color: var(--flexoki-cyan-300);
-    margin-top: calc(0.5 * var(--spacing));
+.life article {
+  font-family: var(--font-garamond);
+  font-size-adjust: var(--font-garamond-adjust);
 }
 
-.article-grid .article-tags {
-    margin-top: calc(0.5 * var(--spacing));
+.life h1 {
+  font-size: var(--font-size-large);
 }
 
-.article-grid .article-tags .tag {
-    display: inline-block;
-    padding: calc(0.2 * var(--spacing)) calc(0.5 * var(--spacing));
-    background-color: var(--flexoki-cyan-800);
-    border-radius: 0.2rem;
-    font-size: var(--font-size-extra-small);
-    margin-right: calc(0.5 * var(--spacing));
+.life article h2,
+.life article h3 {
+  text-align: center;
 }
 
-.article-grid article img {
-    width: 100%;
-    aspect-ratio: 16/9;
-    object-fit: cover;
-    border-radius: 0.2rem;
-    margin-bottom: var(--spacing);
+.life article a {
+  font-family: var(--font-inter);
 }
+
+.life hr {
+  display: flex;
+  justify-content: center;
+  border: none;
+}
+
+.life hr:after {
+  content: "✧✧✧";
+  text-align: center;
+  color: var(--accent);
+}
+/* LIFE END */
