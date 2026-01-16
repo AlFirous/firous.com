@@ -1,16 +1,69 @@
+/* GARDEN START */
+
 body {
   background-color: var(--flexoki-cyan-950);
   color: var(--flexoki-paper);
 }
+
 a,
 a:visited {
   color: var(--flexoki-cyan-100);
   transition: var(--transition-medium);
 }
 
+header {
+  z-index: 2;
+  position: relative;
+}
+
+header * {
+  font-size: medium;
+}
+
+header svg {
+  @media (max-width: 767px) {
+    width: 21px;
+  }
+}
+
+header > *:first-child,
+header > *:last-child {
+  @media (max-width: 768px) {
+    grid-column: span 2;
+  }
+}
+
+header > *:nth-child(2) {
+  @media (max-width: 768px) {
+    grid-column: span 8;
+  }
+}
+
+header > *:nth-child(2) span {
+  @media (max-width: 767px) {
+    display: none;
+  }
+}
+
+header nav {
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
+
 article {
   grid-column: 4 / 10;
   margin-block: calc(3 * var(--spacing));
+
+  /* TABLET */
+  @media (max-width: 1023px) {
+    grid-column: 2 / 12;
+  }
+
+  /* MOBILE */
+  @media (max-width: 767px) {
+    grid-column: 1 / 13;
+  }
 }
 
 article h1 {
@@ -19,14 +72,108 @@ article h1 {
   margin-block: calc(3 * var(--spacing));
 }
 
+/* TABLE OF CONTENT */
+
+nav.toc {
+  font-size: medium;
+  position: fixed;
+  right: var(--spacing);
+}
+
+nav.toc h2 {
+  margin: 0;
+  margin-bottom: 1ch;
+
+  &:before {
+    content: unset;
+  }
+}
+
+nav.toc ul {
+  padding-left: 2ch;
+  margin-left: 2px;
+  border-left: 1px solid gray;
+}
+
+nav.toc ul li:before {
+  content: "";
+  position: absolute;
+}
+
+nav.toc li.depth-3 {
+  margin-left: 2ch;
+  opacity: 0.9;
+}
+
+/* TABLE OF CONTENT END */
+
+article h2,
+article h3,
+article h4 {
+  scroll-margin-top: var(--spacing);
+}
+
 article h2,
 article p {
   margin-block: var(--spacing);
 }
 
+article h3 {
+  color: var(--text);
+}
+
+article ul {
+  list-style: none;
+}
+
+article ul li:before {
+  content: "—";
+  margin-right: 1ch;
+  color: var(--secondary);
+}
+
+article p,
+article li {
+  color: var(--text);
+}
+
+article a[href^="https://firous.com"],
+article a[href^="mailto"],
+article a[href^="/"] {
+  border-bottom: 1.5px solid var(--secondary);
+}
+
+article a[href^="http"],
+article a[href^="https://"] {
+  border-bottom: 1.5px solid var(--accent);
+}
+
 article hr {
   margin-block: calc(3 * var(--spacing));
-  border: 1px solid var(--muted);
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--secondary), transparent);
+}
+
+sup {
+  vertical-align: 0.5ch;
+  line-height: 0;
+  font-weight: bold;
+}
+
+sup a,
+sup a:visited,
+section.footnotes a {
+  color: var(--accent);
+  scroll-margin-top: 10dvh;
+}
+
+section.footnotes {
+  font-size: smaller;
+}
+
+section.footnotes p {
+  margin: 0;
 }
 
 post-meta {
@@ -35,13 +182,54 @@ post-meta {
   font-family: var(--font-inter);
   color: var(--muted);
   margin-block: calc(3 * var(--spacing));
+  display: flex;
+  justify-content: center;
+  gap: 1ch;
+  align-items: center;
+}
+
+post-meta svg {
+  width: 2ch;
+  color: var(--secondary);
+  margin-left: 0.2ch;
+}
+
+body::before {
+  content: "";
+  height: 10dvh;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  realcode: afterthis;
+  /* position: sticky;*/
+  pointer-events: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  width: 100%;
+  left: 0;
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  will-change: transform;
+  background: linear-gradient(to top, transparent, black);
+  -webkit-mask-image: linear-gradient(to bottom, black 25%, transparent);
+  mask-image: linear-gradient(to bottom, black 25%, transparent);
+  z-index: 1;
   display: block;
 }
 
+/* GARDEN END */
+
 /* TECH */
+
 html.tech {
   background: var(--blue-1000);
   color: var(--paper);
+  --accent: var(--orange-400);
+  --secondary: var(--blue-400);
+  --text: var(--blue-50);
+  --muted: var(--400);
 }
 
 .tech {
@@ -55,8 +243,63 @@ html.tech {
   color: var(--orange-400);
 }
 
+/*
+.tech header > *:first-child,
+.tech header > *:last-child {
+  @media (min-width: 768px) {
+    grid-column: span 1;
+  }
+}
+
+.tech header > *:nth-child(2),
+.tech header > *:nth-child(3) {
+  @media (min-width: 768px) {
+    grid-column: span 5;
+  }
+}
+*/
+
 .tech h1 {
   font-size: var(--font-size-large);
+}
+
+.tech h2,
+.tech h3,
+.tech h4 {
+  position: relative;
+
+  &:before {
+    margin-right: 1ch;
+    color: var(--secondary);
+  }
+
+  /* MOBILE LARGE */
+  @media (min-width: 768px) {
+    &:before {
+      position: absolute;
+      width: 3ch;
+      left: -4ch;
+      text-align: right;
+    }
+  }
+}
+
+.tech h2 {
+  &:before {
+    content: "##";
+  }
+}
+
+.tech h3 {
+  &:before {
+    content: "###";
+  }
+}
+
+.tech h4 {
+  &:before {
+    content: "####";
+  }
 }
 
 .tech .astro-code {
@@ -65,6 +308,11 @@ html.tech {
   border: 1px solid var(--blue-900);
   font-size: var(--font-size-small);
 }
+
+.tech post-meta {
+  justify-content: flex-start;
+}
+
 /* TECH END */
 
 /* LIFE */
@@ -80,15 +328,15 @@ html.life {
   --serif: var(--font-garamond);
 }
 
-.life svg,
-.life svg path {
+.life header svg,
+.life header svg path {
   fill: var(--text);
   transition: var(--transition-medium);
 }
 
 .life a:hover,
 .life a:active,
-.life svg:hover path {
+.life header svg:hover path {
   color: var(--accent);
   fill: var(--accent);
 }

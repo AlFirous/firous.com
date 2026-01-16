@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import GardenLayout from '../../layouts/GardenLayout.astro';
+import { Calendars } from '@lucide/astro';
 
 export async function getStaticPaths() {
   const gardenPosts = await getCollection('garden');
@@ -12,10 +13,25 @@ export async function getStaticPaths() {
 
 const post = Astro.props;
 
-const { Content } = await render(post);
+const { Content, headings } = await render(post);
 ---
+
 <GardenLayout title={post.data.title} description={post.data.description} tags={post.data.tags} image={post.data.image}>
     <h1>{post.data.title}</h1>
+    <!--
+    {headings.length > 0 &&
+        <nav class="toc" aria-label="Table of Contents">
+            <h2>On this page</h2>
+            <ul>
+                {headings.map(heading => (
+                    <li class={`depth-${heading.depth}`}>
+                        <a href={`#${heading.slug}`}>{heading.text}</a>
+                    </li>
+                ))}
+            </ul>
+        </nav>
+    }
+    -->
     <Content />
     <post-meta>
         {post.data.created && (
@@ -23,7 +39,7 @@ const { Content } = await render(post);
         )}
         {post.data.created && post.data.modified && new Date(post.data.modified).getTime() !== new Date(post.data.created).getTime() && (
             <>
-                {' ✧ '}
+                <Calendars />
                 <time datetime={new Date(post.data.modified).toISOString()} title="Updated">{new Date(post.data.modified).toLocaleDateString('en-us', { year: 'numeric', month: 'long' })}</time>
             </>
         )}

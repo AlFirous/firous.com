@@ -1,95 +1,214 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection } from "astro:content";
 
-import '../styles/global.css';
-import '../styles/garden.css';
-import Head from '../components/Head.astro';
-import Header from '../components/Header.astro';
+import "../styles/global.css";
+import Head from "../components/Head.astro";
+import Header from "../components/Header.astro";
 
-const title = "Garden"; 
+const title = "Garden";
 const description = "Notes, documentation, and miscellaneous writings.";
 
 // Helper function to parse potentially non-standard date strings
 function robustDateParse(dateValue: string | Date | undefined | null) {
-    if (dateValue instanceof Date) {
-        return dateValue;
-    }
-    if (typeof dateValue !== 'string') {
-        return null;
-    }
-    // Converts 'YYYY-MM-DDTHH:mmAM/PM' into a more parsable format
-    const parsableDateString = dateValue.replace('T', ' ').replace(/([AP]M)/, ' $1');
-    const date = new Date(parsableDateString);
-    if (!isNaN(date.getTime())) {
-        return date;
-    }
-    // Fallback for standard date formats
-    const standardDate = new Date(dateValue);
-    return !isNaN(standardDate.getTime()) ? standardDate : null;
+  if (dateValue instanceof Date) {
+    return dateValue;
+  }
+  if (typeof dateValue !== "string") {
+    return null;
+  }
+  // Converts 'YYYY-MM-DDTHH:mmAM/PM' into a more parsable format
+  const parsableDateString = dateValue.replace("T", " ").replace(/([AP]M)/, " $1");
+  const date = new Date(parsableDateString);
+  if (!isNaN(date.getTime())) {
+    return date;
+  }
+  // Fallback for standard date formats
+  const standardDate = new Date(dateValue);
+  return !isNaN(standardDate.getTime()) ? standardDate : null;
 }
 
-const allPosts = await getCollection('garden');
+const allPosts = await getCollection("garden");
 
 const gardenPosts = allPosts
-    .map(post => ({
-        slug: post.id.replace(/\.mdx?$/, '').toLowerCase(),
-        image: post.data.image,
-        title: post.data.title,
-        tags: post.data.tags,
-        createdDate: robustDateParse(post.data.created),
-    }))
-    .sort((a, b) => {
-        const aDate = a.createdDate;
-        const bDate = b.createdDate;
+  .map((post) => ({
+    slug: post.id.replace(/\.mdx?$/, "").toLowerCase(),
+    image: post.data.image,
+    title: post.data.title,
+    tags: post.data.tags,
+    createdDate: robustDateParse(post.data.created),
+  }))
+  .sort((a, b) => {
+    const aDate = a.createdDate;
+    const bDate = b.createdDate;
 
-        // Sort by date descending. Posts without a date are pushed to the end.
-        if (aDate && bDate) {
-            return bDate.getTime() - aDate.getTime();
-        } else if (aDate) {
-            return -1; // a has a date, b does not, so a comes first
-        } else if (bDate) {
-            return 1; // b has a date, a does not, so b comes first
-        }
-        return 0; // Neither has a date, keep original order
-    });
+    // Sort by date descending. Posts without a date are pushed to the end.
+    if (aDate && bDate) {
+      return bDate.getTime() - aDate.getTime();
+    } else if (aDate) {
+      return -1; // a has a date, b does not, so a comes first
+    } else if (bDate) {
+      return 1; // b has a date, a does not, so b comes first
+    }
+    return 0; // Neither has a date, keep original order
+  });
 ---
 
 <!doctype html>
 <html lang="en">
-<Head title={title} description={description} />
-<body>
-    <Header />
+  <Head title={title} description={description} />
+  <body>
     <main>
-        <section class="hero">
-            <h1>Garden</h1>
-            <p><a href="/">Notes</a>, documentation, etc.</p>
-        </section>
-        <section class="article-grid">
-            {gardenPosts.map(post => {
-                return (
-                    <article>
-                        <a href={`/garden/${post.slug}/`}>
-                            {post.image && <img src={post.image} alt={post.title} />}
-                            <h2>{post.title}</h2>
-                            <div class="article-meta">
-                                {post.createdDate && (
-                                    <time datetime={post.createdDate.toISOString()}>
-                                        {post.createdDate.toLocaleDateString('en-us', { year: 'numeric', month: 'short', day: 'numeric' })}
-                                    </time>
-                                )}
-                                {post.tags && post.tags.length > 0 && (
-                                    <div class="article-tags">
-                                        {post.tags.map(tag => (
-                                            <span class="tag">{tag}</span>
-                                        ))}
-                                    </div>
-                                )}
-                            </div>
-                        </a>
-                    </article>
-                )
-            })}
-        </section>
+      <section class="hero">
+        <h1>{title}</h1>
+        <p>{description}</p>
+      </section>
+      <section class="article-grid">
+        {
+          gardenPosts.map((post) => {
+            const tag = post.tags && post.tags.length > 0 ? post.tags[0].toLowerCase() : "";
+            return (
+              <article class={tag}>
+                {post.image && <img src={post.image} alt={post.title} />}
+                <h2>
+                  <a href={`/garden/${post.slug}/`}>{post.title}</a>
+                </h2>
+                <post-meta>
+                  {post.createdDate && <time datetime={post.createdDate.toISOString()}>{post.createdDate.toLocaleDateString("en-us", { year: "numeric", month: "short", day: "numeric" })}</time>}
+                  {post.tags && post.tags.length > 0 && (
+                    <div class="article-tags">
+                      {post.tags.map((tag) => (
+                        <span class="tag">{tag}</span>
+                      ))}
+                    </div>
+                  )}
+                </post-meta>
+              </article>
+            );
+          })
+        }
+      </section>
+      <section class="article-grid">
+        <article class="card">
+          <a href="destination.html" class="card-link">
+            <h2>Card Title</h2>
+            <img src="image.jpg" alt="Description of the image" />
+          </a>
+          <p>This is a brief description of the card content.</p>
+          <ul>
+            <!-- Other content or optional secondary links if needed -->
+            <li><a href="secondary.html">Secondary Action</a></li>
+          </ul>
+        </article>
+        <article class="card">
+          <a href="destination.html" class="card-link">
+            <h2>Card Title</h2>
+            <img src="image.jpg" alt="Description of the image" />
+          </a>
+          <p>This is a brief description of the card content.</p>
+          <ul>
+            <!-- Other content or optional secondary links if needed -->
+            <li><a href="secondary.html">Secondary Action</a></li>
+          </ul>
+        </article>
+      </section>
     </main>
-</body>
+  </body>
 </html>
+
+<style>
+  main > * {
+    grid-column: span 12;
+  }
+
+  section.hero {
+    padding: var(--spacing);
+    background: var(--cyan-900);
+    color: var(--paper);
+
+    border-radius: 0.3rem;
+  }
+
+  section.hero h1 {
+    font-size: 10cqi;
+    font-weight: bold;
+  }
+
+  section.hero a,
+  section.hero a:visited {
+    color: var(--paper);
+  }
+
+  section.article-grid {
+    display: grid;
+    grid-template-columns: var(--grid-12);
+    gap: var(--spacing);
+  }
+
+  article {
+    grid-column: span 3;
+    background: grey;
+    aspect-ratio: 1/1;
+    margin: 0;
+    padding: var(--spacing);
+    border-radius: 0.3rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: var(--paper);
+  }
+
+  article a,
+  article a:visited {
+    color: var(--paper);
+  }
+
+  post-meta {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  span.tag:not(:first-child) {
+    color: red;
+    display: none;
+  }
+
+  article.tech {
+    background: var(--blue-600);
+  }
+
+  article.life {
+    background: var(--cyan-600);
+  }
+
+  /* TEST CLICKABLE PARENT AND ACCESSIBILITY */
+  .card {
+    position: relative; /* Establishes a positioning context */
+    border: 1px solid #ccc;
+    padding: 1rem;
+    border-radius: 5px;
+    /* Add other styling for visual presentation */
+  }
+
+  .card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional hover effect */
+    cursor: pointer; /* Changes cursor to pointer on hover */
+  }
+
+  .card-link {
+    position: absolute; /* Positions the link relative to the card */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Visually hide the stretched link text if needed (e.g., using screen-reader-only class)
+    For accessibility, the link text should be the main title of the card. */
+  }
+
+  /* Ensure secondary links are positioned above the stretched link */
+  .card a:not(.card-link) {
+    position: relative;
+    z-index: 1; /* Puts secondary links on top */
+    /* Add styling for secondary links */
+  }
+</style>

@@ -1,121 +1,123 @@
 :root {
-    /* LAYOUT */
-    /* 15px @ 320px viewport → 45px @ 2560px viewport */
-    --fluid-size: clamp(15px, 1.339vw + 10.714px, 45px);
-    --spacing: var(--fluid-size);
-    --spacing-vertical: calc(var(--fluid-size) * 2);
-    --size: var(--fluid-size);
-    --grid-12: repeat(12, 1fr);
-    --grid-9: repeat(9, 1fr);
-    --grid-6: repeat(6, 1fr);
-    --grid-3: 1fr 1fr 1fr;
+  /* LAYOUT */
+  /* 15px @ 320px viewport → 45px @ 2560px viewport */
+  --fluid-size: clamp(15px, 1.339vw + 10.714px, 45px);
+  --spacing: var(--fluid-size);
+  --spacing-half: calc(var(--spacing) / 2);
+  --spacing-quarter: calc(var(--spacing) / 4);
+  --spacing-vertical: calc(var(--fluid-size) * 2);
+  --size: var(--fluid-size);
+  --grid-12: repeat(12, 1fr);
+  --grid-9: repeat(9, 1fr);
+  --grid-6: repeat(6, 1fr);
+  --grid-3: 1fr 1fr 1fr;
 
-    --grid: var(--grid-12);
+  --grid: var(--grid-12);
 
-    @media (max-width: 1023px) {
-        --grid: var(--grid-9);
-    }
+  @media (max-width: 1023px) {
+    --grid: var(--grid-9);
+  }
 
-    @media (max-width: 767px) {
-        --grid: var(--grid-6);
-    }
+  @media (max-width: 767px) {
+    --grid: var(--grid-6);
+  }
 
-    /* TYPOGRAPHY */
-    /* 24px @ 320px viewport → 48px @ 2560px viewport */
-    --font-size-large: clamp(24px, 1.071vw + 20.571px, 48px);
-    /* 15px @ 320px viewport → 21px @ 2560px viewport */
-    --font-size-medium: clamp(15px, 0.268vw + 14.143px, 21px);
-    /* 12px @ 320px viewport → 18px @ 2560px viewport */
-    --font-size-small: clamp(12px, 0.268vw + 11.143px, 18px);
+  /* TYPOGRAPHY */
+  /* 24px @ 320px viewport → 48px @ 2560px viewport */
+  --font-size-large: clamp(24px, 1.071vw + 20.571px, 48px);
+  /* 15px @ 320px viewport → 21px @ 2560px viewport */
+  --font-size-medium: clamp(15px, 0.268vw + 14.143px, 21px);
+  /* 12px @ 320px viewport → 18px @ 2560px viewport */
+  --font-size-small: clamp(12px, 0.268vw + 11.143px, 18px);
 
-    --font-garamond-adjust: 0.545;
-    --line-height-small: calc(100% + calc(var(--spacing) / 5));
+  --font-garamond-adjust: 0.545;
+  --line-height-small: calc(100% + calc(var(--spacing) / 5));
 
-    /* COLORS */
-    --black: #100f0f;
-    --paper: #fffcf0;
-    --50: #f2f0e5;
-    --100: #e6e4d9;
-    --150: #dad8ce;
-    --200: #cecdc3;
-    --300: #b7b5ac;
-    --400: #9f9d96;
-    --500: #878580;
-    --600: #6f6e69;
-    --700: #575653;
-    --800: #403e3c;
-    --850: #343331;
-    --900: #282726;
-    --950: #1c1b1a;
-    --red-50: #ffe1d5;
-    --red-100: #ffcabb;
-    --red-150: #fdb2a2;
-    --red-200: #f89a8a;
-    --red-300: #e8705f;
-    --red-400: #d14d41;
-    --red-500: #c03e35;
-    --red-600: #af3029;
-    --red-700: #942822;
-    --red-800: #6c201c;
-    --red-850: #551b18;
-    --red-900: #3e1715;
-    --red-950: #261312;
-    --orange-50: #ffe7ce;
-    --orange-100: #fed3af;
-    --orange-150: #fcc192;
-    --orange-200: #f9ae77;
-    --orange-300: #ec8b49;
-    --orange-400: #da702c;
-    --orange-500: #cb6120;
-    --orange-600: #bc5215;
-    --orange-700: #9d4310;
-    --orange-800: #71320d;
-    --orange-850: #59290d;
-    --orange-900: #40200d;
-    --orange-950: #27180e;
-    --green-50: #edeecf;
-    --green-100: #dde2b2;
-    --green-150: #cdd597;
-    --green-200: #bec97e;
-    --green-300: #a0af54;
-    --green-400: #879a39;
-    --green-500: #768d21;
-    --green-600: #66800b;
-    --green-700: #536907;
-    --green-800: #3d4c07;
-    --green-850: #313d07;
-    --green-900: #252d09;
-    --green-950: #1a1e0c;
-    --cyan-50: #ddf1e4;
-    --cyan-100: #bfe8d9;
-    --cyan-150: #a2dece;
-    --cyan-200: #87d3c3;
-    --cyan-300: #5abdac;
-    --cyan-400: #3aa99f;
-    --cyan-500: #2f968d;
-    --cyan-600: #24837b;
-    --cyan-700: #1c6c66;
-    --cyan-800: #164f4a;
-    --cyan-850: #143f3c;
-    --cyan-900: #122f2c;
-    --cyan-950: #101f1d;
-    --blue-50: #e1eceb;
-    --blue-100: #c6dde8;
-    --blue-150: #abcfe2;
-    --blue-200: #92bfdb;
-    --blue-300: #66a0c8;
-    --blue-400: #4385be;
-    --blue-500: #3171b2;
-    --blue-600: #205ea6;
-    --blue-700: #1a4f8c;
-    --blue-800: #163b66;
-    --blue-850: #133051;
-    --blue-900: #12253b;
-    --blue-950: #101a24;
-    --blue-1000: #0d1319;
+  /* COLORS */
+  --black: #100f0f;
+  --paper: #fffcf0;
+  --50: #f2f0e5;
+  --100: #e6e4d9;
+  --150: #dad8ce;
+  --200: #cecdc3;
+  --300: #b7b5ac;
+  --400: #9f9d96;
+  --500: #878580;
+  --600: #6f6e69;
+  --700: #575653;
+  --800: #403e3c;
+  --850: #343331;
+  --900: #282726;
+  --950: #1c1b1a;
+  --red-50: #ffe1d5;
+  --red-100: #ffcabb;
+  --red-150: #fdb2a2;
+  --red-200: #f89a8a;
+  --red-300: #e8705f;
+  --red-400: #d14d41;
+  --red-500: #c03e35;
+  --red-600: #af3029;
+  --red-700: #942822;
+  --red-800: #6c201c;
+  --red-850: #551b18;
+  --red-900: #3e1715;
+  --red-950: #261312;
+  --orange-50: #ffe7ce;
+  --orange-100: #fed3af;
+  --orange-150: #fcc192;
+  --orange-200: #f9ae77;
+  --orange-300: #ec8b49;
+  --orange-400: #da702c;
+  --orange-500: #cb6120;
+  --orange-600: #bc5215;
+  --orange-700: #9d4310;
+  --orange-800: #71320d;
+  --orange-850: #59290d;
+  --orange-900: #40200d;
+  --orange-950: #27180e;
+  --green-50: #edeecf;
+  --green-100: #dde2b2;
+  --green-150: #cdd597;
+  --green-200: #bec97e;
+  --green-300: #a0af54;
+  --green-400: #879a39;
+  --green-500: #768d21;
+  --green-600: #66800b;
+  --green-700: #536907;
+  --green-800: #3d4c07;
+  --green-850: #313d07;
+  --green-900: #252d09;
+  --green-950: #1a1e0c;
+  --cyan-50: #ddf1e4;
+  --cyan-100: #bfe8d9;
+  --cyan-150: #a2dece;
+  --cyan-200: #87d3c3;
+  --cyan-300: #5abdac;
+  --cyan-400: #3aa99f;
+  --cyan-500: #2f968d;
+  --cyan-600: #24837b;
+  --cyan-700: #1c6c66;
+  --cyan-800: #164f4a;
+  --cyan-850: #143f3c;
+  --cyan-900: #122f2c;
+  --cyan-950: #101f1d;
+  --blue-50: #e1eceb;
+  --blue-100: #c6dde8;
+  --blue-150: #abcfe2;
+  --blue-200: #92bfdb;
+  --blue-300: #66a0c8;
+  --blue-400: #4385be;
+  --blue-500: #3171b2;
+  --blue-600: #205ea6;
+  --blue-700: #1a4f8c;
+  --blue-800: #163b66;
+  --blue-850: #133051;
+  --blue-900: #12253b;
+  --blue-950: #101a24;
+  --blue-1000: #0d1319;
 
-    /* MOTION */
-    --transition-fast: 150ms ease-in-out;
-    --transition-medium: 300ms ease-in-out;
-    --scale: 0.97;
+  /* MOTION */
+  --transition-fast: 150ms ease-in-out;
+  --transition-medium: 300ms ease-in-out;
+  --scale: 0.97;
 }

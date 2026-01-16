@@ -37,7 +37,7 @@ I am a designer, but I don't want to waste my energy on tinkering with Obsidian 
 
 ### Minimal Interface / Focus Mode
 
-Hide all interface with hover as trigger to show again. Inspired by [Kraa](https://kraa.io).
+Hide all interface with hover as trigger to show again. Inspired by [Kraa](https://kraa.io). Will also implement on this <a href="/">site</a>.
 
 ```css
 .css {
@@ -49,7 +49,3 @@ Hide all interface with hover as trigger to show again. Inspired by [Kraa](https
 [^1]: My own plugin.
 
 [^2]: My own plugin too.
-
----
-
-1. [r/ObsidianMD - Reddit](https://www.reddit.com/r/ObsidianMD/comments/1q5cnxv/calmer_notebook_navigator_appearance/)
