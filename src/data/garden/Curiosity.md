@@ -1,6 +1,7 @@
 ---
 created: 2025-10-19T09:27:10
 modified: 2026-01-13T01:25:56
+type: Note
 tags:
   - Life
 title: Curiosity

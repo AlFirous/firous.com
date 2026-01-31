@@ -18,6 +18,7 @@ const { Content, headings } = await render(post);
 
 <GardenLayout title={post.data.title} description={post.data.description} tags={post.data.tags} image={post.data.image}>
   <h1>{post.data.title}</h1>
+  <small>{post.data.type} <em>of</em> {post.data.tags}</small>
   <img src={post.data.image} />
   <!--
     {headings.length > 0 &&

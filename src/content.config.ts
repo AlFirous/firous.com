@@ -16,6 +16,7 @@ const garden = defineCollection({
   schema: z.object({
     title: z.string(),
     description: z.string().optional(),
+    type: z.string().optional(),
     image: z.string().optional(),
     tags: z.array(z.string()).optional(),
     created: z.union([z.string(), z.date()]).optional(),
