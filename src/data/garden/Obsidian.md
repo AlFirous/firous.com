@@ -4,11 +4,12 @@ modified: 2026-01-07T19:08:31
 tags:
   - Tech
 title: Obsidian
+image: "/src/assets/images/OBSIDIAN KRAA THUMBNAIL.jpg"
 ---
 
-List of my pick of Obsidian theme and plugin, after third attempt of using Obsidian.
+List of my pick of Obsidian theme and plugin, after third attempt of using **Obsidian**.
 
-I am a designer, but I don't want to waste my energy on tinkering with Obsidian too much. I rather use that energy on create design works and use Obsidian for writing. That's why I aim to customize Obsidian interface as minimal as possible like a piece of blank paper.
+I am a _designer_, but I don't want to waste my energy on tinkering with Obsidian too much. I rather use that energy on create design works and use Obsidian for writing. That's why I aim to customize Obsidian interface as minimal as possible like a piece of blank paper.
 
 ## Essential (Function)
 
@@ -37,7 +38,7 @@ I am a designer, but I don't want to waste my energy on tinkering with Obsidian 
 
 ### Minimal Interface / Focus Mode
 
-Hide all interface with hover as trigger to show again. Inspired by [Kraa](https://kraa.io). Will also implement on this <a href="/">site</a>.
+Hide all interface with hover as trigger to show again. Inspired by **[Kraa](https://kraa.io)**. Will also implement on this <a href="/">site</a>.
 
 ```css
 .css {

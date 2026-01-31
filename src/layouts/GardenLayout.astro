@@ -1,32 +1,33 @@
 ---
-import Head from '../components/Head.astro';
-import HeaderEditorial from '../components/HeaderEditorial.astro';
-import Footer from '../components/Footer.astro';
-import Grid from '../components/Grid.astro';
+import Head from "../components/Head.astro";
+import HeaderEditorial from "../components/HeaderEditorial.astro";
+import Footer from "../components/Footer.astro";
+import Grid from "../components/Grid.astro";
 
-import { Font } from 'astro:assets';
+import { Font } from "astro:assets";
 
-import '../styles/global.css';
-import '../styles/garden.css';
+import "../styles/global.css";
+import "../styles/garden.css";
 
 const { title, description, image, tags, favicon } = Astro.props;
 
 // Convert first tag to lowercase for class name
-const firstTag = tags && Array.isArray(tags) && tags.length > 0 ? tags[0].toLowerCase() : '';
+const firstTag = tags && Array.isArray(tags) && tags.length > 0 ? tags[0].toLowerCase() : "";
 ---
 
 <html lang="en" class={firstTag}>
   <Head title={title} description={description} image={image} favicon={favicon}>
-    <slot name="in-head" slot="in-head"/>
+    <slot name="in-head" slot="in-head" />
     <Font cssVariable="--font-inter" preload />
     <Font cssVariable="--font-garamond" preload />
   </Head>
   <body>
-      <HeaderEditorial />
+    <HeaderEditorial />
     <main>
       <article>
-        <slot /> <!-- your content is injected here -->
+        <slot />
+        <!-- your content is injected here -->
       </article>
-    </main>  
+    </main>
   </body>
 </html>

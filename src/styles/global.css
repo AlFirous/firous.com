@@ -44,9 +44,13 @@ h3,
 h4,
 h5,
 h6 {
-  text-wrap: balance;
   font-weight: normal;
   font-size: 1rem;
+  line-height: 1.5em;
+}
+
+h1 {
+  text-wrap: balance;
 }
 
 a {

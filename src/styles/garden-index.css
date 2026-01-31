@@ -1,0 +1,121 @@
+:root {
+  --serif: serif;
+}
+
+section.hero {
+  padding: var(--spacing);
+  background: var(--100);
+  color: var(--paper);
+  border-radius: 0 0 0.3rem 0.3rem;
+  margin-top: calc(-1 * var(--spacing));
+  background-position: center center;
+  background-size: cover;
+  background-blend-mode: luminosity;
+  height: 48dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.life {
+  --accent: var(--cyan-600);
+}
+
+.life h2,
+.life time,
+.life article-tags {
+  font-family: var(--serif);
+}
+
+article {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: var(--transition-fast);
+
+  &:before,
+  &:after {
+    transition: var(--transition-medium);
+  }
+
+  &:before {
+    content: "";
+    position: absolute;
+    height: 75%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    width: 100%;
+    left: 0;
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+    will-change: transform;
+    background: linear-gradient(to top, transparent, var(--accent));
+    -webkit-mask-image: linear-gradient(to bottom, var(--accent) 25%, transparent);
+    mask-image: linear-gradient(to bottom, var(--accent) 25%, transparent);
+    z-index: 1;
+    display: block;
+    opacity: 0.85;
+  }
+
+  &:after {
+    content: "";
+    position: absolute;
+    height: 75%;
+    width: 100%;
+    bottom: -1px;
+    left: 0;
+    pointer-events: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    width: 100%;
+    left: 0;
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+    will-change: transform;
+    background: linear-gradient(to bottom, transparent, var(--accent));
+    -webkit-mask-image: linear-gradient(to top, var(--accent) 25%, transparent);
+    mask-image: linear-gradient(to top, var(--accent) 25%, transparent);
+    display: block;
+    opacity: 0.85;
+  }
+
+  &:hover {
+    &:before,
+    &:after {
+      opacity: 0;
+    }
+  }
+
+  &:active {
+    transform: scale(0.975);
+  }
+
+  @media (max-width: 767px) {
+    grid-column: span 6 !important;
+  }
+}
+
+article img {
+  position: absolute;
+  margin: auto;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  mix-blend-mode: luminosity;
+}
+
+article:hover img {
+  mix-blend-mode: normal;
+}
+
+article *:not(img) {
+  z-index: 1;
+}

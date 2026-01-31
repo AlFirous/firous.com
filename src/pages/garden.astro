@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 
 import "../styles/global.css";
+import "../styles/garden-index.css";
 import Head from "../components/Head.astro";
 import Header from "../components/Header.astro";
 
@@ -58,7 +59,7 @@ const gardenPosts = allPosts
   <Head title={title} description={description} />
   <body>
     <main>
-      <section class="hero">
+      <section class="hero" style="background-image: url('../src/assets/images/The Thinker Painting SQUOOSH.jpg');">
         <h1>{title}</h1>
         <p>{description}</p>
       </section>
@@ -75,11 +76,11 @@ const gardenPosts = allPosts
                 <post-meta>
                   {post.createdDate && <time datetime={post.createdDate.toISOString()}>{post.createdDate.toLocaleDateString("en-us", { year: "numeric", month: "short", day: "numeric" })}</time>}
                   {post.tags && post.tags.length > 0 && (
-                    <div class="article-tags">
+                    <article-tags>
                       {post.tags.map((tag) => (
-                        <span class="tag">{tag}</span>
+                        <tag-name>{tag}</tag-name>
                       ))}
-                    </div>
+                    </article-tags>
                   )}
                 </post-meta>
               </article>
@@ -118,14 +119,6 @@ const gardenPosts = allPosts
 <style>
   main > * {
     grid-column: span 12;
-  }
-
-  section.hero {
-    padding: var(--spacing);
-    background: var(--cyan-900);
-    color: var(--paper);
-
-    border-radius: 0.3rem;
   }
 
   section.hero h1 {
@@ -210,5 +203,10 @@ const gardenPosts = allPosts
     position: relative;
     z-index: 1; /* Puts secondary links on top */
     /* Add styling for secondary links */
+  }
+
+  /* Tab Key Focus */
+  .card-link:focus {
+    border: 5px solid red;
   }
 </style>
