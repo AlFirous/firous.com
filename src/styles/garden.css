@@ -1,9 +1,8 @@
 /* GARDEN START */
 :root {
   --serif: var(--font-garamond);
-  --sans: var(--font-inter);
-  --mono: var(--font-ibm-plex-mono);
-  --mono: monospace;
+  --sans: var(--font-plex-sans);
+  --mono: var(--font-lilex);
   --mono-adjust: 0.58;
 }
 
@@ -14,8 +13,14 @@ body {
 
 a,
 a:visited {
-  color: var(--flexoki-cyan-100);
+  color: var(--text);
   transition: var(--transition-medium);
+}
+
+a:hover,
+a:active,
+a:focus {
+  color: var(--accent);
 }
 
 header {
@@ -30,6 +35,13 @@ header * {
 header svg {
   @media (max-width: 767px) {
     width: 21px;
+  }
+
+  transition: var(--transition-medium);
+
+  &:hover,
+  &:active {
+    fill: var(--accent);
   }
 }
 
@@ -78,6 +90,29 @@ header nav {
   }
 }
 
+header nav a[href^="/garden"] {
+  display: inline-flex;
+  position: relative;
+  justify-content: center;
+
+  &::after {
+    content: "&";
+    display: block;
+    position: absolute;
+    font-family: var(--serif);
+    font-style: italic;
+    color: var(--secondary);
+    transition: var(--transition-slow);
+    opacity: 1;
+    transform: translateY(3ch) scale(1) rotateY(0deg);
+  }
+}
+
+:has(a[href^="/garden"]:hover) header nav a[href^="/garden"]::after {
+  color: var(--accent);
+  transform: translateY(3ch) scale(1) rotateY(180deg);
+}
+
 article {
   grid-column: 4 / 10;
   margin-block: calc(3 * var(--spacing));
@@ -115,10 +150,17 @@ article img {
     margin-top: var(--spacing);
     */
   object-fit: cover;
-  aspect-ratio: 16/9;
   object-position: top;
   margin-bottom: calc(3 * var(--spacing));
   border-radius: 0.3rem;
+
+  @media (min-width: 1024px) {
+    aspect-ratio: 2.35/1;
+  }
+
+  @media (max-width: 767px) {
+    aspect-ratio: 4/3;
+  }
 }
 
 article h1,
@@ -149,10 +191,26 @@ article p:not(post-footer p) {
 
 /* GRID LINE AREA END */
 
-article h1 {
+h1 {
   font-size: var(--font-size-medium);
   font-weight: normal;
-  margin-block: calc(3 * var(--spacing));
+  margin-top: calc(3 * var(--spacing));
+  margin-bottom: 0;
+}
+
+article small {
+  grid-column: col-6;
+  text-align: center;
+  margin-bottom: calc(3 * var(--spacing));
+  font-size: var(--font-size-small);
+  font-family: var(--sans);
+  color: var(--tertiary);
+  font-family: var(--mono);
+}
+article small em {
+  font-family: var(--serif);
+  font-size-adjust: 0.5;
+  font-weight: 500;
 }
 
 /* TABLE OF CONTENT */
@@ -229,8 +287,17 @@ article li::marker {
   color: var(--secondary);
 }
 
-article ol li {
-  margin-left: 2ch;
+article ol {
+  text-wrap-style: balance;
+  counter-reset: pseudo-number;
+  list-style: none;
+}
+
+article ol li::before {
+  counter-increment: pseudo-number;
+  content: counter(pseudo-number, decimal-leading-zero) ".";
+  padding-right: 0.5ch;
+  color: var(--secondary);
 }
 
 article p,
@@ -244,15 +311,24 @@ article a[href^="https://firous.com"],
 article a[href^="mailto"],
 article a[href^="/"] {
   border-bottom: 1.5px solid var(--secondary);
+  border-bottom-style: dotted;
 }
 
-article a[href^="http"],
+a[href^="/garden"] article a[href^="http"],
 article a[href^="https://"] {
-  border-bottom: 1.5px solid var(--accent);
+  border-bottom: 1px solid var(--highlight);
+}
+
+article a[href^="http"]:hover,
+article a[href^="https://"]:hover,
+article a[href^="http"]:active,
+article a[href^="https://"]:active {
+  border-bottom-color: var(--accent);
 }
 
 strong {
   color: var(--highlight);
+  font-weight: 500;
 }
 
 hr {
@@ -282,7 +358,7 @@ hr:after {
   height: 1px;
   width: 100%;
   position: absolute;
-  background: radial-gradient(transparent, var(--trietary));
+  background: radial-gradient(transparent, var(--tertiary));
 }
 
 hr + h2 + p,
@@ -326,7 +402,7 @@ section.footnotes p {
 post-meta {
   text-align: center;
   font-size: var(--font-size-small);
-  font-family: var(--font-inter);
+  font-family: var(--sans);
   color: var(--muted);
   display: flex;
   justify-content: center;
@@ -334,8 +410,9 @@ post-meta {
   align-items: center;
 }
 
-time {
+article time {
   color: var(--secondary);
+  font-family: var(--mono);
 }
 
 post-meta svg {
@@ -350,7 +427,7 @@ post-footer {
   text-align: center;
   font-family: var(--sans);
   display: block;
-  border: 1px solid var(--trietary);
+  border: 1px solid var(--tertiary);
   border-top: 0;
   padding: calc(2 * var(--spacing)) var(--spacing);
 }
@@ -388,7 +465,7 @@ body::before {
   color: var(--paper);
   --accent: var(--orange-400);
   --secondary: var(--blue-400);
-  --trietary: var(--blue-600);
+  --tertiary: var(--blue-600);
   --text: var(--blue-50);
   --muted: var(--400);
   --highlight: var(--orange-50);
@@ -429,6 +506,10 @@ body::before {
   font-size-adjust: var(--mono-adjust);
 }
 
+.tech article small {
+  text-align: left;
+}
+
 .tech h2,
 .tech h3,
 .tech h4 {
@@ -438,7 +519,7 @@ body::before {
 
   &:before {
     margin-right: 1ch;
-    color: var(--trietary);
+    color: var(--tertiary);
     width: 2ch;
     display: inline-block;
   }
@@ -479,7 +560,7 @@ body::before {
 }
 
 .tech ul {
-  border-left: 1px solid var(--trietary);
+  border-left: 1px solid var(--tertiary);
 }
 
 .tech sup {
@@ -501,6 +582,15 @@ body::before {
   background-color: var(--blue-950) !important;
 }
 
+.tech .footnotes ol li p {
+  display: inline;
+}
+
+.tech .footnotes ol li::before {
+  margin-right: 2ch;
+  width: 2ch;
+}
+
 .tech post-footer time {
   font-family: var(--mono);
 }
@@ -513,12 +603,12 @@ body::before {
   color: var(--cyan-50);
   --accent: var(--orange-400);
   --secondary: var(--cyan-400);
-  --trietary: var(--cyan-600);
+  --tertiary: var(--cyan-600);
   --text: var(--cyan-50);
-  --muted: var(--600);
+  --muted: var(--cyan-850);
   --highlight: var(--orange-50);
   --interaction: var(--cyan-400);
-  --sans: var(--font-inter);
+  --sans: var(--font-plex-sans);
   --serif: var(--font-garamond);
 }
 
@@ -526,6 +616,11 @@ body::before {
 .life header svg path {
   fill: var(--text);
   transition: var(--transition-medium);
+}
+
+.life header .wordmark tag-line em {
+  width: 1.8ch;
+  display: inline-block;
 }
 
 .life a:hover,
@@ -540,7 +635,7 @@ body::before {
 }
 
 .life article {
-  font-family: var(--font-garamond);
+  font-family: var(--serif);
   font-size-adjust: var(--font-garamond-adjust);
 }
 
@@ -553,14 +648,27 @@ body::before {
 .life article h2,
 .life article h3 {
   text-align: center;
+  font-synthesis-small-caps: auto;
+  font-variant-caps: all-small-caps;
+  font-weight: 600;
+  font-size: larger;
+  letter-spacing: 0.06em;
 }
 
 .life article a {
-  font-family: var(--font-inter);
+  font-family: var(--sans);
 }
 
 .life sup {
   font-family: var(--serif);
+}
+
+.life strong {
+  font-variant-caps: all-small-caps;
+  font-synthesis-small-caps: auto;
+  font-size: larger;
+  letter-spacing: 0.06em;
+  font-weight: 600;
 }
 
 .life strong,
@@ -568,4 +676,80 @@ body::before {
   font-family: var(--serif);
 }
 
+.life article ol {
+  align-content: center;
+  text-align: center;
+  text-wrap-style: balance;
+  counter-reset: pseudo-number;
+}
+
+.life article ol li {
+  display: inline;
+  padding-right: 0.5ch;
+}
+
+.life article ol li::before {
+  counter-increment: pseudo-number;
+  content: counter(pseudo-number, decimal-leading-zero) ".";
+  padding-right: 0.5ch;
+  color: var(--secondary);
+}
+
+.life article ol li:not(:last-child):after {
+  content: ",";
+  color: var(--secondary);
+}
+
+.life article ol li::before {
+  font-family: var(--serif);
+}
+
 /* LIFE END */
+
+/* DESIGN START */
+.design {
+  --background: var(--900);
+  --text: var(--paper);
+  --accent: var(--red-400);
+  --highlight: var(--red-50);
+  --secondary: var(--400);
+  --tertiary: var(--600);
+  --muted: var(--850);
+  --sans: var(--font-plex-sans);
+  --serif: var(--font-garamond);
+}
+
+.design header {
+  color: var(--text);
+  font-family: var(--sans);
+}
+
+.design header .wordmark tag-line em {
+  width: 2ch;
+  display: inline-block;
+}
+
+.design h1 {
+  text-align: center;
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: var(--font-size-large);
+}
+
+.design h2 {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-synthesis-small-caps: auto;
+  font-variant-caps: all-small-caps;
+  font-weight: 600;
+  font-size: larger;
+  letter-spacing: 0.06em;
+}
+
+.design article p,
+.design article ul,
+.design article ol {
+  font-family: var(--sans);
+}
+
+/* DESIGN END */

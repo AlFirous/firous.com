@@ -16,7 +16,13 @@ const garden = defineCollection({
   schema: z.object({
     title: z.string(),
     description: z.string().optional(),
-    type: z.string().optional(),
+    type: z.preprocess((val) => {
+      if (Array.isArray(val) && val.length > 0 && typeof val[0] === "string") {
+        const match = val[0].match(/\[\[(.*?)\]\]/);
+        return match ? match[1] : val[0];
+      }
+      return val;
+    }, z.string().optional()),
     image: z.string().optional(),
     tags: z.array(z.string()).optional(),
     created: z.union([z.string(), z.date()]).optional(),

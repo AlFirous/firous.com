@@ -119,5 +119,6 @@
   /* MOTION */
   --transition-fast: 150ms ease-in-out;
   --transition-medium: 300ms ease-in-out;
+  --transition-slow: 500ms ease-in-out;
   --scale: 0.97;
 }

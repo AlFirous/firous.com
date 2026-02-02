@@ -75,6 +75,21 @@ a {
     sans-serif;
 }
 
+html {
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+}
+
+/* TROUBLESHOOTING
+@media (min-width: 1025px) {
+    /* HIDE SCROLLBAR FOR DESKTOP 
+    html { scrollbar-width: none; } 
+    #content-7 { -ms-overflow-style: none; } 
+    body::-webkit-scrollbar, body::-webkit-scrollbar-button { display: none; }
+    /* END HIDE SCROLLBAR 
+}
+*/
+
 body {
   padding: var(--spacing);
   position: relative;
@@ -93,6 +108,11 @@ body.theme-dark {
 
 .theme-dark a:hover {
   opacity: 1;
+}
+
+::selection {
+  color: var(--highlight);
+  background-color: var(--muted);
 }
 
 main {
@@ -200,6 +220,29 @@ header nav ul li {
   list-style: none;
 }
 
+header nav a[href^="/garden"] {
+  display: inline-flex;
+  position: relative;
+  justify-content: center;
+
+  &::after {
+    content: "&";
+    display: block;
+    position: absolute;
+    font-family: var(--serif);
+    font-style: italic;
+    color: var(--secondary);
+    transition: var(--transition-slow);
+    opacity: 0;
+    transform: translateY(1.5ch) scale(0.6) rotateY(0deg);
+  }
+}
+
+:has(a[href^="/garden"]:hover) header nav a[href^="/garden"]::after {
+  opacity: 1;
+  transform: translateY(3ch) scale(1) rotateY(180deg);
+}
+
 header.editorial nav-full {
   justify-self: right;
 }
@@ -219,6 +262,43 @@ header nav button .bar {
   width: 100%;
   display: block;
   background: white;
+}
+
+header nav-full button {
+  display: flex;
+  width: 30px;
+  height: 30px;
+  flex-wrap: wrap;
+  gap: calc(30px / 5);
+  cursor: pointer;
+  padding: 6px;
+  margin-inline: -6px;
+}
+
+header nav-full button menu-icon {
+  display: block;
+  height: calc(30px / 5);
+  width: calc(30px / 5);
+  background: var(--text);
+  transition: var(--transition-medium);
+}
+
+header nav-full button menu-icon:nth-child(odd) {
+  border-radius: 100px;
+}
+
+header nav-full button:hover menu-icon:nth-child(even) {
+  transform: rotateY(180deg);
+}
+
+header nav-full button:active menu-icon:nth-child(even) {
+  opacity: 0;
+  transform: scale(0.6);
+}
+
+header nav-full button:hover menu-icon,
+header nav-full button:active menu-icon {
+  background-color: var(--accent);
 }
 
 page-title {
