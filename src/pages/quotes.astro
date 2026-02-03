@@ -1,44 +1,45 @@
 ---
-import { getCollection, render } from 'astro:content';
-import { Font } from 'astro:assets';
+import { getCollection, render } from "astro:content";
+import { Font } from "astro:assets";
 
-import '../styles/global.css';
-import '../styles/quotes.css';
+import "../styles/global.css";
+import "../styles/quotes.css";
 
-import Head from '../components/Head.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import Grid from '../components/Grid.astro';
+import Head from "../components/Head.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import Grid from "../components/Grid.astro";
 
-const quotes = (await getCollection('quotes')).sort((a, b) => b.data.created.getTime() - a.data.created.getTime());
+const quotes = (await getCollection("quotes")).sort((a, b) => b.data.created.getTime() - a.data.created.getTime());
 
-const title = "Quotes"; 
+const title = "Quotes";
 const description = "Words that resonates.";
 
-import '../assets/images/The Thinker Painting SQUOOSH.jpg'
+import "../assets/images/The Thinker Painting SQUOOSH.jpg";
 ---
 
 <html lang="en">
-    <Head title={title} description={description} favicon="/favicon-cyan.svg" image="/src/assets/images/The Thinker Painting SQUOOSH.jpg">
-        <Font cssVariable="--font-inter" preload />
-        <Font cssVariable="--font-garamond" preload />
-        <meta content="Test named slots" />
-    </Head>
-    <body>
-        <Header title={title} description={description} />
-        <main>
-            <article>
-                {quotes.map(async (quote) => {
-                    const { Content } = await render(quote);
-                    return (
-                        <figure>
-                            <Content />
-                        </figure>
-                    );
-                })}
-            </article>
-        </main> 
-        <Footer />
-        <Grid />
-    </body>
+  <Head title={title} description={description} favicon="/favicon-cyan.svg" image="/src/assets/images/The Thinker Painting SQUOOSH.jpg">
+    <Font cssVariable="--font-inter" preload />
+    <Font cssVariable="--font-garamond" preload />
+    <meta content="Test named slots" />
+  </Head>
+  <body>
+    <Header title={title} description={description} />
+    <main>
+      <article>
+        {
+          quotes.map(async (quote) => {
+            const { Content } = await render(quote);
+            return (
+              <figure>
+                <Content />
+              </figure>
+            );
+          })
+        }
+      </article>
+    </main>
+    <Footer />
+  </body>
 </html>

@@ -32,6 +32,19 @@ header * {
   font-size: medium;
 }
 
+header nav,
+header a,
+header a:visited,
+header p,
+header svg {
+  color: var(--secondary);
+  fill: var(--secondary);
+}
+header a:hover,
+header a:active {
+  color: var(--accent);
+}
+
 header svg {
   @media (max-width: 767px) {
     width: 21px;
@@ -111,6 +124,10 @@ header nav a[href^="/garden"] {
 :has(a[href^="/garden"]:hover) header nav a[href^="/garden"]::after {
   color: var(--accent);
   transform: translateY(3ch) scale(1) rotateY(180deg);
+}
+
+header nav-full button menu-icon {
+  background: var(--secondary);
 }
 
 article {
@@ -310,20 +327,26 @@ article li {
 article a[href^="https://firous.com"],
 article a[href^="mailto"],
 article a[href^="/"] {
-  border-bottom: 1.5px solid var(--secondary);
+  border-bottom: 1.5px solid var(--tertiary);
   border-bottom-style: dotted;
 }
 
 a[href^="/garden"] article a[href^="http"],
 article a[href^="https://"] {
-  border-bottom: 1px solid var(--highlight);
+  border-bottom: 1px solid var(--tertiary);
 }
 
 article a[href^="http"]:hover,
 article a[href^="https://"]:hover,
 article a[href^="http"]:active,
-article a[href^="https://"]:active {
-  border-bottom-color: var(--accent);
+article a[href^="https://"]:active,
+article a[href^="https://firous.com"]:hover,
+article a[href^="mailto"]:hover,
+article a[href^="/"]:hover,
+article a[href^="https://firous.com"]:active,
+article a[href^="mailto"]:active,
+article a[href^="/"]:active {
+  border-bottom-color: var(--highlight);
 }
 
 strong {
@@ -599,10 +622,10 @@ body::before {
 
 /* LIFE */
 .life {
-  --background: var(--cyan-950);
+  --background: var(--cyan-1000);
   color: var(--cyan-50);
   --accent: var(--orange-400);
-  --secondary: var(--cyan-400);
+  --secondary: var(--cyan-500);
   --tertiary: var(--cyan-600);
   --text: var(--cyan-50);
   --muted: var(--cyan-850);
@@ -610,12 +633,6 @@ body::before {
   --interaction: var(--cyan-400);
   --sans: var(--font-plex-sans);
   --serif: var(--font-garamond);
-}
-
-.life header svg,
-.life header svg path {
-  fill: var(--text);
-  transition: var(--transition-medium);
 }
 
 .life header .wordmark tag-line em {
@@ -710,7 +727,7 @@ body::before {
 .design {
   --background: var(--900);
   --text: var(--paper);
-  --accent: var(--red-400);
+  --accent: var(--red-300);
   --highlight: var(--red-50);
   --secondary: var(--400);
   --tertiary: var(--600);
