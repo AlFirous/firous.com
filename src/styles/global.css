@@ -220,27 +220,54 @@ header nav ul li {
   list-style: none;
 }
 
-header nav a[href^="/garden"] {
+header nav a {
   display: inline-flex;
   position: relative;
   justify-content: center;
+  transition: var(--transition-medium);
 
   &::after {
-    content: "&";
     display: block;
     position: absolute;
-    font-family: var(--serif);
-    font-style: italic;
     color: var(--secondary);
-    transition: var(--transition-slow);
+    transition: var(--transition-medium);
     opacity: 0;
-    transform: translateY(1.5ch) scale(0.6) rotateY(0deg);
+    transform: translateY(1.5ch) scale(0.8) rotateY(0deg);
+    pointer-events: none;
   }
 }
 
-:has(a[href^="/garden"]:hover) header nav a[href^="/garden"]::after {
-  opacity: 1;
-  transform: translateY(3ch) scale(1) rotateY(180deg);
+header nav a[href^="/garden"] {
+  &::after {
+    content: "&";
+    font-family: var(--serif);
+    font-style: italic;
+  }
+}
+
+header nav a[href^="/frames"] {
+  &::after {
+    content: "";
+    display: block;
+    height: var(--font-size-small);
+    width: var(--font-size-small);
+    mask-repeat: no-repeat;
+    mask-position: center center;
+    background: var(--secondary);
+    mask-size: 100%;
+    mask-image: url("/src/assets/brand/frames logo 2 by 4.svg");
+    margin-top: calc(var(--font-size-small) / 2);
+  }
+}
+
+header nav a {
+  &:hover {
+    &::after {
+      opacity: 1;
+      transform: translateY(1rem) scale(1) rotateY(180deg);
+      background: var(--accent);
+    }
+  }
 }
 
 header.editorial nav-full {

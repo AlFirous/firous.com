@@ -1,149 +1,155 @@
 :root {
-    --accent: var(--red-400);
+  --accent: var(--red-400);
 }
 
 body {
-    background-color: var(--black);
-    color: white;
-    position: relative;
-    height: 100vh;
-    margin: 0;
-    padding: var(--spacing);
+  background-color: var(--black);
+  color: white;
+  position: relative;
+  height: 100vh;
+  margin: 0;
+  padding: var(--spacing);
 }
 
 body * {
-    font-family: var(--font-neue-montreal);
+  font-family: var(--font-neue-montreal);
 }
 
 a,
 a:visited {
-    color: var(--paper);
+  color: var(--paper);
 }
 
-a:hover, a:active {
-    color: var(--accent);
+a:hover,
+a:active {
+  color: var(--accent);
 }
 
 header {
-    grid-template-columns: repeat(12, 1fr);
+  grid-template-columns: repeat(12, 1fr);
 }
 
 header > * {
-    grid-column: span 3;
+  grid-column: span 3;
 }
 
 a.logomark svg {
-    width: var(--spacing);
+  width: var(--spacing);
 }
 
 status-badge {
-    display: flex;
+  display: flex;
 }
 
 status-badge button {
-    display: flex;
-    align-items: center;
-    border-radius: 100px;
-    padding: calc(var(--font-size-small) / 9) calc(var(--font-size-small) / 3) calc(var(--font-size-small) / 9);
-    font-size: var(--font-size-small);
-    gap: calc(var(--spacing) / 5);
-    cursor: pointer;
-    border: 1px solid var(--800);
-    background: var(--900);
+  display: flex;
+  align-items: center;
+  border-radius: 100px;
+  padding: calc(var(--font-size-small) / 9) calc(var(--font-size-small) / 3) calc(var(--font-size-small) / 9);
+  font-size: var(--font-size-small);
+  gap: calc(var(--spacing) / 5);
+  cursor: pointer;
+  border: 1px solid var(--800);
+  background: var(--900);
 }
 
 status-badge button:hover {
-    background: #333;
-    border-color: #4a4a4a;
+  background: #333;
+  border-color: #4a4a4a;
 }
 
 status-icon {
-    position: relative;
-    width: calc(var(--font-size-small) / 2);
-    height: calc(var(--font-size-small) / 2);
-    background: var(--green-400);
-    border-radius: 50%;
-    display: block;
-    flex-shrink: 0;
+  position: relative;
+  width: calc(var(--font-size-small) / 2);
+  height: calc(var(--font-size-small) / 2);
+  background: var(--green-400);
+  border-radius: 50%;
+  display: block;
+  flex-shrink: 0;
 }
 
 status-icon::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    height: 100%;
-    background: #10b981;
-    border-radius: 50%;
-    animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  background: #10b981;
+  border-radius: 50%;
+  animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
 @keyframes pulse {
-    0%, 100% {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1);
-    }
-    50% {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(2);
-    }
+  0%,
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(2);
+  }
 }
 
 status-badge button span {
-    font-size: var(--font-size-small);
+  font-size: var(--font-size-small);
 }
 
 h1 {
-    font-size: 1rem;
-    font-weight: 400;
-    margin: 0;
-    order: 2;
-    margin-top: -0.2rem;
+  font-size: 1rem;
+  font-weight: 400;
+  margin: 0;
+  order: 2;
+  margin-top: -0.2rem;
 }
 
 header nav {
-    justify-self: auto;
-    display: block;
-    grid-column: span 6;
-    grid-template-columns: repeat(2, 1fr);
+  justify-self: auto;
+  display: block;
+  grid-column: span 6;
+  grid-template-columns: repeat(2, 1fr);
 }
 
 header nav > * {
-    grid-column: span 1;
+  grid-column: span 1;
 }
 
 main p {
+  grid-column: 4 / 13;
+  margin: 0;
+  margin: calc(100vw / 6) 0 0;
+  font-size: calc(2 * var(--font-size-medium));
+  font-size: var(--font-size-large);
+  font-family: var(--font-neue-montreal);
+
+  @media (max-width: 767px) {
     grid-column: 1 / 13;
-    margin: 0;
-    margin: calc(100vw / 6) 0 0;
-    font-size: calc(2 * var(--font-size-medium));
-    font-size: var(--font-size-large);
-    font-family: var(--font-neue-montreal);
+  }
 }
 
 nav {
-    grid-column: 6/13;
-    justify-self: right;
-    order: 2;
+  grid-column: 6/13;
+  justify-self: right;
+  order: 2;
 }
 
 li {
-    list-style: none;
-    display: inline;
+  list-style: none;
+  display: inline;
 }
 
 ul {
-    display: inline;
-    /* width: 100%; */
+  display: inline;
+  /* width: 100%; */
 }
 
 strong {
-    font-family: var(--font-editorial-new);
-    font-style: normal;
-    font-weight: normal;
-    position: relative;
+  font-family: var(--font-editorial-new);
+  font-style: normal;
+  font-weight: normal;
+  position: relative;
 }
 
 /* MARK UNDERLINE
@@ -163,137 +169,138 @@ strong.website::after,
 }
 */
 
-strong.brand::after, strong.product::after, strong.website::after, .location button::after {
-    content: "";
-    position: absolute;
-    height: 100%;
-    width: 120%;
-    left: -10%;
-    bottom: 0;
-    mask-repeat: no-repeat;
-    mask-position: center center;
-    background: var(--red-600);
-    mask-size: 100%;
-    transition: var(--transition-fast);
+strong.brand::after,
+strong.product::after,
+strong.website::after,
+.location button::after {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 120%;
+  left: -10%;
+  bottom: 0;
+  mask-repeat: no-repeat;
+  mask-position: center center;
+  background: var(--red-600);
+  mask-size: 100%;
+  transition: var(--transition-fast);
 }
 
 strong:hover::after {
-    background: var(--paper);
+  background: var(--paper);
 }
 
 strong.brand::after {
-    mask-image: url(/src/assets/mark-brand.svg);
+  mask-image: url(/src/assets/mark-brand.svg);
 }
 
 strong.product::after {
-    mask-image: url(/src/assets/mark-product.svg);
+  mask-image: url(/src/assets/mark-product.svg);
 }
 
 strong.website::after {
-    mask-image: url(/src/assets/mark-website.svg);
+  mask-image: url(/src/assets/mark-website.svg);
 }
 
 .location button::after {
-    mask-image: url(/src/assets/mark-indonesia.svg);
+  mask-image: url(/src/assets/mark-indonesia.svg);
 }
 
 em {
-    font-family: var(--font-editorial-new);
+  font-family: var(--font-editorial-new);
 }
 
 .trigger {
-    background: none;
-    border: none;
-    padding: 0;
-    cursor: help;
-    transition: var(--transition-fast);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: help;
+  transition: var(--transition-fast);
 }
 
-
 .trigger:hover {
-    color: var(--accent);
+  color: var(--accent);
 }
 
 .trigger:active {
-    transform: scale(var(--scale));
+  transform: scale(var(--scale));
 }
 
 span[data-state="open"]:has(.collapsible-content:hover) .trigger {
-    color: var(--accent);
+  color: var(--accent);
 }
 
 .collapsible-content {
-    overflow: hidden;
-    transition: var(--transition-medium);
+  overflow: hidden;
+  transition: var(--transition-medium);
 }
 
 .collapsible-content[data-state="closed"] {
-    height: 0 !important;
-    opacity: 0;
-    display: none;
+  height: 0 !important;
+  opacity: 0;
+  display: none;
 }
 
 .collapsible-content[data-state="open"] {
-    opacity: 1;
-    display: contents;
+  opacity: 1;
+  display: contents;
 }
 
 :has(.website .collapsible-content[data-state="open"]) hide-this {
-    display: none;
+  display: none;
 }
 
 p.location {
-    grid-row: auto;
-    margin: 0;
-    font-size: var(--font-size-medium);
+  grid-row: auto;
+  margin: 0;
+  font-size: var(--font-size-medium);
 }
 
 .location button {
-    position: relative;
+  position: relative;
 }
 
 .location button::after {
-    bottom: calc(var(--spacing) / -14);
-    height: .25rem;
+  bottom: calc(var(--spacing) / -14);
+  height: 0.25rem;
 }
 
 #clock {
-    font-family: monospace;
+  font-family: monospace;
 }
 
 footer {
-    position: absolute;
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    gap: var(--spacing);
-    right: var(--spacing);
-    bottom: var(--spacing);
-    left: var(--spacing);
+  position: absolute;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--spacing);
+  right: var(--spacing);
+  bottom: var(--spacing);
+  left: var(--spacing);
 }
 
 footer > * {
-    grid-column: span 3;
+  grid-column: span 3;
 }
 
 footer-col {
-    display: flex;
-    flex-direction: column;
-    gap: calc(var(--spacing) / 6);
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--spacing) / 6);
 }
 
 footer-col:first-child {
-    grid-column: span 6;
+  grid-column: span 6;
 }
 
 footer-col span {
-    color: var(--400);
+  color: var(--400);
 }
 
 footer-col * {
-    width: fit-content;
+  width: fit-content;
 }
 
 footer button {
-    cursor: pointer;
+  cursor: pointer;
 }
-

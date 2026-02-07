@@ -101,6 +101,20 @@ export default defineConfig({
         fallbacks: ["sans-serif"],
         optimizedFallbacks: false,
       },
+      {
+        name: "Libertinus Sans",
+        cssVariable: "--font-libertinus-sans",
+        provider: "local",
+        variants: [
+          {
+            style: "normal",
+            weight: "400",
+            src: ["./src/assets/fonts/LibertinusSans-400.woff2"],
+          },
+        ],
+        fallbacks: ["sans-serif"],
+        optimizedFallbacks: false,
+      },
     ],
   },
 

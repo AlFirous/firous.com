@@ -757,16 +757,19 @@ body::before {
   font-family: var(--serif);
   font-weight: 500;
   font-synthesis-small-caps: auto;
-  font-variant-caps: all-small-caps;
-  font-weight: 600;
+  /* font-variant-caps: all-small-caps; */
+  font-weight: 300;
   font-size: larger;
   letter-spacing: 0.06em;
+  font-style: italic;
 }
 
 .design article p,
 .design article ul,
 .design article ol {
   font-family: var(--sans);
+  font-family: var(--font-libertinus-sans);
+  font-size-adjust: 0.5;
 }
 
 /* DESIGN END */
