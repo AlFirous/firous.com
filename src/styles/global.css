@@ -376,16 +376,20 @@ footer > section:first-child {
 }
 
 footer-epilogue {
-  grid-column: span 5;
+  grid-column: span 6;
 }
 
 footer h3 {
-  margin: 0 0 var(--spacing);
+  border-bottom: 1px solid;
+  margin: 0 0 calc((var(--spacing) / 2));
+  padding-bottom: calc((var(--spacing) / 2));
+  font-weight: 500;
 }
 
 footer p {
   margin: 0;
   line-height: var(--line-height-small);
+  text-wrap-style: balance;
 }
 
 footer nav a {
@@ -462,9 +466,8 @@ grid-12 {
 }
 
 grid-item {
-  border-inline: 1px solid var(--accent);
+  border-inline: 1px dashed var(--accent);
   height: 100%;
   width: 100%;
-  border-style: dashed;
   border-block: 0;
 }
