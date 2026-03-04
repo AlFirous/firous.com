@@ -5,9 +5,12 @@ import "../styles/global.css";
 import "../styles/garden-index.css";
 import Head from "../components/Head.astro";
 import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { Image } from "astro:assets";
 
 const title = "Garden";
 const description = "Notes, documentation, and miscellaneous writings.";
+const favicon = "/favicon-garden.svg";
 
 // Helper function to parse potentially non-standard date strings
 function robustDateParse(dateValue: string | Date | undefined | null) {
@@ -56,10 +59,10 @@ const gardenPosts = allPosts
 
 <!doctype html>
 <html lang="en">
-  <Head title={title} description={description} />
+  <Head title={title} description={description} favicon={favicon} />
   <body>
     <main>
-      <section class="hero" style="background-image: url('../src/assets/images/The Thinker Painting SQUOOSH.jpg');">
+      <section class="hero" style="background-image: url('https://cdn.firous.com/garden/curiosity/The%20Thinker%20Painting%20SQSH.jpg');">
         <h1>{title}</h1>
         <p>{description}</p>
       </section>
@@ -69,7 +72,7 @@ const gardenPosts = allPosts
             const tag = post.tags && post.tags.length > 0 ? post.tags[0].toLowerCase() : "";
             return (
               <article class={tag}>
-                {post.image && <img src={post.image} alt={post.title} />}
+                {post.image && <Image src={post.image} alt={post.title} inferSize={true} />}
                 <h2>
                   <a href={`/garden/${post.slug}/`}>{post.title}</a>
                 </h2>
@@ -92,7 +95,7 @@ const gardenPosts = allPosts
         <article class="card">
           <a href="destination.html" class="card-link">
             <h2>Card Title</h2>
-            <img src="image.jpg" alt="Description of the image" />
+            <Image src="https://cdn.firous.com/garden/curiosity/The%20Thinker%20Painting%20SQSH.jpg" alt="Description" inferSize={true} />
           </a>
           <p>This is a brief description of the card content.</p>
           <ul>
@@ -103,7 +106,7 @@ const gardenPosts = allPosts
         <article class="card">
           <a href="destination.html" class="card-link">
             <h2>Card Title</h2>
-            <img src="image.jpg" alt="Description of the image" />
+            <Image src="https://cdn.firous.com/garden/curiosity/The%20Thinker%20Painting%20SQSH.jpg" alt="" inferSize={true} />
           </a>
           <p>This is a brief description of the card content.</p>
           <ul>
@@ -113,10 +116,16 @@ const gardenPosts = allPosts
         </article>
       </section>
     </main>
+    <Footer />
   </body>
 </html>
 
 <style>
+  body {
+    background: #fdfdfc;
+    padding-bottom: 0;
+  }
+
   main > * {
     grid-column: span 12;
   }
@@ -208,5 +217,22 @@ const gardenPosts = allPosts
   /* Tab Key Focus */
   .card-link:focus {
     border: 5px solid red;
+  }
+
+  footer {
+    background: red;
+  }
+</style>
+
+<style is:global>
+  footer {
+    box-shadow:
+      0 -0.4rem 0 #f76b15,
+      0 -0.8rem 0 #e5484d,
+      0 -1.2rem 0 #12a594,
+      0 -1.6rem 0 #0090ff;
+    padding: var(--spacing) var(--spacing) 0;
+    border-radius: 1rem 1rem 0 0;
+    background: #f4fbf6;
   }
 </style>

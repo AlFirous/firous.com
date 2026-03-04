@@ -5,7 +5,7 @@
   --spacing: var(--fluid-size);
   --spacing-half: calc(var(--spacing) / 2);
   --spacing-quarter: calc(var(--spacing) / 4);
-  --spacing-vertical: calc(var(--fluid-size) * 2);
+  --spacing-vertical: calc(var(--spacing) * 3);
   --size: var(--fluid-size);
   --grid-12: repeat(12, 1fr);
   --grid-9: repeat(9, 1fr);
@@ -25,10 +25,19 @@
   /* TYPOGRAPHY */
   /* 24px @ 320px viewport → 48px @ 2560px viewport */
   --font-size-large: clamp(24px, 1.071vw + 20.571px, 48px);
-  /* 15px @ 320px viewport → 21px @ 2560px viewport */
+  /* 15px @ 320px viewport → 21px @ 2560px viewport 
   --font-size-medium: clamp(15px, 0.268vw + 14.143px, 21px);
-  /* 12px @ 320px viewport → 18px @ 2560px viewport */
+  */
+
+  /* 18px @ 320px viewport → 24px @ 2560px viewport */
+  --font-size-medium: clamp(18px, 0.268vw + 17.143px, 24px);
+
+  /* 12px @ 320px viewport → 18px @ 2560px viewport 
   --font-size-small: clamp(12px, 0.268vw + 11.143px, 18px);
+  */
+
+  /* 15px @ 320px viewport → 21px @ 2560px viewport */
+  --font-size-small: clamp(15px, 0.268vw + 14.143px, 21px);
 
   --font-garamond-adjust: 0.545;
   --line-height-small: calc(100% + calc(var(--spacing) / 5));

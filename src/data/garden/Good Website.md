@@ -8,9 +8,9 @@ tags:
   - Design
 ---
 
-What's makes good website? Is it design, content, performance or anything else?
+**What's makes good website?** Is it design, content, performance or anything else?
 
-If we see from perspective of designer, a good website is the one that have great design. From writer (or perhaps marketing) perspective, good website have quality content. From developer perspective, a good website is the one with fast performance (clean code is plus). But of course, that 3 perspective are from my perspective that I got from interacting with said people, which is subjective.
+If we see from perspective of designer, a good website is the one that have great design. From writer (or perhaps marketing) perspective, good website have quality content. From developer perspective, a good website is the one with fast performance (clean code is plus). But of course, that 3 perspective are from my perspective that I got from interacting with said people, which is _subjective_.
 
 But is there's objective principle, best practices or guidelines for good website?
 

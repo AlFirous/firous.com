@@ -1,27 +1,22 @@
 ---
-import Head from '../components/Head.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import Grid from '../components/Grid.astro';
-import Logo from '../components/Logo.astro';
-import Nav from '../components/Nav.astro';
+import Head from "../components/Head.astro";
+import { Font } from "astro:assets";
+import "../styles/frames.css";
 
 const { title, description, image } = Astro.props;
 ---
 
-<html lang="en">
+<html lang="en" class="single">
   <Head title={title} description={description} image={image}>
-    <slot name="in-head" slot="in-head"/>
+    <slot name="in-head" slot="in-head" />
+    <Font cssVariable="--font-museum" preload />
   </Head>
   <body>
-    <header>
-      <Logo />
-      <Nav />
-    </header>
     <main>
-      <slot /> <!-- your content is injected here -->
-    </main>    
-    <Footer />
-    <Grid />
+      <slot /><!-- your content is injected here -->
+    </main>
+    <footer>
+      <p>A frame may have a story waiting to be told, even if it's just ordinary, plain, or mundane.</p>
+    </footer>
   </body>
 </html>

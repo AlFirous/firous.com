@@ -5,7 +5,7 @@ type: Note
 tags:
   - Life
 title: Curiosity
-image: "/src/assets/images/The Thinker Painting SQUOOSH.jpg"
+image: "https://cdn.firous.com/garden/curiosity/The%20Thinker%20Painting%20SQSH.jpg"
 ---
 
 Curiosity can keep your spirits up.  

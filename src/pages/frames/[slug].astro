@@ -1,0 +1,53 @@
+---
+import { getCollection, render } from "astro:content";
+import { Image } from "astro:assets";
+import FramesLayout from "../../layouts/FramesLayout.astro";
+import FramesGallery from "../../components/FramesGallery.astro";
+
+export async function getStaticPaths() {
+  const frames = await getCollection("frames");
+  return frames.map((entry) => {
+    // glob loader IDs are the file path relative to base
+    const idWithoutExt = entry.id.replace(/\.md$/i, "");
+    const slug = idWithoutExt.toLowerCase().replace(/\s+/g, "-");
+    const folderName = idWithoutExt;
+
+    return {
+      params: { slug },
+      props: { entry, folderName },
+    };
+  });
+}
+
+const { entry, folderName } = Astro.props;
+const { Content } = await render(entry);
+const { title, taken, created, modified, image } = entry.data;
+
+const description = entry.body ? (entry.body.length > 160 ? entry.body.substring(0, 160) + "..." : entry.body) : "";
+
+const formatDate = (date: Date | string | number) => {
+  if (!date) return "";
+  const d = new Date(date);
+  return d.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+  });
+};
+---
+
+<FramesLayout title={title} description={description} image={image || ""}>
+  <article>
+    <header>
+      <h1>{title}</h1>
+      {taken && <time datetime={taken.toISOString()}>{formatDate(taken)}</time>}
+      {image && <Image src={image} inferSize={true} alt="" priority class="featured" />}
+      <empty-space></empty-space>
+    </header>
+    <Content />
+    <footer>
+      {created && <time datetime={created.toISOString()}>{formatDate(created)}</time>}
+      <author-name>Al Firous</author-name>
+      <small><a href="/">Email</a></small>
+    </footer>
+  </article>
+</FramesLayout>

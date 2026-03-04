@@ -4,7 +4,7 @@ modified: 2026-01-07T19:08:31
 tags:
   - Tech
 title: Obsidian
-image: "/src/assets/images/OBSIDIAN KRAA THUMBNAIL.jpg"
+image: ""
 ---
 
 List of my pick of Obsidian theme and plugin, after third attempt of using **Obsidian**.

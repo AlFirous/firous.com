@@ -30,7 +30,21 @@ const garden = defineCollection({
   }),
 });
 
+const frames = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/data/frames" }),
+  schema: z.object({
+    title: z.string(),
+    taken: z.coerce.date().optional(),
+    created: z.coerce.date().optional(),
+    modified: z.coerce.date().optional(),
+    image: z.string().optional(),
+    tags: z.array(z.string()).optional(),
+    cssclasses: z.array(z.string()).optional(),
+  }),
+});
+
 export const collections = {
   quotes,
   garden,
+  frames,
 };

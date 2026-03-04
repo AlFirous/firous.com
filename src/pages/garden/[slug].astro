@@ -2,6 +2,7 @@
 import { getCollection, render } from "astro:content";
 import GardenLayout from "../../layouts/GardenLayout.astro";
 import { Calendars } from "@lucide/astro";
+import { Image } from "astro:assets";
 
 export async function getStaticPaths() {
   const gardenPosts = await getCollection("garden");
@@ -18,8 +19,8 @@ const { Content, headings } = await render(post);
 
 <GardenLayout title={post.data.title} description={post.data.description} tags={post.data.tags} image={post.data.image}>
   <h1>{post.data.title}</h1>
-  <small>{post.data.type} <em>of</em> {post.data.tags}</small>
-  <img src={post.data.image} />
+  <post-type-tags>{post.data.type} & {post.data.tags}</post-type-tags>
+  {post.data.image && <Image src={post.data.image} inferSize={true} alt="" priority />}
   <!--
     {headings.length > 0 &&
         <nav class="toc" aria-label="Table of Contents">

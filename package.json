@@ -1,7 +1,7 @@
 {
   "name": "firous.com",
   "type": "module",
-  "version": "2026.12.13",
+  "version": "2026",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
@@ -11,8 +11,9 @@
   "dependencies": {
     "@astrojs/mdx": "^4.3.13",
     "@lucide/astro": "^0.562.0",
-    "astro": "^5.16.9",
-    "astro-meta-tags": "^0.4.0"
+    "astro": "^5.18.0",
+    "astro-meta-tags": "^0.4.0",
+    "photoswipe": "^5.4.4"
   },
   "devDependencies": {
     "prettier": "^3.8.0",

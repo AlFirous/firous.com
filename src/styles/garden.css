@@ -1,6 +1,7 @@
 /* GARDEN START */
 :root {
   --serif: var(--font-garamond);
+  --serif-transitional: var(--font-source-serif);
   --sans: var(--font-plex-sans);
   --mono: var(--font-lilex);
   --mono-adjust: 0.58;
@@ -170,6 +171,7 @@ article img {
   object-position: top;
   margin-bottom: calc(3 * var(--spacing));
   border-radius: 0.3rem;
+  height: auto;
 
   @media (min-width: 1024px) {
     aspect-ratio: 2.35/1;
@@ -215,16 +217,17 @@ h1 {
   margin-bottom: 0;
 }
 
-article small {
+article post-type-tags {
   grid-column: col-6;
   text-align: center;
   margin-bottom: calc(3 * var(--spacing));
   font-size: var(--font-size-small);
-  font-family: var(--sans);
   color: var(--tertiary);
-  font-family: var(--mono);
+  font-family: var(--serif);
+  font-style: italic;
 }
-article small em {
+
+article post-type-tags em {
   font-family: var(--serif);
   font-size-adjust: 0.5;
   font-weight: 500;
@@ -315,6 +318,10 @@ article ol li::before {
   content: counter(pseudo-number, decimal-leading-zero) ".";
   padding-right: 0.5ch;
   color: var(--secondary);
+}
+
+article p + p {
+  text-indent: var(--spacing);
 }
 
 article p,
@@ -529,7 +536,7 @@ body::before {
   font-size-adjust: var(--mono-adjust);
 }
 
-.tech article small {
+.tech article post-type-tags {
   text-align: left;
 }
 
@@ -725,20 +732,18 @@ body::before {
 
 /* DESIGN START */
 .design {
-  --background: var(--900);
-  --text: var(--paper);
-  --accent: var(--red-300);
-  --highlight: var(--red-50);
+  --background: var(--paper);
+  --text: var(--900);
+  --accent: var(--red-600);
+  --highlight: var(--red-800);
   --secondary: var(--400);
   --tertiary: var(--600);
-  --muted: var(--850);
-  --sans: var(--font-plex-sans);
-  --serif: var(--font-garamond);
+  --muted: var(--400);
 }
 
 .design header {
   color: var(--text);
-  font-family: var(--sans);
+  font-family: var(--serif-transitional);
 }
 
 .design header .wordmark tag-line em {
@@ -748,28 +753,41 @@ body::before {
 
 .design h1 {
   text-align: center;
-  font-family: var(--serif);
-  font-weight: 500;
+  font-family: var(--serif-transitional);
+  font-variation-settings: "opsz" 60;
+  font-weight: 600;
   font-size: var(--font-size-large);
 }
 
 .design h2 {
-  font-family: var(--serif);
-  font-weight: 500;
-  font-synthesis-small-caps: auto;
-  /* font-variant-caps: all-small-caps; */
-  font-weight: 300;
+  font-family: var(--serif-transitional);
+  font-variation-settings: "opsz" 60;
+  font-weight: 600;
+  font-variant: small-caps;
   font-size: larger;
   letter-spacing: 0.06em;
-  font-style: italic;
 }
 
 .design article p,
 .design article ul,
 .design article ol {
-  font-family: var(--sans);
-  font-family: var(--font-libertinus-sans);
-  font-size-adjust: 0.5;
+  font-family: var(--serif-transitional);
+  font-variation-settings: "opsz" 30;
+  text-align: justify;
+  hyphens: auto;
+  text-wrap-style: auto;
+  hyphenate-limit-chars: 7;
+  font-weight: 480;
+}
+
+.design strong {
+  font-variant: all-small-caps;
+}
+
+.design em {
+  font-family: var(--serif);
+  font-size-adjust: 0.45;
+  font-weight: 450;
 }
 
 /* DESIGN END */
