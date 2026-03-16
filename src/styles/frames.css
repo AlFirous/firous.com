@@ -2,12 +2,30 @@
 
 :root {
   --accent: var(--red-800);
+  scroll-behavior: smooth;
 }
 
 body {
   font-family: var(--font-museum);
   font-weight: 300;
+  margin: var(--spacing);
 }
+
+/* OVERLAY SCROLLBARS 
+.os-scrollbar {
+  pointer-events: auto !important;
+  visibility: visible !important;
+  cursor: pointer;
+}
+
+.os-scrollbar-handle {
+  cursor: pointer;
+
+  &:active {
+    cursor: grabbing;
+  }
+}
+*/
 
 h1,
 h2,
@@ -26,6 +44,186 @@ a:hover,
 a:focus,
 a:active {
   color: var(--red-600);
+}
+
+header {
+  display: grid;
+  grid-template-columns: var(--grid-12);
+  gap: var(--spacing);
+}
+
+body > header > * {
+  grid-column: span 4;
+}
+
+header * {
+  font-size: calc(var(--font-size) - 3px);
+  font-size: var(--font-size-medium);
+  font-weight: normal;
+  text-decoration: none;
+}
+
+header svg {
+  width: 30px;
+  object-fit: fill;
+  height: auto;
+  fill: red;
+}
+
+logo-container {
+  grid-column: span 3;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-auto-rows: auto;
+  gap: var(--spacing);
+
+  @media (max-width: 767px) {
+    grid-column: span 11;
+    grid-template-columns: repeat(11, 1fr);
+  }
+}
+
+logo-container svg {
+  width: var(--size);
+  object-fit: fill;
+  height: auto;
+  fill: red;
+}
+
+logo-monogram a span {
+  display: block !important;
+  width: var(--size);
+  height: var(--size);
+  background: red;
+}
+
+logo-wordmark {
+  display: flex;
+  gap: calc(var(--spacing) / 5);
+  flex-direction: column;
+  grid-column: span 2;
+
+  @media (max-width: 767px) {
+    grid-column: span 10;
+  }
+}
+
+logo-container p {
+  margin: 0;
+}
+
+header nav ul {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--spacing) / 5);
+
+  @media (max-width: 767px) {
+    display: none;
+  }
+}
+
+header nav ul li {
+  list-style: none;
+}
+
+header nav a {
+  display: inline-flex;
+  position: relative;
+  justify-content: center;
+  transition: var(--transition-medium);
+
+  &::after {
+    display: block;
+    position: absolute;
+    color: var(--secondary);
+    transition: var(--transition-medium);
+    opacity: 0;
+    transform: translateY(1.5ch) scale(0.8) rotateY(0deg);
+    pointer-events: none;
+  }
+}
+
+header a:nth-child(2) {
+  display: flex;
+  justify-content: center;
+}
+
+header nav a[href^="/garden"] {
+  &::after {
+    content: "&";
+    font-family: var(--serif);
+    font-style: italic;
+  }
+}
+
+header nav a[href^="/frames"] {
+  &::after {
+    content: "";
+    display: block;
+    height: var(--font-size-small);
+    width: var(--font-size-small);
+    mask-repeat: no-repeat;
+    mask-position: center center;
+    background: var(--secondary);
+    mask-size: 100%;
+    mask-image: url("/src/assets/brand/frames logo 2 by 4.svg");
+    margin-top: calc(var(--font-size-small) / 2);
+  }
+}
+
+header nav a {
+  &:hover {
+    &::after {
+      opacity: 1;
+      transform: translateY(1rem) scale(1) rotateY(180deg);
+      background: var(--accent);
+    }
+  }
+}
+
+header nav-full {
+  display: flex;
+  justify-content: flex-end;
+}
+
+header nav-full button {
+  all: unset;
+  display: flex;
+  width: 30px;
+  height: 30px;
+  flex-wrap: wrap;
+  gap: calc(30px / 5);
+  cursor: pointer;
+  padding: 6px;
+  margin-inline: -6px;
+}
+
+header nav-full button menu-icon {
+  display: block;
+  height: calc(30px / 5);
+  width: calc(30px / 5);
+  background: pink;
+  transition: var(--transition-medium);
+}
+
+header nav-full button menu-icon:nth-child(odd) {
+  border-radius: 100px;
+}
+
+header nav-full button:hover menu-icon:nth-child(even) {
+  transform: rotateY(180deg);
+}
+
+header nav-full button:active menu-icon:nth-child(even) {
+  opacity: 0;
+  transform: scale(0.6);
+}
+
+header nav-full button:hover menu-icon,
+header nav-full button:active menu-icon {
+  background-color: blue;
 }
 
 header nav {
@@ -151,7 +349,6 @@ footer {
   position: relative;
 }
 
-.single article header,
 .single article img,
 .single article h2,
 .single article h3,
@@ -173,22 +370,52 @@ footer {
   }
 }
 
-.single header {
-  margin-top: var(--spacing-vertical);
+.single article header {
+  grid-column: fullwidth;
+  margin-top: calc(var(--spacing-vertical) * 3);
   text-align: center;
   position: relative;
+  display: grid;
+  grid-template-columns: [fullwidth-start] 1fr 1fr [col-8-start] 1fr [col-6-start] 1fr 1fr 1fr [center] 1fr 1fr 1fr [col-6-end] 1fr [col-8-end] 1fr 1fr [fullwidth-end];
+  column-gap: var(--spacing);
+  grid-auto-rows: auto;
+  text-align: left;
 }
 
-.single header h1 {
+.single article header > *:not(img) {
+  /* 
   position: sticky;
-  top: var(--spacing-vertical);
+  */
+  top: calc(var(--spacing-vertical) * 3);
+  height: fit-content;
 }
 
-.single header img {
+.single article header h1 {
+  grid-column: col-6;
+  font-size: 1rem;
+  font-weight: 300;
+  grid-row: 1;
+}
+
+.single article header time {
+  grid-column-start: fullwidth-start;
+  grid-column-end: col-6-start;
+  grid-row: 1;
+}
+
+.single article header .tags {
+  grid-column-start: col-6-end;
+  grid-column-end: fullwidth-end;
+  grid-row: 1;
+}
+
+.single article header img {
+  grid-column: col-6;
   margin-block: var(--spacing-vertical);
+  padding-bottom: 2rem;
 }
 
-.single empty-space {
+.single article empty-space {
   display: block;
   height: calc(2 * var(--spacing-vertical));
 }

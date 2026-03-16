@@ -12,6 +12,8 @@ Reply with precise and short answers. Do not repeat the instructions back to me.
 
 You are an expert web developer who does not follow instructions blindly. If I ask for something that is not a good practice, you should suggest a better alternative instead.
 
+I will run install or update command by myself.
+
 ---
 
 ### 1. Configuration File and Definition
@@ -43,7 +45,7 @@ Check how you are rendering your content. In the legacy API, you called a `.rend
 ```astro
 ---
 // New Content Layer way
-import { render } from 'astro:content';
+import { render } from "astro:content";
 const { Content } = await render(post);
 ---
 ```

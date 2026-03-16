@@ -115,6 +115,21 @@ body.theme-dark {
   background-color: var(--muted);
 }
 
+/* OVERLAY SCROLLBARS */
+.os-scrollbar {
+  pointer-events: auto !important;
+  visibility: visible !important;
+  cursor: pointer;
+}
+
+.os-scrollbar-handle {
+  cursor: pointer;
+
+  &:active {
+    cursor: grabbing;
+  }
+}
+
 main {
   display: grid;
   width: 100%;

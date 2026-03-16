@@ -1,7 +1,12 @@
 ---
 import Head from "../components/Head.astro";
+import HeaderMinimal from "../components/HeaderMinimal.astro";
+import FramesFooter from "../components/FramesFooter.astro";
+import { ClientRouter } from "astro:transitions";
+
 import { Font } from "astro:assets";
 import "../styles/frames.css";
+import "overlayscrollbars/styles/overlayscrollbars.css";
 
 const { title, description, image } = Astro.props;
 ---
@@ -10,13 +15,37 @@ const { title, description, image } = Astro.props;
   <Head title={title} description={description} image={image}>
     <slot name="in-head" slot="in-head" />
     <Font cssVariable="--font-museum" preload />
+    <noscript>
+      <style>
+        /**
+        * Reinstate scrolling for non-JS clients
+        */
+      </style>
+    </noscript>
+    <ClientRouter />
   </Head>
   <body>
+    <HeaderMinimal>
+      <a href="/frames">
+        <svg width="30" height="30" viewBox="0 0 300 300" fill="red" xmlns="http://www.w3.org/2000/svg">
+          <path d="M110 30H80V270H110V300H50V0H110V30Z" fill="#808080"></path>
+          <path d="M250 0V300H190V270H220V30H190V0H250Z" fill="#808080"></path>
+        </svg>
+      </a>
+    </HeaderMinimal>
     <main>
       <slot /><!-- your content is injected here -->
     </main>
-    <footer>
-      <p>A frame may have a story waiting to be told, even if it's just ordinary, plain, or mundane.</p>
-    </footer>
+    <FramesFooter />
+    <script>
+      import "overlayscrollbars/overlayscrollbars.css";
+      import { OverlayScrollbars } from "overlayscrollbars";
+
+      OverlayScrollbars(document.body, {
+        scrollbars: {
+          autoHide: "never", // hides when not scrolling
+        },
+      });
+    </script>
   </body>
 </html>

@@ -38,9 +38,16 @@ const formatDate = (date: Date | string | number) => {
 <FramesLayout title={title} description={description} image={image || ""}>
   <article>
     <header>
-      <h1>{title}</h1>
-      {taken && <time datetime={taken.toISOString()}>{formatDate(taken)}</time>}
-      {image && <Image src={image} inferSize={true} alt="" priority class="featured" />}
+      <h1 transition:name={`title-${entry.id}`}>{title}</h1>
+      {
+        taken && (
+          <time datetime={taken.toISOString()} title="Date Taken">
+            {formatDate(taken)}
+          </time>
+        )
+      }
+      <span class="tags">{entry.data.tags?.join(", ")}</span>
+      {image && <Image src={image} inferSize={true} alt="" priority class="featured" transition:name={`image-${entry.id}`} />}
       <empty-space></empty-space>
     </header>
     <Content />

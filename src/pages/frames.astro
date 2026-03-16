@@ -1,53 +1,121 @@
 ---
+import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
 import Head from "../components/Head.astro";
+import FramesFooter from "../components/FramesFooter.astro";
+import { ClientRouter } from "astro:transitions";
 
 import "../styles/global.css";
 import "../styles/frames.css";
 
+import "overlayscrollbars/styles/overlayscrollbars.css";
+
 import { Font } from "astro:assets";
+
+const frames = await getCollection("frames");
+
+// Sort frames by taken date descending
+const sortedFrames = frames.sort((a, b) => {
+  const dateA = a.data.taken ? new Date(a.data.taken).getTime() : 0;
+  const dateB = b.data.taken ? new Date(b.data.taken).getTime() : 0;
+  return dateB - dateA;
+});
+
+const featuredFrame = sortedFrames[0];
+const galleryFrames = sortedFrames.slice(1);
+
+const formatDate = (date: Date | string | number | undefined) => {
+  if (!date) return "";
+  const d = new Date(date);
+  return d.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+  });
+};
+
+const getSlug = (id: string) => {
+  return id.replace(/\.md$/i, "").toLowerCase().replace(/\s+/g, "-");
+};
 ---
 
-<html lang="en" class="index">
-  <Head title="Frames" description="Hobby photography and cinematography by Al Firous" image="https://firous.com/wp-content/uploads/2025/05/IMG_9744_KP800V4_SQU.jpg">
-    <Font slot="in-head" cssVariable="--font-editorial-new" preload />
-    <Font slot="in-head" cssVariable="--font-neue-montreal" preload />
-    <Head />
-    <body>
-      <main>
-        <section class="frames-hero">
-          <frames-title>
-            <h1>
-              <svg>
-                <title>Frames</title>
-              </svg>
-            </h1>
-            <p><span>Every</span> <span>frame</span> <span>may</span> <span>have</span> <span>a</span> <span>story</span></p>
-            <p>Photography, videography and cinematography <span><em>by</em> Al Firous</span></p>
-          </frames-title>
-          <frames-featured>
-            <article class="frames-featured">
-              <a href="/">
-                <img src="https://firous.com/wp-content/uploads/2025/05/IMG_9744_KP800V4_SQU.jpg" alt="Asian Green Lizard" />
-                <h2>Curious Green Lizard</h2>
+<html lang="en" class="index" data-overlayscrollbars-initialize>
+  <Head title="Frames" description="A frame may have a story waiting to be told, even if it's just ordinary, plain, or mundane." image={featuredFrame?.data.image || "https://firous.com/wp-content/uploads/2025/05/IMG_9744_KP800V4_SQU.jpg"}>
+    <Font cssVariable="--font-museum" preload />
+    <ClientRouter />
+  </Head>
+  <body data-overlayscrollbars-initialize>
+    <main>
+      <section class="frames-hero">
+        <frames-title>
+          <h1>
+            <svg>
+              <title>Frames</title>
+            </svg>
+          </h1>
+          <p><span>Every</span> <span>frame</span> <span>may</span> <span>have</span> <span>a</span> <span>story</span></p>
+          <p>Photography, videography and cinematography <span><em>by</em> Al Firous</span></p>
+        </frames-title>
+        <frames-featured>
+          {
+            featuredFrame && (
+              <article class="frames-featured">
+                <a href={`/frames/${getSlug(featuredFrame.id)}`}>
+                  {featuredFrame.data.image && <Image src={featuredFrame.data.image} inferSize={true} alt={featuredFrame.data.title} loading="eager" transition:name={`image-${featuredFrame.id}`} />}
+                  <h2 transition:name={`title-${featuredFrame.id}`}>{featuredFrame.data.title}</h2>
+                </a>
+              </article>
+            )
+          }
+        </frames-featured>
+      </section>
+      <section class="frames-gallery">
+        {
+          galleryFrames.map((frame) => (
+            <article>
+              <a href={`/frames/${getSlug(frame.id)}`}>
+                {frame.data.image && <Image src={frame.data.image} inferSize={true} alt={frame.data.title} transition:name={`image-${frame.id}`} />}
+                <h2 transition:name={`title-${frame.id}`}>{frame.data.title}</h2>
+                {frame.data.taken && (
+                  <time datetime={frame.data.taken.toISOString()} title="Date Taken">
+                    {formatDate(frame.data.taken)}
+                  </time>
+                )}
               </a>
             </article>
-          </frames-featured>
-        </section>
-        <section class="frames-gallery">
-          <article></article>
-          <article></article>
-          <article></article>
-          <article></article>
-          <article></article>
-          <article></article>
-          <article></article>
-          <article></article>
-          <article></article>
-          <article></article>
-          <article></article>
-          <article></article>
-        </section>
-      </main>
-    </body>
-  </Head>
+          ))
+        }
+      </section>
+    </main>
+    <FramesFooter />
+    <script>
+      import { OverlayScrollbars, ClickScrollPlugin } from "overlayscrollbars";
+
+      OverlayScrollbars.plugin(ClickScrollPlugin);
+
+      OverlayScrollbars(document.body, {
+        scrollbars: {
+          autoHide: "move",
+          autoHideDelay: 600,
+          visibility: "auto",
+          autoHideSuspend: true,
+          dragScroll: true,
+          clickScroll: true,
+          pointers: ["mouse", "touch", "pen"],
+        },
+      });
+    </script>
+    <script is:inline>
+      document.addEventListener("astro:before-swap", () => {
+        sessionStorage.setItem("scrollPosition", window.scrollY.toString());
+      });
+
+      document.addEventListener("astro:after-swap", () => {
+        const scrollPosition = sessionStorage.getItem("scrollPosition");
+        if (scrollPosition) {
+          window.scrollTo(0, parseInt(scrollPosition));
+          sessionStorage.removeItem("scrollPosition");
+        }
+      });
+    </script>
+  </body>
 </html>
