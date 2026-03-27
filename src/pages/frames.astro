@@ -1,14 +1,16 @@
 ---
 import { getCollection } from "astro:content";
-import { Image } from "astro:assets";
 import Head from "../components/Head.astro";
+import HeaderMinimal from "../components/HeaderMinimal.astro";
+import { Image } from "astro:assets";
+import MarkdownImage from "../components/MarkdownImage.astro";
+
 import FramesFooter from "../components/FramesFooter.astro";
 import { ClientRouter } from "astro:transitions";
 
+import "../styles/variables.css";
 import "../styles/global.css";
 import "../styles/frames.css";
-
-import "overlayscrollbars/styles/overlayscrollbars.css";
 
 import { Font } from "astro:assets";
 
@@ -38,42 +40,106 @@ const getSlug = (id: string) => {
 };
 ---
 
-<html lang="en" class="index" data-overlayscrollbars-initialize>
+<html lang="en" class="index">
   <Head title="Frames" description="A frame may have a story waiting to be told, even if it's just ordinary, plain, or mundane." image={featuredFrame?.data.image || "https://firous.com/wp-content/uploads/2025/05/IMG_9744_KP800V4_SQU.jpg"}>
     <Font cssVariable="--font-museum" preload />
     <ClientRouter />
   </Head>
-  <body data-overlayscrollbars-initialize>
+  <body>
+    <HeaderMinimal>
+      <a href="/frames">
+          <svg width="5" height="24" viewBox="0 0 5 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4.8 2.4H2.4V21.6H4.8V24H0V0H4.8V2.4Z" fill="white"/>
+          </svg>
+          <svg width="5" height="24" viewBox="0 0 5 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4.8 24L4.8 6.20015e-08L2.09815e-06 -3.57628e-07L1.88833e-06 2.4L2.4 2.4L2.4 21.6L2.09815e-07 21.6L0 24L4.8 24Z" fill="white"/>
+          </svg>
+
+      </a>
+    </HeaderMinimal>
     <main>
-      <section class="frames-hero">
-        <frames-title>
-          <h1>
-            <svg>
-              <title>Frames</title>
-            </svg>
-          </h1>
-          <p><span>Every</span> <span>frame</span> <span>may</span> <span>have</span> <span>a</span> <span>story</span></p>
-          <p>Photography, videography and cinematography <span><em>by</em> Al Firous</span></p>
-        </frames-title>
-        <frames-featured>
-          {
-            featuredFrame && (
-              <article class="frames-featured">
-                <a href={`/frames/${getSlug(featuredFrame.id)}`}>
-                  {featuredFrame.data.image && <Image src={featuredFrame.data.image} inferSize={true} alt={featuredFrame.data.title} loading="eager" transition:name={`image-${featuredFrame.id}`} />}
-                  <h2 transition:name={`title-${featuredFrame.id}`}>{featuredFrame.data.title}</h2>
-                </a>
-              </article>
-            )
-          }
-        </frames-featured>
+        <section class="hero">
+            <h1 aria-label="Frames" title="Frames" transition:name="logo">
+          <svg width="205" height="175" viewBox="0 0 205 175" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g clip-path="url(#clip0_458_955)">
+              <path d="M0 174.37V3.05176e-05H111.552V52.311H58.1233V75.1133H107.081V121.388H58.1233V174.37H0Z" fill="white"></path>
+            </g>
+            <defs>
+              <clipPath id="clip0_458_955">
+                <rect width="205" height="174.37" fill="white"></rect>
+              </clipPath>
+            </defs>
+          </svg>
+          <svg width="205" height="175" viewBox="0 0 205 175" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g clip-path="url(#clip0_458_957)">
+              <path d="M0 174.37V3.05176e-05H72.8777C110.211 3.05176e-05 141.061 19.2254 141.061 57.8998C141.061 80.0314 131.448 95.2329 116.694 104.622L148.214 174.37H85.6201L60.5824 116.023H58.1233V174.37H0ZM58.1233 71.5364H68.1831C76.0074 71.5364 82.2669 68.1832 82.2669 60.1353C82.2669 52.311 75.7839 48.9578 68.1831 48.9578H58.1233V71.5364Z" fill="white"></path>
+            </g>
+            <defs>
+              <clipPath id="clip0_458_957">
+                <rect width="205" height="174.37" fill="white"></rect>
+              </clipPath>
+            </defs>
+          </svg>
+          <svg width="205" height="175" viewBox="0 0 205 175" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g clip-path="url(#clip0_458_959)">
+              <path d="M110.881 174.37L105.963 152.238H64.3828L59.4646 174.37H0L46.4987 3.05176e-05H124.071L170.57 174.37H110.881ZM73.3248 111.776H97.0212L84.9495 58.5705L73.3248 111.776Z" fill="white"></path>
+            </g>
+            <defs>
+              <clipPath id="clip0_458_959">
+                <rect width="205" height="174.37" fill="white"></rect>
+              </clipPath>
+            </defs>
+          </svg>
+          <svg width="205" height="175" viewBox="0 0 205 175" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g clip-path="url(#clip0_458_961)">
+              <path d="M0 174.373V0H71.5376L102.612 86.5158L133.462 0H205V174.373H146.876V90.5398L117.59 174.373H87.8571L58.1243 90.3162V174.373H0Z" fill="white"></path>
+            </g>
+            <defs>
+              <clipPath id="clip0_458_961">
+                <rect width="205" height="174.37" fill="white"></rect>
+              </clipPath>
+            </defs>
+          </svg>
+          <svg width="205" height="175" viewBox="0 0 205 175" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g clip-path="url(#clip0_458_963)">
+              <path d="M0 174.37V3.05176e-05H111.552V48.5107H58.1233V66.3948H104.622V106.858H58.1233V125.859H111.552V174.37H0Z" fill="white"></path>
+            </g>
+            <defs>
+              <clipPath id="clip0_458_963">
+                <rect width="205" height="174.37" fill="white"></rect>
+              </clipPath>
+            </defs>
+          </svg>
+          <svg width="205" height="175" viewBox="0 0 205 175" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g clip-path="url(#clip0_458_965)">
+              <path d="M138.635 174.37C97.6453 174.37 72.7043 152.899 68.1499 122.102L121.719 114.295C123.02 125.139 130.828 129.042 137.334 129.042C143.623 129.042 148.178 125.356 148.178 120.15C148.178 115.162 143.407 112.56 134.948 110.391L113.261 104.752C87.4521 98.0289 69.4512 84.7993 69.4512 56.3883C69.4512 22.9891 95.6934 0 136.466 0C177.023 0 197.192 23.4228 201.096 49.4482L149.479 56.6052C148.829 49.882 144.708 43.5925 136.033 43.5925C129.526 43.5925 125.406 47.2794 125.406 51.4001C125.406 55.7377 128.876 58.3402 134.515 59.8584L157.937 66.1478C195.891 76.3411 205 96.7276 205 117.765C205 145.959 184.397 174.37 138.635 174.37Z" fill="white"></path>
+            </g>
+            <defs>
+              <clipPath id="clip0_458_965">
+                <rect width="205" height="174.37" fill="white"></rect>
+              </clipPath>
+            </defs>
+          </svg>
+        </h1>
+        <p>A frame may have a story waiting to be told, even if it's just ordinary, plain, or mundane.</p>
+        {
+          featuredFrame && (
+            <article class="featured">
+              <!--<a href={`/frames/${getSlug(featuredFrame.id)}`}>-->
+                {featuredFrame.data.image && <MarkdownImage src={featuredFrame.data.image} alt={featuredFrame.data.title} title={featuredFrame.data.title} loading="eager" decoding="sync" fetchpriority="high" transition:name={`image-${featuredFrame.id}`} />}
+                <h2 transition:name={`title-${featuredFrame.id}`}>{featuredFrame.data.title}</h2>
+             <!-- </a>-->
+            </article>
+          )
+        }
       </section>
-      <section class="frames-gallery">
+      <section class="gallery">
+        <filter-sort><filter-category>Photography/Videography</filter-category><sort-date>Taken/Published</sort-date></filter-sort>
         {
           galleryFrames.map((frame) => (
             <article>
               <a href={`/frames/${getSlug(frame.id)}`}>
-                {frame.data.image && <Image src={frame.data.image} inferSize={true} alt={frame.data.title} transition:name={`image-${frame.id}`} />}
+                {frame.data.image && <MarkdownImage src={frame.data.image} inferSize={true} alt={frame.data.title} transition:name={`image-${frame.id}`} />}
                 <h2 transition:name={`title-${frame.id}`}>{frame.data.title}</h2>
                 {frame.data.taken && (
                   <time datetime={frame.data.taken.toISOString()} title="Date Taken">
@@ -88,34 +154,7 @@ const getSlug = (id: string) => {
     </main>
     <FramesFooter />
     <script>
-      import { OverlayScrollbars, ClickScrollPlugin } from "overlayscrollbars";
-
-      OverlayScrollbars.plugin(ClickScrollPlugin);
-
-      OverlayScrollbars(document.body, {
-        scrollbars: {
-          autoHide: "move",
-          autoHideDelay: 600,
-          visibility: "auto",
-          autoHideSuspend: true,
-          dragScroll: true,
-          clickScroll: true,
-          pointers: ["mouse", "touch", "pen"],
-        },
-      });
-    </script>
-    <script is:inline>
-      document.addEventListener("astro:before-swap", () => {
-        sessionStorage.setItem("scrollPosition", window.scrollY.toString());
-      });
-
-      document.addEventListener("astro:after-swap", () => {
-        const scrollPosition = sessionStorage.getItem("scrollPosition");
-        if (scrollPosition) {
-          window.scrollTo(0, parseInt(scrollPosition));
-          sessionStorage.removeItem("scrollPosition");
-        }
-      });
+      import "../scripts/hamburger.js";
     </script>
   </body>
 </html>

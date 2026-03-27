@@ -1,0 +1,46 @@
+---
+import probe from "probe-image-size";
+
+const { src, alt, title, width, height, loading, decoding, fetchpriority, ...rest } = Astro.props;
+
+let finalSrc = src;
+let finalWidth = width;
+let finalHeight = height;
+
+// Check if we are in offline mode.
+// You can set this in your .env file: PUBLIC_OFFLINE=true
+const isOffline = import.meta.env.PUBLIC_OFFLINE === "true";
+
+// If src is an object (imported image), use its properties
+if (typeof src === "object" && src !== null) {
+  finalSrc = src.src;
+  finalWidth = src.width;
+  finalHeight = src.height;
+} else if (typeof src === "string" && !isOffline) {
+  // If src is a string (remote image), infer size if dimensions are missing
+  if (!finalWidth || !finalHeight) {
+    try {
+      const result = await probe(src);
+      finalWidth = result.width;
+      finalHeight = result.height;
+    } catch (e) {
+      console.error(`[MarkdownImage] Failed to probe size for ${src}:`, e);
+      // Fallback: don't set width/height if inference fails
+    }
+  }
+}
+
+const finalLoading = loading || "lazy";
+const finalDecoding = decoding || "async";
+const finalFetchPriority = fetchpriority || "auto";
+---
+
+{
+  isOffline && typeof src === "string" ? (
+    <div class={`remote-image-placeholder ${rest.class || ""}`} style={`width: ${finalWidth ? `${finalWidth}px` : "100%"}; height: ${finalHeight ? `${finalHeight}px` : "auto"}; aspect-ratio: ${finalWidth && finalHeight ? `${finalWidth}/${finalHeight}` : "16/9"}; background-color: #e0e0e0; display: flex; align-items: center; justify-content: center; color: #757575; font-family: monospace; font-size: 0.8rem; padding: 1rem; text-align: center;`} {...rest}>
+      <span>[Offline] {alt}</span>
+    </div>
+  ) : (
+    <img src={finalSrc} alt={alt} title={title} width={finalWidth} height={finalHeight} loading={finalLoading} decoding={finalDecoding} fetchpriority={finalFetchPriority} {...rest} />
+  )
+}

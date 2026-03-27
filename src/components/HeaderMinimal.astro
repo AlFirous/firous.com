@@ -1,3 +1,7 @@
+---
+import Nav from "./Nav.astro";
+---
+
 <header class="minimal">
   <a href="/" class="logomark">
     <svg width="30" height="30" viewBox="0 0 300 300" fill="red" xmlns="http://www.w3.org/2000/svg">
@@ -8,8 +12,8 @@
     </svg>
   </a>
   <slot />
-  <nav-full>
-    <button aria-label="menu">
+  <nav-menu title="Navigation">
+    <button aria-label="menu" aria-expanded="false" aria-controls="main-menu" class="menu">
       <menu-icon></menu-icon>
       <menu-icon></menu-icon>
       <menu-icon></menu-icon>
@@ -20,6 +24,6 @@
       <menu-icon></menu-icon>
       <menu-icon></menu-icon>
     </button>
-    <nav></nav>
-  </nav-full>
+    <Nav />
+  </nav-menu>
 </header>

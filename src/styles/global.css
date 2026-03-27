@@ -146,6 +146,12 @@ header {
   gap: var(--spacing);
 }
 
+header a {
+  height: 30px;
+  width: 100%;
+  overflow: hidden;
+}
+
 header > * {
   grid-column: span 3;
 }
@@ -158,9 +164,9 @@ header * {
 }
 
 header svg {
-  width: 30px;
+  height: 30px;
+  width: auto;
   object-fit: fill;
-  height: auto;
   fill: white;
 }
 
@@ -341,6 +347,19 @@ header nav-full button:active menu-icon:nth-child(even) {
 header nav-full button:hover menu-icon,
 header nav-full button:active menu-icon {
   background-color: var(--accent);
+}
+
+header nav-menu button {
+  z-index: 2;
+}
+
+/* HEADER NAV-MENU END */
+
+/* HEADER MINIMAL */
+
+header.minimal {
+  height: var(--size);
+  overflow: hidden;
 }
 
 page-title {

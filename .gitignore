@@ -22,3 +22,6 @@ pnpm-debug.log*
 
 # FreeFileSync
 sync.ffs_db
+
+# agent
+GEMINI.md.bak

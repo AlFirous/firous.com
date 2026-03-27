@@ -7,6 +7,7 @@ import Head from "../components/Head.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import { Image } from "astro:assets";
+import MarkdownImage from "../components/MarkdownImage.astro";
 
 const title = "Garden";
 const description = "Notes, documentation, and miscellaneous writings.";
@@ -73,7 +74,7 @@ const gardenPosts = allPosts
             const tag = post.tags && post.tags.length > 0 ? post.tags[0].toLowerCase() : "";
             return (
               <article class={tag}>
-                {post.image && <Image src={post.image} alt={post.title} inferSize={true} />}
+                {post.image && <MarkdownImage src={post.image} alt={post.title} inferSize={true} />}
                 <h2>
                   <a href={`/garden/${post.slug}/`}>{post.title}</a>
                 </h2>
@@ -96,7 +97,7 @@ const gardenPosts = allPosts
         <article class="card">
           <a href="destination.html" class="card-link">
             <h2>Card Title</h2>
-            <Image src="https://cdn.firous.com/garden/curiosity/The%20Thinker%20Painting%20SQSH.jpg" alt="Description" inferSize={true} />
+            <MarkdownImage src="https://cdn.firous.com/garden/curiosity/The%20Thinker%20Painting%20SQSH.jpg" alt="Description" inferSize={true} />
           </a>
           <p>This is a brief description of the card content.</p>
           <ul>
@@ -107,7 +108,7 @@ const gardenPosts = allPosts
         <article class="card">
           <a href="destination.html" class="card-link">
             <h2>Card Title</h2>
-            <Image src="https://cdn.firous.com/garden/curiosity/The%20Thinker%20Painting%20SQSH.jpg" alt="" inferSize={true} />
+            <MarkdownImage src="https://cdn.firous.com/garden/curiosity/The%20Thinker%20Painting%20SQSH.jpg" alt="" inferSize={true} />
           </a>
           <p>This is a brief description of the card content.</p>
           <ul>

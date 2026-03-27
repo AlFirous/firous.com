@@ -2,7 +2,7 @@
 import { getCollection, render } from "astro:content";
 import { Image } from "astro:assets";
 import FramesLayout from "../../layouts/FramesLayout.astro";
-import FramesGallery from "../../components/FramesGallery.astro";
+import MarkdownImage from "../../components/MarkdownImage.astro";
 
 export async function getStaticPaths() {
   const frames = await getCollection("frames");
@@ -13,7 +13,7 @@ export async function getStaticPaths() {
     const folderName = idWithoutExt;
 
     return {
-      params: { slug },
+      params: { framesSlug: slug }, // Must match the filename [framesSlug].astro
       props: { entry, folderName },
     };
   });
@@ -47,7 +47,7 @@ const formatDate = (date: Date | string | number) => {
         )
       }
       <span class="tags">{entry.data.tags?.join(", ")}</span>
-      {image && <Image src={image} inferSize={true} alt="" priority class="featured" transition:name={`image-${entry.id}`} />}
+      {image && <MarkdownImage src={image} inferSize={true} alt="" loading="eager" decoding="sync" fetchpriority="high" class="featured" transition:name={`image-${entry.id}`} />}
       <empty-space></empty-space>
     </header>
     <Content />
