@@ -1,0 +1,24 @@
+---
+import { getCollection } from "astro:content";
+import { marked } from "marked";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("obsidian");
+  const publicPosts = posts.filter((post) => post.data.status === "public");
+
+  return publicPosts.map((entry) => {
+    const idWithoutExt = entry.id.replace(/\.md$/i, "");
+    const slug = idWithoutExt.toLowerCase().replace(/[()]/g, "").trim().replace(/\s+/g, "-").replace(/-+/g, "-");
+
+    return {
+      params: { obsidian: slug },
+      props: { entry },
+    };
+  });
+}
+
+const { entry } = Astro.props;
+const htmlContent = marked(entry.body ?? "");
+---
+
+<Fragment set:html={htmlContent} />

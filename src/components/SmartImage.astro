@@ -24,7 +24,7 @@ if (typeof src === "object" && src !== null) {
       finalWidth = result.width;
       finalHeight = result.height;
     } catch (e) {
-      console.error(`[MarkdownImage] Failed to probe size for ${src}:`, e);
+      console.error(`[SmartImage] Failed to probe size for ${src}:`, e);
       // Fallback: don't set width/height if inference fails
     }
   }

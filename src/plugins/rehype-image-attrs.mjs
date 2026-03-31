@@ -6,7 +6,8 @@ const CACHE_FILE = "./src/plugins/.image-size-cache.json";
 
 function loadCache() {
   if (existsSync(CACHE_FILE)) {
-    return JSON.parse(readFileSync(CACHE_FILE, "utf-8"));
+    const content = readFileSync(CACHE_FILE, "utf-8");
+    return content ? JSON.parse(content) : {};
   }
   return {};
 }

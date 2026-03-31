@@ -1,24 +1,31 @@
 ---
 import { getCollection, render } from "astro:content";
-import GardenLayout from "../../layouts/GardenLayout.astro";
+import MonstresiaLayout from "../../layouts/MonstresiaLayout.astro";
 import { Calendars } from "@lucide/astro";
 import { Image } from "astro:assets";
 import SmartImage from "../../components/SmartImage.astro";
 
 export async function getStaticPaths() {
-  const gardenPosts = await getCollection("garden");
-  return gardenPosts.map((post) => ({
-    params: { slug: post.id.replace(/\.mdx?$/, "").toLowerCase() },
-    props: post,
-  }));
+  const monstresia = await getCollection("monstresia");
+  return monstresia.map((entry) => {
+    // glob loader IDs are the file path relative to base
+    const idWithoutExt = entry.id.replace(/\.md$/i, "");
+    const slug = idWithoutExt.toLowerCase().replace(/[()]/g, "").trim().replace(/\s+/g, "-").replace(/-+/g, "-");
+    const folderName = idWithoutExt;
+
+    return {
+      params: { monstresia: slug }, // Must match the filename [monstresia].astro
+      props: { entry, folderName },
+    };
+  });
 }
 
-const post = Astro.props;
+const { entry: post } = Astro.props;
 
 const { Content, headings } = await render(post);
 ---
 
-<GardenLayout title={post.data.title} description={post.data.description} tags={post.data.tags} image={post.data.image}>
+<MonstresiaLayout title={post.data.title} description={post.data.description} tags={post.data.tags} image={post.data.image}>
   <h1>{post.data.title}</h1>
   <post-type-tags>{post.data.type} & {post.data.tags}</post-type-tags>
   {post.data.image && <SmartImage src={post.data.image} inferSize={true} alt="" loading="eager" />}
@@ -36,7 +43,7 @@ const { Content, headings } = await render(post);
         </nav>
     }
     -->
-  <Content components={{ img: SmartImage }} />
+  <Content />
   <hr />
   <post-footer>
     <post-epilogue>
@@ -62,4 +69,4 @@ const { Content, headings } = await render(post);
       }
     </post-meta>
   </post-footer>
-</GardenLayout>
+</MonstresiaLayout>

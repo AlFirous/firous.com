@@ -3,7 +3,7 @@ import { getCollection } from "astro:content";
 import Head from "../components/Head.astro";
 import HeaderMinimal from "../components/HeaderMinimal.astro";
 import { Image } from "astro:assets";
-import MarkdownImage from "../components/MarkdownImage.astro";
+import SmartImage from "../components/SmartImage.astro";
 
 import FramesFooter from "../components/FramesFooter.astro";
 import { ClientRouter } from "astro:transitions";
@@ -126,7 +126,7 @@ const getSlug = (id: string) => {
           featuredFrame && (
             <article class="featured">
               <!--<a href={`/frames/${getSlug(featuredFrame.id)}`}>-->
-                {featuredFrame.data.image && <MarkdownImage src={featuredFrame.data.image} alt={featuredFrame.data.title} title={featuredFrame.data.title} loading="eager" decoding="sync" fetchpriority="high" transition:name={`image-${featuredFrame.id}`} />}
+                {featuredFrame.data.image && <SmartImage src={featuredFrame.data.image} alt={featuredFrame.data.title} title={featuredFrame.data.title} loading="eager" decoding="sync" fetchpriority="high" transition:name={`image-${featuredFrame.id}`} />}
                 <h2 transition:name={`title-${featuredFrame.id}`}>{featuredFrame.data.title}</h2>
              <!-- </a>-->
             </article>
@@ -139,7 +139,7 @@ const getSlug = (id: string) => {
           galleryFrames.map((frame) => (
             <article>
               <a href={`/frames/${getSlug(frame.id)}`}>
-                {frame.data.image && <MarkdownImage src={frame.data.image} inferSize={true} alt={frame.data.title} transition:name={`image-${frame.id}`} />}
+                {frame.data.image && <SmartImage src={frame.data.image} inferSize={true} alt={frame.data.title} transition:name={`image-${frame.id}`} />}
                 <h2 transition:name={`title-${frame.id}`}>{frame.data.title}</h2>
                 {frame.data.taken && (
                   <time datetime={frame.data.taken.toISOString()} title="Date Taken">
