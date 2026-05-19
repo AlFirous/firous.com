@@ -102,11 +102,11 @@ export default defineConfig({
         variants: [
           {
             style: "normal",
-            src: ["./src/assets/fonts/PPNeueMontreal-Book.otf"],
+            src: ["./src/assets/fonts/PPNeueMontreal-Book.woff2"],
           },
           {
             style: "normal",
-            src: ["./src/assets/fonts/PPNeueMontreal-Medium.otf"],
+            src: ["./src/assets/fonts/PPNeueMontreal-Medium.woff2"],
           },
         ],
       },

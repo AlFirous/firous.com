@@ -1,7 +1,24 @@
 import { defineCollection } from "astro:content";
 import { z } from "astro/zod";
 import { glob } from "astro/loaders";
-import { obsidianVaultLoader } from "./loaders/obsidian-vault";
+import { lastfmLoader } from "./loaders/lastfm";
+import { youtubeLoader } from "./loaders/youtube";
+// import { obsidianVaultLoader } from "./loaders/obsidian-vault";
+
+const music = defineCollection({
+  loader: lastfmLoader({
+    username: import.meta.env.LASTFM_USERNAME || "",
+    apiKey: import.meta.env.LASTFM_API_KEY || "",
+    limit: 20,
+  }),
+});
+
+const mixtapes = defineCollection({
+  loader: youtubeLoader({
+    playlistIds: ["PLexample1", "PLexample2"], // Add your playlist IDs here
+    apiKey: import.meta.env.YOUTUBE_API_KEY || "",
+  }),
+});
 
 const quotes = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/data/quotes" }),
@@ -64,10 +81,19 @@ const monstresia = defineCollection({
   }),
 });
 
-const obsidian = defineCollection({
-  loader: obsidianVaultLoader({
-    vaultPath: "E:/Garden/Story",
-    pattern: "**/*.md",
+const labs = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/data/labs" }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string().optional(),
+    type: z.union([z.string(), z.array(z.string())]).optional(),
+    layout: z.string().optional(),
+    taken: z.coerce.date().optional(),
+    created: z.union([z.string(), z.date()]).optional(),
+    modified: z.union([z.string(), z.date()]).optional(),
+    image: z.string().optional(),
+    tags: z.array(z.string()).optional(),
+    cssclasses: z.array(z.string()).optional(),
   }),
 });
 
@@ -76,5 +102,7 @@ export const collections = {
   garden,
   frames,
   monstresia,
-  obsidian,
+  labs,
+  music,
+  mixtapes,
 };
