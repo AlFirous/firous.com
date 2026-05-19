@@ -1,0 +1,40 @@
+---
+import { getCollection, render } from "astro:content";
+import { Image } from "astro:assets";
+import LabsLayout from "../../layouts/LabsLayout.astro";
+import SmartImage from "../../components/SmartImage.astro";
+
+export async function getStaticPaths() {
+  const labs = await getCollection("labs");
+  return labs.map((entry) => {
+    // glob loader IDs are the file path relative to base
+    const idWithoutExt = entry.id.replace(/\.md$/i, "");
+    const slug = idWithoutExt.toLowerCase().replace(/\s+/g, "-");
+    const folderName = idWithoutExt;
+
+    return {
+      params: { labs: slug }, // Must match the filename
+      props: { entry, folderName },
+    };
+  });
+}
+
+const { entry, folderName } = Astro.props;
+const { Content } = await render(entry);
+const { title, taken, created, modified, image } = entry.data;
+
+const description = entry.body ? (entry.body.length > 160 ? entry.body.substring(0, 160) + "..." : entry.body) : "";
+---
+
+<LabsLayout title={title} description={description} image={image || ""}>
+  <article>
+    <h1 transition:name={`title-${entry.id}`}>{title}</h1>
+    <div class="metadata">
+      <span>{entry.data.tags?.join(", ")}</span>
+      <span>R&D</span>
+      <span>2026</span>
+    </div>
+    {image && <SmartImage src={image} inferSize={true} alt="" loading="eager" decoding="sync" fetchpriority="high" class="featured" transition:name={`image-${entry.id}`} />}
+    <Content />
+  </article>
+</LabsLayout>

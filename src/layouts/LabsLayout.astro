@@ -1,0 +1,37 @@
+---
+import Head from "../components/Head.astro";
+import HeaderEditorial from "../components/HeaderEditorial.astro";
+import FooterMinimal from "../components/FooterMinimal.astro";
+import { ClientRouter } from "astro:transitions";
+import Grid from "../components/Grid.astro";
+
+import { Font } from "astro:assets";
+import "../styles/variables.css";
+import "../styles/global.css";
+import "../styles/labs.css";
+
+const { title, description, image } = Astro.props;
+---
+
+<html lang="en" class="single">
+  <Head title={title} description={description} image={image}>
+    <slot name="in-head" slot="in-head" />
+    <Font cssVariable="--font-lilex" preload />
+    <Font cssVariable="--font-neue-montreal" preload />
+  </Head>
+  <body>
+    <HeaderEditorial>
+      <a href="/labs">Labs</a>
+    </HeaderEditorial>
+    <main>
+      <slot />
+    </main>
+    <FooterMinimal />
+    <Grid />
+    <bg-gr class="top"></bg-gr>
+    <bg-gr class="bottom"></bg-gr>
+    <script>
+      import "../scripts/realtime.js";
+    </script>
+  </body>
+</html>

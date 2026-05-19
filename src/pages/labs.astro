@@ -1,22 +1,29 @@
 ---
-import Grid from '../components/Grid.astro';
-import Head from '../components/Head.astro';
+import Grid from "../components/Grid.astro";
+import Head from "../components/Head.astro";
 
-import HeaderEditorial from '../components/HeaderEditorial.astro';
-import FooterMinimal from '../components/FooterMinimal.astro';
+import HeaderEditorial from "../components/HeaderEditorial.astro";
+import FooterMinimal from "../components/FooterMinimal.astro";
 
-import '../styles/global.css';
-import '../styles/labs.css';
+import "../styles/global.css";
+import "../styles/labs.css";
 
-import { Font } from 'astro:assets';
+import { Font } from "astro:assets";
+import { getCollection } from "astro:content";
 
-const title = "Labs"; 
+const title = "Labs";
 const description = "Multidisciplinary maker creating out of curiosity and things I wish existed. Experiment, exploration, or proof of concept. Unpolished and imperfect. No rules and boundaries. With or without limitations.";
 const url = "/labs";
+
+const labs = await getCollection("labs");
+
+const getSlug = (id: string) => {
+  return id.replace(/\.md$/i, "").toLowerCase().replace(/\s+/g, "-");
+};
 ---
 
 <html lang="en">
-  <Head title={title} description={description} url={url} >
+  <Head title={title} description={description} url={url}>
     <Font slot="in-head" cssVariable="--font-editorial-new" preload />
     <Font slot="in-head" cssVariable="--font-neue-montreal" preload />
   </Head>
@@ -28,83 +35,19 @@ const url = "/labs";
         <p>Multidisciplinary maker creating out of curiosity and things I wish existed. Experiment, exploration, or proof of concept. Unpolished and imperfect. No rules and boundaries. With or without limitations.</p>
       </section>
       <section class="labs-gallery">
-        <article>
-          <project-thumbnail></project-thumbnail>
-          <project-title>
-            <h2>Acme Inc</h2>
-            <p>Brand Identity, Web Design</p>
-          </project-title>
-        </article>
-        <article>
-          <project-thumbnail style="aspect-ratio: 3/4;"></project-thumbnail>
-          <project-title>
-            <h2>Acme Inc</h2>
-            <p>Brand Identity, Web Design</p>
-          </project-title>
-        </article>
-        <article>
-          <project-thumbnail></project-thumbnail>
-          <project-title>
-            <h2>Acme Inc</h2>
-            <p>Brand Identity, Web Design</p>
-          </project-title>
-        </article>
-        <article>
-          <project-thumbnail style="aspect-ratio: 4/3;"></project-thumbnail>
-          <project-title>
-            <h2>Acme Inc</h2>
-            <p>Brand Identity, Web Design</p>
-          </project-title>
-        </article>
-        <article>
-          <project-thumbnail style="aspect-ratio: 16/9;"></project-thumbnail>
-          <project-title>
-            <h2>Acme Inc</h2>
-            <p>Brand Identity, Web Design</p>
-          </project-title>
-        </article>
-        <article>
-          <project-thumbnail></project-thumbnail>
-          <project-title>
-            <h2>Acme Inc</h2>
-            <p>Brand Identity, Web Design</p>
-          </project-title>
-        </article>
-        <article>
-          <project-thumbnail style="aspect-ratio: 4/3;"></project-thumbnail>
-          <project-title>
-            <h2>Acme Inc</h2>
-            <p>Brand Identity, Web Design</p>
-          </project-title>
-        </article>
-        <article>
-          <project-thumbnail></project-thumbnail>
-          <project-title>
-            <h2>Acme Inc</h2>
-            <p>Brand Identity, Web Design</p>
-          </project-title>
-        </article>
-        <article>
-          <project-thumbnail></project-thumbnail>
-          <project-title>
-            <h2>Acme Inc</h2>
-            <p>Brand Identity, Web Design</p>
-          </project-title>
-        </article>
-        <article>
-          <project-thumbnail style="aspect-ratio: 16/9;"></project-thumbnail>
-          <project-title>
-            <h2>Acme Inc</h2>
-            <p>Brand Identity, Web Design</p>
-          </project-title>
-        </article>
-        <article>
-          <project-thumbnail></project-thumbnail>
-          <project-title>
-            <h2>Acme Inc</h2>
-            <p>Brand Identity, Web Design</p>
-          </project-title>
-        </article>
+        {
+          labs.map((project) => (
+            <article>
+              <a href={`/labs/${getSlug(project.id)}`}>
+                <project-thumbnail />
+                <project-title>
+                  <h2>{project.data.title}</h2>
+                  <p>{project.data.tags?.join(", ")}</p>
+                </project-title>
+              </a>
+            </article>
+          ))
+        }
       </section>
     </main>
     <FooterMinimal />

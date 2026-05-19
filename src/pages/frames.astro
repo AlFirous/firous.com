@@ -46,6 +46,12 @@ const getSlug = (id: string) => {
     <ClientRouter />
   </Head>
   <body>
+      <div class="banner">
+        <p>Transitions experiment. Do you enjoy?</p>
+        <button type="button" onclick="sendData('yes')">Yes</button>
+        <button type="button" onclick="sendData('no')">No</button>
+        <button type="button" onclick="closeBanner()" aria-label="Close">&times;</button>
+      </div>
     <HeaderMinimal>
       <a href="/frames">
           <svg width="5" height="24" viewBox="0 0 5 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -155,6 +161,24 @@ const getSlug = (id: string) => {
     <FramesFooter />
     <script>
       import "../scripts/hamburger.js";
+      
+      // BANNER
+      function sendData(choice) {
+        const data = { response: choice, timestamp: new Date().toISOString() };
+        
+        fetch('https://formspree.io/f/YOUR_FORM_ID', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        }).then(() => {
+          document.getElementById('survey-banner').style.display = 'none';
+        });
+      }
+      
+      function closeBanner() {
+        sendData('close');
+      }
+      // BANNER END
     </script>
   </body>
 </html>

@@ -25,22 +25,26 @@
   /* TYPOGRAPHY */
   /* 24px @ 320px viewport → 48px @ 2560px viewport */
   --font-size-large: clamp(24px, 1.071vw + 20.571px, 48px);
+  --fs-l: var(--font-size-large);
   /* 15px @ 320px viewport → 21px @ 2560px viewport 
   --font-size-medium: clamp(15px, 0.268vw + 14.143px, 21px);
   */
 
   /* 18px @ 320px viewport → 24px @ 2560px viewport */
   --font-size-medium: clamp(18px, 0.268vw + 17.143px, 24px);
-
-  /* 12px @ 320px viewport → 18px @ 2560px viewport 
+  --fs-m: var(var(--font-size-medium)) /* 12px @ 320px viewport → 18px @ 2560px viewport 
   --font-size-small: clamp(12px, 0.268vw + 11.143px, 18px);
-  */
+  */ /* 15px @ 320px viewport → 21px @ 2560px viewport */ --font-size-small: clamp(15px, 0.268vw + 14.143px, 21px);
+  --fs-s: var(--font-size-small);
 
-  /* 15px @ 320px viewport → 21px @ 2560px viewport */
-  --font-size-small: clamp(15px, 0.268vw + 14.143px, 21px);
+  /* 12px @ 320px viewport → 18px @ 2560px viewport */
+  --font-size-xs: clamp(12px, 0.268vw + 11.143px, 18px);
+  --fs-xs: var(--font-size-xs);
 
   --font-garamond-adjust: 0.545;
   --line-height-small: calc(100% + calc(var(--spacing) / 5));
+
+  --mono: var(--font-lilex);
 
   /* COLORS */
   --black: #100f0f;

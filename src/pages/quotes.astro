@@ -6,7 +6,7 @@ import "../styles/global.css";
 import "../styles/quotes.css";
 
 import Head from "../components/Head.astro";
-import Header from "../components/Header.astro";
+import HeaderEditorial from "../components/HeaderEditorial.astro";
 import Footer from "../components/Footer.astro";
 import Grid from "../components/Grid.astro";
 
@@ -25,21 +25,88 @@ import "../assets/images/The Thinker Painting SQUOOSH.jpg";
     <meta content="Test named slots" />
   </Head>
   <body>
-    <Header title={title} description={description} />
+    <HeaderEditorial title={title} description={description} />
     <main>
       <article>
         {
           quotes.map(async (quote) => {
             const { Content } = await render(quote);
+            const slug = quote.id
+              .replace(/\.[^/.]+$/, "")
+              .replace(/\s+/g, "-")
+              .toLowerCase();
             return (
-              <figure>
-                <Content />
-              </figure>
+              <section class="quote-item" id={slug}>
+                <figure>
+                  <Content />
+                </figure>
+                <div class="sharing">
+                  <button class="copy-text" title="Copy quote text">
+                    Copy Text
+                  </button>
+                  <button class="copy-link" title="Copy link to this quote">
+                    Copy Link
+                  </button>
+                  <button class="visit-source" title="Visit quote source">
+                    Visit Source
+                  </button>
+                </div>
+              </section>
             );
           })
         }
       </article>
     </main>
     <Footer />
+    <script>
+      document.querySelectorAll(".quote-item").forEach((container) => {
+        const copyTextBtn = container.querySelector(".copy-text") as HTMLButtonElement;
+        const copyLinkBtn = container.querySelector(".copy-link") as HTMLButtonElement;
+        const visitSourceBtn = container.querySelector(".visit-source") as HTMLButtonElement;
+        const quoteId = container.id;
+
+        const provideFeedback = (btn: HTMLButtonElement, message: string, originalText: string) => {
+          btn.innerText = message;
+          btn.classList.add("active");
+          setTimeout(() => {
+            btn.innerText = originalText;
+            btn.classList.remove("active");
+          }, 2000);
+        };
+
+        copyTextBtn?.addEventListener("click", () => {
+          const blockquote = container.querySelector("blockquote");
+          const text = blockquote ? blockquote.innerText.trim() : "";
+
+          // Try to find attribution in figcaption or a paragraph following the figure
+          const attribution = container.querySelector("figcaption")?.innerText.trim() || container.querySelector("figure > p")?.innerText.trim() || "";
+
+          const fullText = attribution ? `${text}\n\n— ${attribution}` : text;
+
+          if (fullText) {
+            navigator.clipboard.writeText(fullText).then(() => {
+              provideFeedback(copyTextBtn, "Copied!", "Copy Text");
+            });
+          }
+        });
+
+        copyLinkBtn?.addEventListener("click", () => {
+          const url = `${window.location.origin}${window.location.pathname}#${quoteId}`;
+          navigator.clipboard.writeText(url).then(() => {
+            provideFeedback(copyLinkBtn, "Link Copied!", "Copy Link");
+          });
+        });
+
+        visitSourceBtn?.addEventListener("click", () => {
+          // Look for links in the attribution area
+          const sourceLink = container.querySelector("blockquote + p a, figcaption a, figure > p a") as HTMLAnchorElement;
+          if (sourceLink && sourceLink.href) {
+            window.open(sourceLink.href, "_blank");
+          } else {
+            provideFeedback(visitSourceBtn, "No Link", "Visit Source");
+          }
+        });
+      });
+    </script>
   </body>
 </html>

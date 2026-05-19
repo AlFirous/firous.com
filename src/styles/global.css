@@ -144,12 +144,6 @@ header {
   gap: var(--spacing);
 }
 
-header a {
-  height: 30px;
-  width: 100%;
-  overflow: hidden;
-}
-
 header > * {
   grid-column: span 3;
 }
@@ -159,6 +153,11 @@ header * {
   font-size: var(--font-size-medium);
   font-weight: normal;
   text-decoration: none;
+}
+
+header a {
+  height: fit-content;
+  border: none !important;
 }
 
 header svg {
@@ -303,6 +302,11 @@ header nav button {
   justify-self: right;
 }
 
+header nav-menu button svg rect,
+header nav-menu button svg circle {
+  fill: var(--primary) !important;
+}
+
 header nav button .bar {
   height: calc(var(--size) / 10);
   width: 100%;
@@ -342,13 +346,35 @@ header nav-full button:active menu-icon:nth-child(even) {
   transform: scale(0.6);
 }
 
-header nav-full button:hover menu-icon,
-header nav-full button:active menu-icon {
-  background-color: var(--accent);
+header nav-menu button:hover svg rect,
+header nav-menu button:active svg rect {
+  fill: var(--accent) !important;
 }
 
 header nav-menu button {
+  all: unset;
+  width: 30px;
+  height: 30px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  padding: 6px;
+  margin: -6px;
   z-index: 2;
+}
+
+header nav-menu button svg:last-child {
+  position: absolute;
+  left: 6px;
+}
+
+header nav-menu button,
+header nav-menu button svg {
+  transition: var(--transition-medium);
+}
+
+header nav-menu button:hover svg:first-child {
+  opacity: 0;
 }
 
 /* HEADER NAV-MENU END */
@@ -371,6 +397,28 @@ page-title h1,
 page-title p {
   margin: 0;
 }
+
+/* HEADER MINIMAL END */
+
+/* HEADER EDITORIAL START */
+
+header.editorial * {
+  font-weight: 500;
+  font-size: var(--fs-xs);
+}
+
+header.editorial > *:nth-child(1),
+header.editorial > *:nth-child(4) {
+  grid-column: span 2;
+  height: 30px;
+}
+
+header.editorial > *:nth-child(2),
+header.editorial > *:nth-child(3) {
+  grid-column: span 4;
+}
+
+/* HEADER EDITORIAL END */
 
 pre.astro-code.Flexoki {
   padding: var(--spacing);

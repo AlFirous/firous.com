@@ -1,1 +1,33 @@
-<footer><small>Al Firous</small></footer>
+---
+// obtain last commit date and cache it to avoid re-fetching on every request.
+let commitDate = "2026";
+try {
+  // Store the promise in a global variable to ensure it's only fetched once per build/server-start.
+  if (!(globalThis as any).firousCommitPromise) {
+    (globalThis as any).firousCommitPromise = fetch("https://api.github.com/repos/alfirous/firous.com/commits?per_page=1").then((res) => {
+      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+      return res.json();
+    });
+  }
+  const data = await (globalThis as any).firousCommitPromise;
+  const commit = data[0].commit;
+  const date = new Date(commit.author.date);
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, "0");
+  const day = date.getDate().toString().padStart(2, "0");
+
+  commitDate = `${year}.${month}.${day}`;
+} catch (err) {
+  // If the fetch fails, we'll log the error and `commitDate` will remain 'unknown'.
+  if (err instanceof Error) {
+    console.error("Failed to fetch last commit date:", err.message);
+  } else {
+    console.error("An unknown error occurred while fetching commit date:", err);
+  }
+}
+---
+
+<footer class="minimal">
+  <span class="left"><a href="mailto:al@firous.com">Email</a><time class="clock" id="clock"></time><span>Indonesia</span></span>
+  <span class="right"><a href="https://github.com/AlFirous/firous.com" class="copyright">© {commitDate}</a><a href="/">Al Firous</a></span>
+</footer>
