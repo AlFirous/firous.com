@@ -1,3 +1,9 @@
+# data (temporary)
+src/data/garden/
+src/data/labs/
+src/data/monstresia/
+src/data/frames/
+
 # build output
 dist/
 # generated types
