@@ -181,18 +181,4 @@ export default defineConfig({
   integrations: [metaTags(), mdx()],
 
   output: "static", // Confirms you are using SSG
-  redirects: {
-    "/movie": {
-      status: 301,
-      destination: "/movies",
-    },
-    "/resource": {
-      status: 301,
-      destination: "/resources",
-    },
-    "/blog": {
-      status: 301,
-      destination: "/garden",
-    },
-  },
 });
