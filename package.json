@@ -9,21 +9,20 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/mdx": "^5.0.3",
+    "@astrojs/mdx": "^5.0.6",
     "@lucide/astro": "^0.562.0",
-    "astro": "^6.1.2",
-    "astro-meta-tags": "^0.4.0",
+    "astro": "^6.3.6",
+    "astro-meta-tags": "^0.4.1",
     "gray-matter": "^4.0.3",
-    "marked": "^17.0.5",
-    "overlayscrollbars": "^2.14.0",
+    "marked": "^17.0.6",
     "photoswipe": "^5.4.4",
-    "probe-image-size": "^7.2.3",
-    "sharp": "^0.34.5",
+    "probe-image-size": "^7.3.0",
+    "rss-parser": "^3.13.0",
     "unist-util-visit": "^5.1.0"
   },
   "devDependencies": {
     "@types/probe-image-size": "^7.2.5",
-    "prettier": "^3.8.0",
+    "prettier": "^3.8.3",
     "prettier-plugin-astro": "^0.14.1"
   }
 }

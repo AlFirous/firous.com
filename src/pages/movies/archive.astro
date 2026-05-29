@@ -1,0 +1,320 @@
+---
+import { getCollection } from "astro:content";
+import { Font } from "astro:assets";
+
+const entries = await getCollection("movies");
+
+const sorted = entries
+  .filter((m) => m.data.poster)
+  .sort(
+    (a, b) =>
+      new Date(b.data.watchedDate || 0).getTime() -
+      new Date(a.data.watchedDate || 0).getTime()
+  );
+
+const latest = sorted.find((m) => m.data.rating === 5) || sorted[0];
+const total = sorted.length;
+const avg =
+  total > 0
+    ? (
+        sorted.reduce((s, m) => s + (m.data.rating || 0), 0) / total
+      ).toFixed(1)
+    : "0";
+
+const heroBg = latest?.data.backdrop || latest?.data.poster || "";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="black" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={Astro.url} />
+
+    <title>Movies archive — Al Firous</title>
+    <meta name="description" content="All movies I've watched" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.url} />
+    <meta property="og:title" content="Movies archive — Al Firous" />
+    <meta property="og:description" content="All movies I've watched" />
+    <meta property="og:image" content={heroBg || "/favicon.svg"} />
+
+    <Font cssVariable="--font-lettra-mono" preload />
+  </head>
+  <body>
+    <section
+      class="hero"
+      style={heroBg ? `background-image: url(${heroBg})` : ""}
+    >
+      <div class="hero-overlay">
+        <div class="hero-meta">
+          <span class="hero-subtitle">Archive</span>
+          <h1>{latest?.data.title}</h1>
+          <p>
+            <span class="hero-year">{latest?.data.filmYear}</span>
+            <span class="hero-rating"
+              >{"★".repeat(Math.round(latest?.data.rating || 0))}</span
+            >
+          </p>
+        </div>
+        <a href={latest?.data.link} class="hero-link" target="_blank"
+          >View on Letterboxd</a
+        >
+      </div>
+    </section>
+
+    <header>
+      <p class="stats">
+        <span>{total}</span> films · <span>{avg}</span> avg rating
+      </p>
+    </header>
+
+    <main>
+      {
+        sorted.map((movie) => (
+          <article>
+            <a href={movie.data.link} target="_blank">
+              <img
+                src={movie.data.poster}
+                alt={movie.data.title}
+                loading="lazy"
+              />
+            </a>
+            <div class="info">
+              <span class="title">{movie.data.title}</span>
+              <div class="meta">
+                <span class="year">{movie.data.filmYear}</span>
+                <span class="rating"
+                  >{"★".repeat(Math.round(movie.data.rating || 0))}</span
+                >
+              </div>
+            </div>
+          </article>
+        ))
+      }
+    </main>
+
+    <footer>
+      <a href="https://letterboxd.com/alfirous/" target="_blank">Letterboxd</a>
+      <span class="sep">·</span>
+      <a href="/movies">Latest</a>
+    </footer>
+  </body>
+</html>
+
+<style>
+  *,
+  *:before,
+  *:after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    background: #100f0f;
+    color: #fffcf0;
+    font-family: var(--font-lettra-mono, monospace);
+    min-height: 100vh;
+  }
+
+  .hero {
+    position: relative;
+    width: 100%;
+    height: 60vh;
+    min-height: 400px;
+    background-size: cover;
+    background-position: center;
+    background-color: #1c1b1a;
+    display: flex;
+    align-items: flex-end;
+    margin-bottom: 2rem;
+  }
+
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      transparent 30%,
+      rgba(16, 15, 15, 0.92)
+    );
+  }
+
+  .hero-overlay {
+    position: relative;
+    z-index: 1;
+    padding: 2rem;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .hero-subtitle {
+    font-size: 0.75rem;
+    opacity: 0.4;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .hero h1 {
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin: 0.25rem 0 0.5rem;
+    max-width: 600px;
+  }
+
+  .hero p {
+    display: flex;
+    gap: 0.75rem;
+    align-items: baseline;
+    font-size: 0.85rem;
+  }
+
+  .hero-year {
+    opacity: 0.5;
+  }
+
+  .hero-rating {
+    color: var(--orange-300, #ec8b49);
+  }
+
+  .hero-link {
+    display: inline-block;
+    margin-top: 1rem;
+    font-size: 0.75rem;
+    color: #fffcf0;
+    opacity: 0.4;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+
+  .hero-link:hover {
+    opacity: 0.8;
+  }
+
+  header {
+    padding: 0 2rem;
+    max-width: 1400px;
+    margin: 0 auto 1.5rem;
+  }
+
+  .stats {
+    font-size: 0.85rem;
+    opacity: 0.5;
+  }
+
+  main {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1rem;
+    padding: 0 2rem 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  @media (max-width: 600px) {
+    main {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+      padding: 0 1rem 1rem;
+    }
+
+    .hero-overlay {
+      padding: 1.5rem;
+    }
+
+    header {
+      padding: 0 1rem;
+    }
+  }
+
+  article {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: #fffcf0;
+  }
+
+  article a {
+    display: block;
+    aspect-ratio: 2 / 3;
+    overflow: hidden;
+    background: #1c1b1a;
+  }
+
+  article a:hover img {
+    transform: scale(0.97);
+  }
+
+  article img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+  }
+
+  .info {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem 0;
+    gap: 0.15rem;
+  }
+
+  .title {
+    font-size: 0.78rem;
+    line-height: 1.3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .meta {
+    display: flex;
+    gap: 0.5rem;
+    align-items: baseline;
+    font-size: 0.7rem;
+  }
+
+  .year {
+    opacity: 0.4;
+  }
+
+  .rating {
+    color: var(--orange-300, #ec8b49);
+  }
+
+  footer {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    text-align: center;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .sep {
+    opacity: 0.2;
+    font-size: 0.8rem;
+  }
+
+  footer a {
+    color: #fffcf0;
+    opacity: 0.35;
+    font-size: 0.8rem;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+
+  footer a:hover {
+    opacity: 0.7;
+  }
+</style>

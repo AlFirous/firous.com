@@ -150,6 +150,21 @@ export default defineConfig({
       fallbacks: ["serif"],
       optimizedFallbacks: false,
     },
+    {
+      name: "PP Lettra Mono",
+      cssVariable: "--font-lettra-mono",
+      provider: fontProviders.local(),
+      options: {
+        variants: [
+          {
+            style: "normal",
+            src: ["./src/assets/fonts/PPLettraMono-Medium.otf"],
+          },
+        ],
+      },
+      fallbacks: ["monospace"],
+      optimizedFallbacks: false,
+    },
   ],
 
   markdown: {
@@ -164,4 +179,20 @@ export default defineConfig({
   },
 
   integrations: [metaTags(), mdx()],
+
+  output: "static", // Confirms you are using SSG
+  redirects: {
+    "/movie": {
+      status: 301,
+      destination: "/movies",
+    },
+    "/resource": {
+      status: 301,
+      destination: "/resources",
+    },
+    "/blog": {
+      status: 301,
+      destination: "/garden",
+    },
+  },
 });

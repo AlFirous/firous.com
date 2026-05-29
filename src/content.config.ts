@@ -3,6 +3,8 @@ import { z } from "astro/zod";
 import { glob } from "astro/loaders";
 import { lastfmLoader } from "./loaders/lastfm";
 import { youtubeLoader } from "./loaders/youtube";
+import { letterboxdLoader } from "./loaders/letterboxd";
+import { raindropLoader } from "./loaders/raindrop";
 // import { obsidianVaultLoader } from "./loaders/obsidian-vault";
 
 const music = defineCollection({
@@ -81,6 +83,23 @@ const monstresia = defineCollection({
   }),
 });
 
+const movies = defineCollection({
+  loader: letterboxdLoader({
+    rssUrl: "https://letterboxd.com/alfirous/rss/",
+    csvPath: "src/data/diary.csv",
+    tmdbToken: import.meta.env.TMDB_ACCESS_TOKEN || "",
+    mode: "csv",
+  }),
+});
+
+const moviesRss = defineCollection({
+  loader: letterboxdLoader({
+    rssUrl: "https://letterboxd.com/alfirous/rss/",
+    tmdbToken: import.meta.env.TMDB_ACCESS_TOKEN || "",
+    mode: "rss",
+  }),
+});
+
 const labs = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/data/labs" }),
   schema: z.object({
@@ -97,6 +116,12 @@ const labs = defineCollection({
   }),
 });
 
+const bookmarks = defineCollection({
+  loader: raindropLoader({
+    token: import.meta.env.RAINDROP_TOKEN || "",
+  }),
+});
+
 export const collections = {
   quotes,
   garden,
@@ -105,4 +130,7 @@ export const collections = {
   labs,
   music,
   mixtapes,
+  movies,
+  moviesRss,
+  bookmarks,
 };

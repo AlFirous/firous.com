@@ -1,0 +1,404 @@
+---
+import { getCollection } from "astro:content";
+import Head from "../../components/Head.astro";
+
+export async function getStaticPaths() {
+  const collections = await getCollection("bookmarks");
+  return collections.map((col) => ({
+    params: { slug: col.data.slug },
+    props: { collection: col },
+  }));
+}
+
+const { collection } = Astro.props;
+const { title, count, raindrops, parentTitle, slug } = collection.data;
+
+const allCollections = (await getCollection("bookmarks")) || [];
+const rootCollections = allCollections.filter((c) => !c.data.parentId).sort((a, b) => a.data.sort - b.data.sort);
+const childCollections = allCollections.filter((c) => c.data.parentId).sort((a, b) => a.data.sort - b.data.sort);
+
+const sorted = [...raindrops].sort(
+  (a, b) => new Date(b.created).getTime() - new Date(a.created).getTime(),
+);
+
+const PER_PAGE = 48;
+const totalPages = Math.max(1, Math.ceil(sorted.length / PER_PAGE));
+const page = 1;
+const pageItems = sorted.slice(0, PER_PAGE);
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <Head title={title} description={`${count} bookmarks in ${title}`} />
+  <body>
+    <main class="container">
+      <header>
+        <h1>{title}</h1>
+        <p class="meta">
+          {parentTitle && <><a href="/resources" class="back">&larr;</a> {parentTitle} / </>}
+          {count} bookmark{count !== 1 ? "s" : ""}
+        </p>
+      </header>
+
+      <nav class="subcollections">
+        <a href="/resources" class="chip">All</a>
+        {
+          rootCollections.map((col) => (
+            <a href={`/resources/${col.data.slug}`} class={`chip ${col.data.slug === slug ? "active" : ""}`}>{col.data.title}</a>
+          ))
+        }
+        {
+          childCollections.map((col) => (
+            <a href={`/resources/${col.data.slug}`} class={`chip ${col.data.slug === slug ? "active" : ""}`}>{col.data.title}</a>
+          ))
+        }
+      </nav>
+
+      {
+        pageItems.length === 0 && <p class="empty">No bookmarks in this collection.</p>
+      }
+
+      <div class="grid">
+        {
+          pageItems.map((rd) => (
+            <div class="card">
+              <a href={rd.link} class="card-link" target="_blank" rel="noopener noreferrer">
+                <div class="thumb">
+                  <img src={rd.cover || ""} alt="" loading="lazy" onerror="this.style.display='none';this.parentElement.querySelector('.thumb-fallback').style.display='block'" />
+                  <svg class="thumb-fallback" style={rd.cover ? "display:none" : ""} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15.197 2.625a3.3 3.3 0 0 1 4.664 4.664l-7.026 7.026a4.95 4.95 0 0 1-7.7-5.556l.089-.22.089-.22a3.3 3.3 0 0 1 4.664-4.664l.996.996" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.803 21.375a3.3 3.3 0 0 1-4.664-4.664l7.026-7.026a4.95 4.95 0 0 1 7.7 5.556l-.089.22a3.3 3.3 0 0 1-4.664 4.664l-.996-.996" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div class="card-body">
+                  <span class="card-title">{rd.title || rd.link}</span>
+                  <span class="card-domain">{rd.domain}</span>
+                </div>
+              </a>
+              {rd.tags.length > 0 && (
+                <div class="card-tags">
+                  {rd.tags.map((tag: string) => <span class="tag">{tag}</span>)}
+                </div>
+              )}
+            </div>
+          ))
+        }
+      </div>
+
+      {
+        totalPages > 1 && (
+          <nav class="pagination">
+            {
+              Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
+                <a
+                  href={p === 1 ? `/resources/${slug}` : `/resources/${slug}/page/${p}`}
+                  class={`page ${p === page ? "active" : ""}`}
+                >{p}</a>
+              ))
+            }
+          </nav>
+        )
+      }
+    </main>
+
+    <script>
+      (() => {
+        for (const el of document.querySelectorAll(".card-tags")) {
+          let isDown = false, startX, scrollLeft;
+          el.addEventListener("mousedown", (e) => {
+            isDown = true;
+            el.classList.add("dragging");
+            startX = e.pageX - el.offsetLeft;
+            scrollLeft = el.scrollLeft;
+          });
+          el.addEventListener("mouseleave", () => {
+            isDown = false;
+            el.classList.remove("dragging");
+          });
+          el.addEventListener("mouseup", () => {
+            isDown = false;
+            el.classList.remove("dragging");
+          });
+          el.addEventListener("mousemove", (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - el.offsetLeft;
+            const walk = (x - startX) * 1.5;
+            el.scrollLeft = scrollLeft - walk;
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>
+
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: system-ui, -apple-system, sans-serif;
+    background: var(--bg, #fafafa);
+    color: var(--fg, #1a1a1a);
+    min-height: 100vh;
+  }
+
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  header {
+    margin-bottom: 1.5rem;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 0 0 0.15rem;
+  }
+
+  .meta {
+    color: #888;
+    font-size: 0.85rem;
+    margin: 0;
+  }
+
+  .back {
+    color: inherit;
+    text-decoration: none;
+  }
+  .back:hover {
+    text-decoration: underline;
+  }
+
+  .empty {
+    color: #888;
+    font-style: italic;
+  }
+
+  .subcollections {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .chip {
+    padding: 0.35rem 0.85rem;
+    font-size: 0.85rem;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    text-decoration: none;
+    color: #555;
+    transition: background 0.15s;
+  }
+
+  .chip:hover {
+    background: #eee;
+  }
+
+  .chip.active {
+    background: #111;
+    color: #fff;
+    border-color: #111;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1rem;
+  }
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #e0e0e0;
+    background: #fff;
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+
+  .card:hover {
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+  }
+
+  .card-link {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .thumb {
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: #f0f0f0;
+  }
+
+  .thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .thumb-fallback {
+    width: 100%;
+    height: 100%;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, #e0e0e0, #f5f5f5);
+    color: #bbb;
+  }
+
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    padding: 0.65rem;
+    min-width: 0;
+  }
+
+  .card-title {
+    font-size: 0.85rem;
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .card-domain {
+    font-size: 0.75rem;
+    color: #999;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .card-tags {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 0.3rem;
+    padding: 0 0.65rem 0.65rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  .card-tags.dragging {
+    cursor: grabbing;
+  }
+  .card-tags::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tag {
+    font-size: 0.65rem;
+    padding: 0.1rem 0.4rem;
+    background: #f0f0f0;
+    border-radius: 3px;
+    color: #777;
+  }
+
+  .pagination {
+    display: flex;
+    justify-content: center;
+    gap: 0.4rem;
+    margin-top: 2rem;
+  }
+
+  .page {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.85rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    text-decoration: none;
+    color: #555;
+  }
+
+  .page:hover {
+    background: #eee;
+  }
+
+  .page.active {
+    background: #111;
+    color: #fff;
+    border-color: #111;
+  }
+
+  @media (max-width: 600px) {
+    .grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+    }
+
+    .container {
+      padding: 2rem 1rem;
+    }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    body {
+      background: var(--bg-dark, #121212);
+      color: var(--fg-dark, #e0e0e0);
+    }
+
+    .chip {
+      border-color: #333;
+      color: #aaa;
+    }
+
+    .chip:hover {
+      background: #2a2a2a;
+    }
+
+    .chip.active {
+      background: #fff;
+      color: #111;
+      border-color: #fff;
+    }
+
+    .card {
+      background: #1e1e1e;
+      border-color: #333;
+    }
+
+    .thumb {
+      background: #2a2a2a;
+    }
+
+    .thumb-fallback {
+      background: linear-gradient(135deg, #2a2a2a, #333);
+      color: #555;
+    }
+
+    .card-domain {
+      color: #777;
+    }
+
+    .tag {
+      background: #2a2a2a;
+      color: #999;
+    }
+
+    .meta,
+    .empty {
+      color: #999;
+    }
+
+    .page {
+      border-color: #333;
+      color: #aaa;
+    }
+
+    .page:hover {
+      background: #2a2a2a;
+    }
+
+    .page.active {
+      background: #fff;
+      color: #111;
+      border-color: #fff;
+    }
+  }
+</style>

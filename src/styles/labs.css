@@ -3,6 +3,10 @@
   --muted: var(--300);
 }
 
+html {
+  overflow-x: hidden;
+}
+
 main {
   display: flex;
   flex-direction: column;
@@ -111,22 +115,6 @@ body {
   font-smooth: always;
 }
 
-/* OVERLAY SCROLLBARS 
-.os-scrollbar {
-  pointer-events: auto !important;
-  visibility: visible !important;
-  cursor: pointer;
-}
-
-.os-scrollbar-handle {
-  cursor: pointer;
-
-  &:active {
-    cursor: grabbing;
-  }
-}
-*/
-
 h1,
 h2,
 p {
@@ -223,8 +211,8 @@ header nav-menu nav {
   z-index: 10;
   width: 50vw;
   min-width: 300px;
-  box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
-  transform: translateX(100%);
+  box-shadow: -5px 0 15px rgb(255 0 0);
+  transform: translateX(calc(100% + var(--spacing)));
   transition: transform var(--transition-medium);
 }
 
@@ -297,7 +285,7 @@ bg-gr {
   position: absolute;
   background: linear-gradient(180deg, #000000, #35404a, #ced0c6, transparent);
   height: 80vh;
-  width: 100vw;
+  width: 100%;
   top: 0;
   left: 0;
   z-index: -10;

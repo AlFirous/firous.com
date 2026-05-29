@@ -2,16 +2,21 @@
 import { getCollection } from "astro:content";
 
 import "../styles/global.css";
+import "../styles/variables.css";
+import "../styles/garden.css";
 import "../styles/garden-index.css";
 import Head from "../components/Head.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import { Image } from "astro:assets";
 import SmartImage from "../components/SmartImage.astro";
+import HeaderEditorial from "../components/HeaderEditorial.astro";
+import { Font } from "astro:assets";
 
 const title = "Garden";
-const description = "Notes, documentation, and miscellaneous writings.";
+const description = "I write to think,I write to forget, I write for future of me,and I write for you.";
 const favicon = "/favicon-garden.svg";
+const image = "https://cdn.firous.com/garden/curiosity/The%20Thinker%20Painting%20SQSH.jpg";
 
 // Helper function to parse potentially non-standard date strings
 function robustDateParse(dateValue: string | Date | undefined | null) {
@@ -59,14 +64,21 @@ const gardenPosts = allPosts
 ---
 
 <!doctype html>
-<html lang="en">
-  <Head title={title} description={description} favicon={favicon} />
+<html lang="en" class="index">
+  <Head title={title} description={description} favicon={favicon} image={image}>
+    <Font cssVariable="--font-garamond" preload />
+  </Head>
   <body>
+    <HeaderEditorial />
     <main>
-      <section class="hero" <!--style="background-image: url('https://cdn.firous.com/garden/curiosity/The%20Thinker%20Painting%20SQSH.jpg');" -->
-        >
+      <section class="hero">
         <h1>{title}</h1>
-        <p>{description}</p>
+        <p>
+          I write to think,<br />
+          I write to forget,<br />
+          I write for future of me,<br />
+          and I write for you.
+        </p>
       </section>
       <section class="article-grid">
         {
@@ -132,11 +144,6 @@ const gardenPosts = allPosts
     grid-column: span 12;
   }
 
-  section.hero h1 {
-    font-size: 10cqi;
-    font-weight: bold;
-  }
-
   section.hero a,
   section.hero a:visited {
     color: var(--paper);
@@ -146,20 +153,6 @@ const gardenPosts = allPosts
     display: grid;
     grid-template-columns: var(--grid-12);
     gap: var(--spacing);
-  }
-
-  article {
-    grid-column: span 3;
-    background: grey;
-    aspect-ratio: 1/1;
-    margin: 0;
-    padding: var(--spacing);
-    border-radius: 0.3rem;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    color: var(--paper);
   }
 
   article a,

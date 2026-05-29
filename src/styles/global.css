@@ -74,7 +74,7 @@ a {
 }
 
 html {
-  scrollbar-gutter: stable;
+  /* scrollbar-gutter: stable; */
   scrollbar-width: thin;
 }
 
@@ -113,7 +113,7 @@ body.theme-dark {
   background-color: var(--muted);
 }
 
-/* OVERLAY SCROLLBARS */
+/* OVERLAY SCROLLBARS 
 .os-scrollbar {
   pointer-events: auto !important;
   visibility: visible !important;
@@ -127,6 +127,7 @@ body.theme-dark {
     cursor: grabbing;
   }
 }
+*/
 
 main {
   display: grid;
@@ -158,13 +159,23 @@ header * {
 header a {
   height: fit-content;
   border: none !important;
+  color: var(--tertiary);
+
+  &:hover,
+  &:active {
+    color: var(--accent);
+  }
 }
 
 header svg {
   height: 30px;
   width: auto;
   object-fit: fill;
-  fill: white;
+  fill: var(--secondary);
+
+  &:hover {
+    fill: var(--accent);
+  }
 }
 
 header p {
@@ -363,21 +374,17 @@ header nav-menu button {
   z-index: 2;
 }
 
-header nav-menu button svg:last-child {
-  position: absolute;
-  left: 6px;
-}
-
 header nav-menu button,
 header nav-menu button svg {
   transition: var(--transition-medium);
 }
 
-header nav-menu button:hover svg:first-child {
-  opacity: 0;
-}
-
 /* HEADER NAV-MENU END */
+
+header > :last-child {
+  display: flex;
+  justify-content: flex-end;
+}
 
 /* HEADER MINIMAL */
 
@@ -416,6 +423,29 @@ header.editorial > *:nth-child(4) {
 header.editorial > *:nth-child(2),
 header.editorial > *:nth-child(3) {
   grid-column: span 4;
+}
+
+header.editorial .left:has(:nth-child(2)) .wordmark::after {
+  content: ",";
+  margin-right: 1ch;
+  display: inline;
+  opacity: unset;
+  transform: unset;
+  position: static;
+}
+
+header.editorial .wordmark::before {
+  content: "R.";
+  margin-right: 1ch;
+  opacity: 0;
+  transition: var(--transition-slow);
+  transform: scale(0.95);
+}
+
+header.editorial .wordmark:hover::before,
+header.editorial:has(.logomark:hover) .wordmark::before {
+  opacity: 1;
+  transform: scale(1);
 }
 
 /* HEADER EDITORIAL END */

@@ -1,0 +1,99 @@
+---
+import Head from "../components/Head.astro";
+import HeaderMinimal from "../components/HeaderMinimal.astro";
+import "../styles/variables.css";
+import "../styles/global.css";
+import "../styles/inspiration.css";
+import { Font } from "astro:assets";
+
+interface CosmosImage {
+  url: string;
+  width: number;
+  height: number;
+}
+
+interface CosmosItem {
+  id: number;
+  image: CosmosImage;
+  type: string;
+  url: string;
+  sourceUrl: string;
+}
+
+interface Collection {
+  name: string;
+  slug: string;
+  url: string;
+  updatedAt: string;
+  items: CosmosItem[];
+}
+
+const COSMOS_API = "https://api.cosmos.so/graphql";
+const USERNAME = "alfirous";
+const SLUGS = ["poster", "cinematography", "film", "editorial", "photography", "layout", "logo", "branding"];
+
+async function fetchCollection(slug: string): Promise<Collection> {
+  const query = `query { cluster(input:{ownerUsername:"${USERNAME}",slug:"${slug}"}) { name updatedAt elements { items { id image { url width height } type url sourceUrl } } } }`;
+
+  try {
+    const res = await fetch(COSMOS_API, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ query }),
+    });
+    const json = await res.json();
+    const cluster = json.data.cluster;
+    return {
+      name: cluster.name,
+      slug,
+      url: `https://www.cosmos.so/${USERNAME}/${slug}`,
+      updatedAt: cluster.updatedAt,
+      items: cluster.elements.items.slice(0, 6),
+    };
+  } catch (e) {
+    console.error(`[inspiration] Failed to fetch ${slug}:`, e);
+    return { name: slug, slug, url: `https://www.cosmos.so/${USERNAME}/${slug}`, updatedAt: "", items: [] };
+  }
+}
+
+const collections = await Promise.all(SLUGS.map(fetchCollection));
+collections.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
+---
+
+<html lang="en">
+  <Head
+    title="Inspiration"
+    description="An abundance of inspiration out there. The resonance lives here."
+  >
+    <Font cssVariable="--font-neue-montreal" preload />
+  </Head>
+  <body>
+    <HeaderMinimal />
+    <main>
+      <h1>Inspiration</h1>
+      <p class="subtitle">An abundance of inspiration out there. The resonance lives here.</p>
+
+      {collections.map((col) => (
+        <section>
+          <h2>
+            <a href={col.url} rel="me">{col.name}</a>
+          </h2>
+          <div class="grid">
+            {col.items.map((item) => (
+              <a href={item.url || item.sourceUrl} target="_blank" rel="noopener noreferrer" class="thumb">
+                <img
+                  src={item.image.url}
+                  alt=""
+                  loading="lazy"
+                  width={item.image.width}
+                  height={item.image.height}
+                  decoding="async"
+                />
+              </a>
+            ))}
+          </div>
+        </section>
+      ))}
+    </main>
+  </body>
+</html>

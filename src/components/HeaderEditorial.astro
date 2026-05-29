@@ -2,6 +2,8 @@
 import LogoMain from "./LogoMain.astro";
 import NavMenu from "./NavMenu.astro";
 // TODO: MAKE IT 6 COLUMN SO THE 2ND AND 3RD ELEMENT DOESNT ALIGN WITH ARTICLE PARAGRAPH, TO ACHIEVE CONTRASTING AESTHETICS
+
+const { title, description, image, favicon } = Astro.props;
 ---
 
 <header class="editorial">
@@ -9,7 +11,7 @@ import NavMenu from "./NavMenu.astro";
     <LogoMain />
   </a>
   <nav class="left">
-    <a href="/" class="wordmark" aria-label="Designer, Author, Name" title="Name">Al Firous</a>, <slot />
+    <a href="/" class="wordmark" aria-label="Designer, Author, Name" title="Name">Al Firous</a><slot />{title}
   </nav>
   <nav aria-label="Main Navigation">Work, Labs, Garden, Frames, Monstresia</nav>
   <NavMenu />

@@ -6,6 +6,7 @@ import Grid from "../components/Grid.astro";
 
 import { Font } from "astro:assets";
 
+import "../styles/variables.css";
 import "../styles/global.css";
 import "../styles/garden.css";
 
@@ -15,7 +16,7 @@ const { title, description, image, tags, favicon } = Astro.props;
 const firstTag = tags && Array.isArray(tags) && tags.length > 0 ? tags[0].toLowerCase() : "";
 ---
 
-<html lang="en" class={firstTag}>
+<html lang="en" class={`${firstTag} single`}>
   <Head title={title} description={description} image={image} favicon={favicon}>
     <slot name="in-head" slot="in-head" />
     <Font cssVariable="--font-plex-sans" preload />
@@ -24,7 +25,7 @@ const firstTag = tags && Array.isArray(tags) && tags.length > 0 ? tags[0].toLowe
     <Font cssVariable="--font-source-serif" preload />
   </Head>
   <body>
-    <HeaderEditorial />
+    <HeaderEditorial><a href="/garden">Garden</a></HeaderEditorial>
     <main>
       <article>
         <slot />
