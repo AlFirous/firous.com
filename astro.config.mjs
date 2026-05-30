@@ -1,5 +1,5 @@
 // @ts-check
-import { defineConfig, fontProviders, passthroughImageService } from "astro/config";
+import { defineConfig, fontProviders } from "astro/config";
 import flexokiTheme from "./flexoki.json";
 import metaTags from "astro-meta-tags";
 import mdx from "@astrojs/mdx";

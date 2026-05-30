@@ -11,7 +11,7 @@ interface LastfmLoaderOptions {
 export function lastfmLoader({ username, apiKey, period = "overall", limit = 10 }: LastfmLoaderOptions): Loader {
   return {
     name: "lastfm-loader",
-    load: async ({ store, logger }) => {
+    load: async ({ store, logger, generateDigest }) => {
       if (!apiKey || !username) {
         logger.warn("Last.fm credentials missing. Skipping fetch.");
         return;
@@ -28,15 +28,17 @@ export function lastfmLoader({ username, apiKey, period = "overall", limit = 10 
         if (artistsData.topartists?.artist) {
           logger.info(`Found ${artistsData.topartists.artist.length} artists.`);
           artistsData.topartists.artist.forEach((artist: any) => {
+            const data = {
+              name: artist.name,
+              playcount: parseInt(artist.playcount),
+              url: artist.url,
+              image: artist.image[3]["#text"] || "",
+              type: "artist",
+            };
             store.set({
               id: `artist-${artist.mbid || artist.name.replace(/\s+/g, "-").toLowerCase()}`,
-              data: {
-                name: artist.name,
-                playcount: parseInt(artist.playcount),
-                url: artist.url,
-                image: artist.image[3]["#text"] || "",
-                type: "artist",
-              },
+              data,
+              digest: generateDigest(data),
             });
           });
         } else {
@@ -51,16 +53,18 @@ export function lastfmLoader({ username, apiKey, period = "overall", limit = 10 
         if (albumsData.topalbums?.album) {
           logger.info(`Found ${albumsData.topalbums.album.length} albums.`);
           albumsData.topalbums.album.forEach((album: any) => {
+            const data = {
+              title: album.name,
+              artist: album.artist.name,
+              playcount: parseInt(album.playcount),
+              url: album.url,
+              image: album.image[3]["#text"] || "",
+              type: "album",
+            };
             store.set({
               id: `album-${album.mbid || (album.artist.name + "-" + album.name).replace(/\s+/g, "-").toLowerCase()}`,
-              data: {
-                title: album.name,
-                artist: album.artist.name,
-                playcount: parseInt(album.playcount),
-                url: album.url,
-                image: album.image[3]["#text"] || "",
-                type: "album",
-              },
+              data,
+              digest: generateDigest(data),
             });
           });
         } else {
@@ -74,17 +78,19 @@ export function lastfmLoader({ username, apiKey, period = "overall", limit = 10 
         if (tracksData.recenttracks?.track) {
           tracksData.recenttracks.track.forEach((track: any, index: number) => {
             const isNowPlaying = track["@attr"]?.nowplaying === "true";
+            const data = {
+              title: track.name,
+              artist: track.artist["#text"],
+              album: track.album["#text"],
+              image: track.image[3]["#text"] || "",
+              url: track.url,
+              nowPlaying: isNowPlaying,
+              type: "track",
+            };
             store.set({
               id: `track-${index}`,
-              data: {
-                title: track.name,
-                artist: track.artist["#text"],
-                album: track.album["#text"],
-                image: track.image[3]["#text"] || "",
-                url: track.url,
-                nowPlaying: isNowPlaying,
-                type: "track",
-              },
+              data,
+              digest: generateDigest(data),
             });
           });
         }
@@ -101,7 +107,7 @@ export function lastfmLoader({ username, apiKey, period = "overall", limit = 10 
       album: z.string().optional(), // for tracks
       playcount: z.number().optional(),
       image: z.string().optional(),
-      url: z.string().url(),
+      url: z.url(),
       nowPlaying: z.boolean().optional(),
     }),
   };

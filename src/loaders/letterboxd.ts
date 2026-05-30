@@ -202,12 +202,9 @@ export function letterboxdLoader(
   return {
     name: "letterboxd-loader",
     schema: movieSchema,
-    load: async ({ store, logger, parseData, meta }) => {
+    load: async ({ store, logger, parseData, meta, generateDigest }) => {
       const MOVIES_DIR = path.join(process.cwd(), "src/data/movies");
       await fs.mkdir(MOVIES_DIR, { recursive: true });
-
-      // Clear store to remove orphan entries from previous builds
-      store.clear();
 
       const SEARCH_CACHE_VERSION = 3; // bump when search logic changes
       const searchCachePath = path.join(MOVIES_DIR, SEARCH_CACHE_FILE);
@@ -258,7 +255,7 @@ export function letterboxdLoader(
           id,
           data: { ...data, watchedDate: data.watchedDate || undefined },
         });
-        store.set({ id, data: validated });
+        store.set({ id, data: validated, digest: generateDigest(validated) });
         await fs.writeFile(path.join(MOVIES_DIR, `${id}.json`), JSON.stringify(data, null, 2) + "\n", "utf-8");
       };
 
@@ -334,13 +331,19 @@ export function letterboxdLoader(
 
       // ── Step 2: RSS ──
       if (mode !== "csv") try {
-        const cachedFingerprint = await meta.get("fingerprint");
+        const cachedFingerprint = meta.get("fingerprint");
         const feed = await rssParser.parseURL(rssUrl);
         const fingerprint = feed.items?.map((i) => i.guid || i.link || "").join("|") || "";
 
         if (cachedFingerprint === fingerprint && csvNewCount === 0) {
           await saveLegacyEntries(movieCache, activeIds, tmdbToken, saveEntry, fetchBackdrop);
           await cleanupOrphans(MOVIES_DIR, activeIds, SEARCH_CACHE_FILE, logger);
+          // Remove stale entries no longer in the active set
+          for (const key of store.keys()) {
+            if (!activeIds.has(key)) {
+              store.delete(key);
+            }
+          }
           await saveSearchCache();
           logger.info(`RSS unchanged. Loaded ${store.keys().length} movies from cache.`);
           return;
@@ -384,7 +387,7 @@ export function letterboxdLoader(
           });
         }
 
-        await meta.set("fingerprint", fingerprint);
+        meta.set("fingerprint", fingerprint);
       } catch (e) {
         logger.warn(`RSS fetch failed (${e}). Using cached data.`);
       }
@@ -394,6 +397,13 @@ export function letterboxdLoader(
 
       // ── Step 4: Clean up orphan boxd.it short code files ──
       await cleanupOrphans(MOVIES_DIR, activeIds, SEARCH_CACHE_FILE, logger);
+
+      // Remove stale entries no longer in the active set
+      for (const key of store.keys()) {
+        if (!activeIds.has(key)) {
+          store.delete(key);
+        }
+      }
 
       await saveSearchCache();
       logger.info(`Total movies: ${store.keys().length}.`);

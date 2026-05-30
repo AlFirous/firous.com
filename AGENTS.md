@@ -1,95 +1,101 @@
-# Project Overview
+# Firous.com
 
-- Latest stable AstroJS with vanilla and baseline HTML, CSS, and JavaScript.
-- Static-first website with hybrid rendering if necessary.
-- Multiple collections and content types with it's own design and schema, while sharing "invisible" global design system and patterns.
-- Accessible and performant.
-- Media is in remote storage.
+Personal static site built with **Astro 6** (SSG, `output: "static"`). Vanilla HTML/CSS/JS — no React, no framework components in templates.
 
-# Think Before Coding
+## Commands
 
-**Don't assume. Don't hide confusion. Surface tradeoffs.**
-
-Before implementing:
-
-- State your assumptions explicitly. If uncertain, ask.
-- If multiple interpretations exist, present them - don't pick silently.
-- If a simpler approach exists, say so. Push back when warranted.
-- If something is unclear, stop. Name what's confusing. Ask.
-- If something is not a good practice, you should suggest a better alternative, but must cite the reasons.
-- You are up to date and research first before make decision.
-- If tool or dependency isn't available on this machine, ask the user to run the command.
-
-# Simplicity First
-
-**Minimum code that solves the problem. Nothing speculative.**
-
-- No features beyond what was asked.
-- No abstractions for single-use code.
-- No "flexibility" or "configurability" that wasn't requested.
-- No error handling for impossible scenarios.
-- If you write 200 lines and it could be 50, rewrite it.
-- Don't install dependencies if not necessary.
-
-Ask yourself: "Would a senior engineer say this is overcomplicated?" If yes, simplify.
-
-# Surgical Changes
-
-**Touch only what you must. Clean up only your own mess.**
-
-When editing existing code:
-
-- Don't "improve" adjacent code, comments, or formatting.
-- Don't refactor things that aren't broken.
-- Match existing style, even if you'd do it differently.
-- If you notice unrelated dead code, mention it - don't delete it.
-
-When your changes create orphans:
-
-- Remove imports/variables/functions that YOUR changes made unused.
-- Don't remove pre-existing dead code unless asked.
-
-The test: Every changed line should trace directly to the user's request.
-
-# Goal-Driven Execution
-
-**Define success criteria. Loop until verified.**
-
-Transform tasks into verifiable goals:
-
-- "Add validation" → "Write tests for invalid inputs, then make them pass"
-- "Fix the bug" → "Write a test that reproduces it, then make it pass"
-- "Refactor X" → "Ensure tests pass before and after"
-
-For multi-step tasks, state a brief plan:
-
-```
-1. [Step] → verify: [check]
-2. [Step] → verify: [check]
-3. [Step] → verify: [check]
+```sh
+pnpm dev          # astro dev (long-running dev server)
+pnpm build        # astro build
+pnpm astro check  # type-check all files (uses @astrojs/check)
 ```
 
-Strong success criteria let you loop independently. Weak criteria ("make it work") require constant clarification.
+No test framework. Type-checking via `pnpm astro check` is the only verification step. Run it after every change.
 
-# Style Guide
+`pnpm` is the package manager. Never use `npm` or `yarn`.
 
-- Not defined here. For now, follow the same conventions and patterns that you detect in the surrounding code.
-- Keep formatting consistent.
+## Architecture
 
-# Running Tests
+Monorepo? No — single package (`astro.config.mjs` is the root). Layout is flat:
 
-- Run test in Chrome DevTools MCP if necessary.
+- `src/content.config.ts` — all content collections defined here (10 collections: quotes, garden, frames, monstresia, labs, music, mixtapes, movies, moviesRss, bookmarks, inspiration, obsidian)
+- `src/loaders/` — custom remote loaders (lastfm, youtube, letterboxd, raindrop, cosmos, _obsidian-vault). These fetch from external APIs at build time
+- `src/data/` — local markdown/CSV content for glob-loaded collections
+- `src/pages/` — flat page routes + param slug directories (`frames/[framesSlug].astro`, etc.)
+- `src/layouts/` — per-content-type layouts (FramesLayout, GardenLayout, LabsLayout, MonstresiaLayout)
+- `src/components/` — shared UI components
+- `src/styles/` — per-page CSS files, all imported as side-effect imports in `.astro` frontmatter
+- `src/styles/variables.css` — global design tokens (must use this)
+- Images hosted on **Cloudflare R2 CDN** (`cdn.firous.com`)
+- 9 fonts configured in `astro.config.mjs` via Fonts API, loaded via `<Font cssVariable="..." preload />`
 
-# Astro Quick Reference
+## Critical quirks
 
-- Fetch **LLM-optimized** docs at https://docs.astro.build/llms.txt.
-- Fetch **Full docs** at https://docs.astro.build/ (primary source, use when llms.txt lacks info).
+### Remote loaders + dev server loops
 
-## Vite Dep Optimizer (`optimizeDeps`)
+Remote loaders call `store.set()` → writes to `.astro/data-store.json` → dev server watcher detects change → triggers reload → loaders run again → infinite loop.
 
-When a bug works in `astro build` but fails in `astro dev` with errors like `require is not defined`, the root cause is almost always Vite's dep optimizer failing to pre-bundle a CJS dependency. `astro build` uses Rollup and handles CJS→ESM reliably; `astro dev` relies on esbuild's optimizer scan, which is intentionally shallow and will miss deps that are only reachable through non-JS files (like `.astro` components in `node_modules`). The key files are `packages/astro/src/vite-plugin-environment/index.ts` (sets `optimizeDeps.entries`) and `packages/astro/src/core/create-vite.ts` (wires up `vitefu`/`crawlFrameworkPkgs`). For a full deep-dive including a debugging playbook and potential fixes, see [`reference/optimize-deps.md`](./reference/optimize-deps.md).
+**Fix:** Every `store.set()` must include `digest: generateDigest(data)`. `store.set()` returns `false` when digest matches existing entry, which skips the disk write and breaks the loop.
 
-# Cleanup
+**Never use `store.clear()`** in a remote loader — it forces a full rewrite every reload, guaranteeing the loop. Instead, track active IDs and delete stale entries at the end.
 
-- If unused, remove screenshot created during debugging and testing.
-- If unused, remove snapshot created during debugging and testing.
+### TypeScript + `.astro` files
+
+`.astro` files are **excluded from tsconfig** (`"**/*.astro"` in `exclude`). The TypeScript compiler can't parse Astro's template syntax. Only the frontmatter (`---` block) is TypeScript; the template section is not type-checked by `tsc`. Astro's own language server handles `.astro` checks.
+
+**Implicit `any` errors** in `.astro` frontmatter: `getCollection()` return types aren't available to the TS language server. Add explicit type annotations to callback parameters in `.map()`, `.filter()`, `.sort()` etc., or use `as any` on the `getCollection()` call and type the variable explicitly.
+
+### Prettier
+
+`printWidth: 1000` — extremely wide. Don't reformat file line breaks to match default 80. Keep existing formatting.
+
+### Inline scripts in `.astro`
+
+Scripts in `.astro` `<script>` tags use TypeScript syntax (`: type` annotations, `as` casts) because Astro processes them. Use `e as MouseEvent`, `querySelectorAll<HTMLElement>`, etc. The TS server checks these.
+
+For third-party scripts with `src` or `data-` attributes, add `is:inline` directive explicitly to suppress the astro(4000) hint.
+
+### Environment variables
+
+Loaded from `.env` (committed — personal project, local dev only). Required vars:
+- `LASTFM_API_KEY`, `LASTFM_USERNAME`
+- `TMDB_ACCESS_TOKEN`
+- `RAINDROP_TOKEN`
+- `YOUTUBE_API_KEY` (optional, playlist IDs are placeholders)
+- `OBSIDIAN_VAULT_PATH` (optional, gates the obsidian collection)
+
+### Content collection conventions
+
+- 5 glob-loaded collections: quotes, garden, frames, monstresia, labs (markdown/MDX in `src/data/`)
+- 7 remote-loaded collections: music (Last.fm), mixtapes (YouTube), movies/moviesRss (Letterboxd), bookmarks (Raindrop), inspiration (Cosmos), obsidian (local vault — gated behind env var)
+- Each remote loader is its own file in `src/loaders/` with `Loader` object pattern
+- `_obsidian-vault.ts` is prefixed with underscore — draft loader, not yet wired to env
+
+## Dead code (from README — don't touch unless asked)
+
+- `src/components/FooterCenter.astro` — never imported (imports Nav.astro as `Navs`, already fixed)
+- `src/components/HeaderCenter.astro` — never imported
+- `src/components/GardenLogo.astro` — never imported
+- `src/components/RemoteImage.astro` — never imported
+- Several pages have unused `Image` imports from `astro:assets` (frames, garden/[slug], monstresia/[monstresia], quotes)
+
+## Git conventions
+
+Conventional commits per `.github/commit-instructions.md`:
+```
+<type>[optional scope]: <description>
+```
+Types: `fix`, `feat`, `build`, `chore`, `ci`, `docs`, `style`, `refactor`, `perf`, `test`.
+
+### Zod 4 API changes
+
+`astro/zod` re-exports `zod/v4`. In Zod 4, `z.string().url()` is deprecated — use `z.url()` instead. Same for other string validators (`z.string().base64url()` → `z.base64url()`, etc.).
+
+## Verification status
+
+`pnpm astro check` yields **0 errors, 0 warnings, 3 hints** (all in third-party `.js` files — `src/scripts/imamu.js` and `src/scripts/spectrogram.js`).
+
+## Astro docs reference
+
+- LLM-optimized: https://docs.astro.build/llms.txt
+- Full docs: https://docs.astro.build/

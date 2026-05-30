@@ -45,7 +45,7 @@ export function raindropLoader({ token }: RaindropLoaderOptions): Loader {
 
   return {
     name: "raindrop-loader",
-    load: async ({ store, logger }) => {
+    load: async ({ store, logger, generateDigest }) => {
       if (!token) {
         logger.warn("Raindrop token missing. Skipping fetch.");
         return;
@@ -92,33 +92,35 @@ export function raindropLoader({ token }: RaindropLoaderOptions): Loader {
             ? collectionMap.get(collection.parent.$id)?.title || null
             : null;
 
+          const data = {
+            collectionId: collection._id,
+            title: collection.title,
+            slug: slugify(collection.title),
+            parentId: collection.parent?.$id || null,
+            parentTitle,
+            color: collection.color || "",
+            cover: collection.cover || [],
+            count: collection.count,
+            sort: collection.sort,
+            view: collection.view || "list",
+            raindrops: raindrops.map((r) => ({
+              raindropId: r._id,
+              collectionId: r.collection?.$id || collection._id,
+              title: r.title,
+              link: r.link,
+              domain: r.domain || "",
+              excerpt: r.excerpt || "",
+              note: r.note || "",
+              tags: r.tags || [],
+              cover: r.cover || "",
+              created: r.created,
+              type: r.type || "link",
+            })),
+          };
           store.set({
             id: `collection-${collection._id}`,
-            data: {
-              collectionId: collection._id,
-              title: collection.title,
-              slug: slugify(collection.title),
-              parentId: collection.parent?.$id || null,
-              parentTitle,
-              color: collection.color || "",
-              cover: collection.cover || [],
-              count: collection.count,
-              sort: collection.sort,
-              view: collection.view || "list",
-              raindrops: raindrops.map((r) => ({
-                raindropId: r._id,
-                collectionId: r.collection?.$id || collection._id,
-                title: r.title,
-                link: r.link,
-                domain: r.domain || "",
-                excerpt: r.excerpt || "",
-                note: r.note || "",
-                tags: r.tags || [],
-                cover: r.cover || "",
-                created: r.created,
-                type: r.type || "link",
-              })),
-            },
+            data,
+            digest: generateDigest(data),
           });
         }
 

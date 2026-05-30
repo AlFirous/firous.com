@@ -1,17 +1,31 @@
-Follow https://www.conventionalcommits.org/ for commit messages.
+## Commit message
 
-The commit message should be structured as follows:
-```
+Write clear, concise commit messages following Conventional Commits specification.
+
+### Format
+
 <type>[optional scope]: <description>
 
 [optional body]
 
 [optional footer(s)]
-```
-The commit contains the following structural elements, to communicate intent to the consumers of your library:
 
-1. fix: a commit of the type fix patches a bug in your codebase (this correlates with **PATCH** in Semantic Versioning).
-2. feat: a commit of the type feat introduces a new feature to the codebase (this correlates with **MINOR** in Semantic Versioning).
-3. BREAKING CHANGE: a commit that has a footer BREAKING CHANGE:, or appends a ! after the type/scope, introduces a breaking API change (correlating with **MAJOR** in Semantic Versioning). A BREAKING CHANGE can be part of commits of any type.
-4. types other than fix: and feat: are allowed, for example @commitlint/config-conventional (based on the Angular convention) recommends build:, chore:, ci:, docs:, style:, refactor:, perf:, test:, and others.
-5. footers other than BREAKING CHANGE: <description> may be provided and follow a convention similar to git trailer format.
+### Types
+
+- **fix**: Bug fixes (PATCH)
+- **feat**: New features (MINOR)
+- **BREAKING CHANGE**: Breaking changes (MAJOR) - use `!` after type/scope or in footer
+- **Other**: build, chore, ci, docs, style, refactor, perf, test
+
+### Style Guidelines
+
+- **Subject line**: Imperative mood, capitalize, no period, ~50 chars max
+- **Body**: Optional, wrap at 72 chars, provide useful context only
+- **Separate**: Blank line between subject and body
+- **No repetition**: Don't repeat subject in body
+- **No diffs**: Don't include raw diff output
+- Don't wrap in markdown code block
+
+### Output
+
+Return only the commit message, no meta-commentary.

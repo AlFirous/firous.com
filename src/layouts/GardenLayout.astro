@@ -19,10 +19,11 @@ const firstTag = tags && Array.isArray(tags) && tags.length > 0 ? tags[0].toLowe
 <html lang="en" class={`${firstTag} single`}>
   <Head title={title} description={description} image={image} favicon={favicon}>
     <slot name="in-head" slot="in-head" />
-    <Font cssVariable="--font-plex-sans" preload />
     <Font cssVariable="--font-garamond" preload />
-    <Font cssVariable="--font-lilex" preload />
     <Font cssVariable="--font-source-serif" preload />
+    <Font cssVariable="--font-lettra-mono" preload />
+    <Font cssVariable="--font-neue-montreal" preload />
+    <Font cssVariable="--font-lilex" preload />
   </Head>
   <body>
     <HeaderEditorial><a href="/garden">Garden</a></HeaderEditorial>

@@ -4,5 +4,5 @@
     "moduleResolution": "bundler",
   },
   "include": [".astro/types.d.ts", "**/*"],
-  "exclude": ["dist"],
+  "exclude": ["dist", "**/*.astro", "src/scripts/draggable.js"],
 }

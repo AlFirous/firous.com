@@ -9,7 +9,7 @@ interface YoutubeLoaderOptions {
 export function youtubeLoader({ playlistIds, apiKey }: YoutubeLoaderOptions): Loader {
   return {
     name: "youtube-loader",
-    load: async ({ store, logger }) => {
+    load: async ({ store, logger, generateDigest }) => {
       if (!apiKey || apiKey === "") {
         logger.warn("YouTube API key is missing. Skipping playlist fetch.");
         return;
@@ -34,15 +34,17 @@ export function youtubeLoader({ playlistIds, apiKey }: YoutubeLoaderOptions): Lo
 
           if (playlistData.items && playlistData.items.length > 0) {
             const item = playlistData.items[0];
+            const data = {
+              title: item.snippet.title,
+              description: item.snippet.description,
+              thumbnail: item.snippet.thumbnails.maxres?.url || item.snippet.thumbnails.high?.url,
+              url: `https://www.youtube.com/playlist?list=${playlistId}`,
+              type: "mixtape",
+            };
             store.set({
               id: `mixtape-${playlistId}`,
-              data: {
-                title: item.snippet.title,
-                description: item.snippet.description,
-                thumbnail: item.snippet.thumbnails.maxres?.url || item.snippet.thumbnails.high?.url,
-                url: `https://www.youtube.com/playlist?list=${playlistId}`,
-                type: "mixtape",
-              },
+              data,
+              digest: generateDigest(data),
             });
           }
         } catch (error) {
@@ -54,7 +56,7 @@ export function youtubeLoader({ playlistIds, apiKey }: YoutubeLoaderOptions): Lo
       title: z.string(),
       description: z.string().optional(),
       thumbnail: z.string().optional(),
-      url: z.string().url(),
+      url: z.url(),
       type: z.literal("mixtape"),
     }),
   };

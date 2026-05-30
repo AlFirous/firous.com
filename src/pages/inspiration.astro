@@ -1,20 +1,16 @@
 ---
+import { getCollection } from "astro:content";
 import Head from "../components/Head.astro";
 import HeaderMinimal from "../components/HeaderMinimal.astro";
 import "../styles/variables.css";
 import "../styles/global.css";
 import "../styles/inspiration.css";
+import "photoswipe/style.css";
 import { Font } from "astro:assets";
-
-interface CosmosImage {
-  url: string;
-  width: number;
-  height: number;
-}
 
 interface CosmosItem {
   id: number;
-  image: CosmosImage;
+  image: { url: string; width: number; height: number };
   type: string;
   url: string;
   sourceUrl: string;
@@ -24,47 +20,19 @@ interface Collection {
   name: string;
   slug: string;
   url: string;
+  description: string | null;
   updatedAt: string;
   items: CosmosItem[];
 }
 
-const COSMOS_API = "https://api.cosmos.so/graphql";
-const USERNAME = "alfirous";
-const SLUGS = ["poster", "cinematography", "film", "editorial", "photography", "layout", "logo", "branding"];
-
-async function fetchCollection(slug: string): Promise<Collection> {
-  const query = `query { cluster(input:{ownerUsername:"${USERNAME}",slug:"${slug}"}) { name updatedAt elements { items { id image { url width height } type url sourceUrl } } } }`;
-
-  try {
-    const res = await fetch(COSMOS_API, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ query }),
-    });
-    const json = await res.json();
-    const cluster = json.data.cluster;
-    return {
-      name: cluster.name,
-      slug,
-      url: `https://www.cosmos.so/${USERNAME}/${slug}`,
-      updatedAt: cluster.updatedAt,
-      items: cluster.elements.items.slice(0, 6),
-    };
-  } catch (e) {
-    console.error(`[inspiration] Failed to fetch ${slug}:`, e);
-    return { name: slug, slug, url: `https://www.cosmos.so/${USERNAME}/${slug}`, updatedAt: "", items: [] };
-  }
-}
-
-const collections = await Promise.all(SLUGS.map(fetchCollection));
-collections.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
+const entries: { data: Collection }[] = await getCollection("inspiration") as any;
+const collections = entries
+  .map((e) => e.data)
+  .sort((a: Collection, b: Collection) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
 ---
 
 <html lang="en">
-  <Head
-    title="Inspiration"
-    description="An abundance of inspiration out there. The resonance lives here."
-  >
+  <Head title="Inspiration" description="An abundance of inspiration out there. The resonance lives here.">
     <Font cssVariable="--font-neue-montreal" preload />
   </Head>
   <body>
@@ -73,27 +41,69 @@ collections.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedA
       <h1>Inspiration</h1>
       <p class="subtitle">An abundance of inspiration out there. The resonance lives here.</p>
 
-      {collections.map((col) => (
-        <section>
-          <h2>
-            <a href={col.url} rel="me">{col.name}</a>
-          </h2>
-          <div class="grid">
-            {col.items.map((item) => (
-              <a href={item.url || item.sourceUrl} target="_blank" rel="noopener noreferrer" class="thumb">
-                <img
-                  src={item.image.url}
-                  alt=""
-                  loading="lazy"
-                  width={item.image.width}
-                  height={item.image.height}
-                  decoding="async"
-                />
-              </a>
-            ))}
-          </div>
-        </section>
-      ))}
+      {
+        collections.map((col) => (
+          <section>
+            <div class="section-head">
+              <h2>
+                <a href={col.url} rel="me">
+                  {col.name}
+                </a>
+              </h2>
+              {col.description && <p class="section-desc">{col.description}</p>}
+            </div>
+            <div class="grid">
+              {col.items.map((item) => (
+                <a href={item.url || item.sourceUrl} target="_blank" rel="noopener noreferrer" class="thumb" data-pswp-src={item.image.url} data-pswp-width={item.image.width} data-pswp-height={item.image.height}>
+                  <img src={item.image.url} alt="" loading="lazy" width={item.image.width} height={item.image.height} decoding="async" />
+                </a>
+              ))}
+            </div>
+          </section>
+        ))
+      }
     </main>
+    <footer>
+      Powered with <a href="https://www.cosmos.so" target="_blank" rel="noopener noreferrer"
+        ><svg xmlns="http://www.w3.org/2000/svg" width="38" height="42" fill="none">
+          <g fill="black" clip-path="url(#a)">
+            <path d="M19.025 11.898c3.296 0 5.97-2.661 5.97-5.949S22.324 0 19.025 0s-5.97 2.662-5.97 5.95c0 3.287 2.671 5.948 5.97 5.948M19.025 41.945c3.296 0 5.97-2.662 5.97-5.95 0-3.287-2.671-5.949-5.97-5.949s-5.97 2.662-5.97 5.95c0 3.287 2.671 5.949 5.97 5.949M5.97 19.41c3.296 0 5.97-2.662 5.97-5.95 0-3.287-2.672-5.949-5.97-5.949-3.3 0-5.97 2.664-5.97 5.952 0 3.289 2.67 5.95 5.97 5.95zM32.08 34.434c3.296 0 5.97-2.662 5.97-5.95 0-3.287-2.671-5.949-5.97-5.949s-5.97 2.662-5.97 5.95c0 3.287 2.671 5.949 5.97 5.949M32.08 19.41c3.296 0 5.97-2.662 5.97-5.95 0-3.286-2.671-5.948-5.97-5.948s-5.97 2.662-5.97 5.949 2.671 5.95 5.97 5.95M5.97 34.433c3.296 0 5.97-2.662 5.97-5.95 0-3.287-2.672-5.948-5.97-5.948-3.3 0-5.97 2.667-5.97 5.951 0 3.285 2.67 5.95 5.97 5.95z"></path>
+          </g>
+          <defs>
+            <clipPath id="a">
+              <path fill="#fff" d="M0 0h38v42H0z"></path>
+            </clipPath>
+          </defs>
+        </svg></a
+      >.
+    </footer>
+    <script>
+      import "../scripts/hamburger.js";
+      import PhotoSwipeLightbox from "photoswipe/lightbox";
+      import PhotoSwipeModule from "photoswipe";
+
+      const lightbox = new PhotoSwipeLightbox({
+        gallery: "main",
+        children: ".thumb",
+        pswpModule: PhotoSwipeModule,
+      });
+
+      lightbox.on("uiRegister", () => {
+        lightbox.pswp!.ui!.registerElement({
+          name: "visit-original",
+          className: "pswp__button--visit",
+          title: "Open original",
+          html: "Visit↗",
+          onClick: () => {
+            const el = lightbox.pswp!.currSlide?.data?.element as HTMLAnchorElement | null;
+            if (el?.href) {
+              window.open(el.href, "_blank");
+            }
+          },
+        });
+      });
+
+      lightbox.init();
+    </script>
   </body>
 </html>

@@ -2,7 +2,7 @@
 // obtain release version (https://ryan-schachte.com/blog/including_version_data/)
 import { Image } from "astro:assets";
 import { version } from "../../package.json";
-import Navs from "./Navs.astro";
+import Nav from "./Nav.astro";
 
 // obtain last commit date and cache it to avoid re-fetching on every request.
 let commitDate = "unknown";
@@ -37,7 +37,7 @@ try {
     <footer-epilogue>
       <p>I write to think, I write to forget, I write for future of me, and I write for you.</p>
     </footer-epilogue>
-    <Navs />
+    <Nav />
   </section>
   <footer-signature>
     <!-- <Image src="https://cdn.firous.com/global/Al-Firous-Graffiti-Tag-Rotated.svg" alt="Al Firous Graffiti Tag" width={100} height={100} /> -->

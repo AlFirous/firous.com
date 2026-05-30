@@ -100,12 +100,13 @@ const pageItems = sorted.slice(0, PER_PAGE);
 
     <script>
       (() => {
-        for (const el of document.querySelectorAll(".card-tags")) {
-          let isDown = false, startX, scrollLeft;
-          el.addEventListener("mousedown", (e) => {
+        for (const el of document.querySelectorAll<HTMLElement>(".card-tags")) {
+          let isDown = false, startX = 0, scrollLeft = 0;
+          el.addEventListener("mousedown", (e: Event) => {
+            const me = e as MouseEvent;
             isDown = true;
             el.classList.add("dragging");
-            startX = e.pageX - el.offsetLeft;
+            startX = me.pageX - el.offsetLeft;
             scrollLeft = el.scrollLeft;
           });
           el.addEventListener("mouseleave", () => {
@@ -116,10 +117,11 @@ const pageItems = sorted.slice(0, PER_PAGE);
             isDown = false;
             el.classList.remove("dragging");
           });
-          el.addEventListener("mousemove", (e) => {
+          el.addEventListener("mousemove", (e: Event) => {
             if (!isDown) return;
             e.preventDefault();
-            const x = e.pageX - el.offsetLeft;
+            const me = e as MouseEvent;
+            const x = me.pageX - el.offsetLeft;
             const walk = (x - startX) * 1.5;
             el.scrollLeft = scrollLeft - walk;
           });

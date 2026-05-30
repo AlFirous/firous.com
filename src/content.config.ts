@@ -5,20 +5,21 @@ import { lastfmLoader } from "./loaders/lastfm";
 import { youtubeLoader } from "./loaders/youtube";
 import { letterboxdLoader } from "./loaders/letterboxd";
 import { raindropLoader } from "./loaders/raindrop";
-// import { obsidianVaultLoader } from "./loaders/obsidian-vault";
+import { cosmosLoader } from "./loaders/cosmos";
+import { obsidianVaultLoader } from "./loaders/_obsidian-vault";
 
 const music = defineCollection({
   loader: lastfmLoader({
-    username: import.meta.env.LASTFM_USERNAME || "",
-    apiKey: import.meta.env.LASTFM_API_KEY || "",
+    username: import.meta.env["LASTFM_USERNAME"] || "",
+    apiKey: import.meta.env["LASTFM_API_KEY"] || "",
     limit: 20,
   }),
 });
 
 const mixtapes = defineCollection({
   loader: youtubeLoader({
-    playlistIds: ["PLexample1", "PLexample2"], // Add your playlist IDs here
-    apiKey: import.meta.env.YOUTUBE_API_KEY || "",
+    playlistIds: ["PLexample1", "PLexample2"],
+    apiKey: import.meta.env["YOUTUBE_API_KEY"] || "",
   }),
 });
 
@@ -87,7 +88,7 @@ const movies = defineCollection({
   loader: letterboxdLoader({
     rssUrl: "https://letterboxd.com/alfirous/rss/",
     csvPath: "src/data/diary.csv",
-    tmdbToken: import.meta.env.TMDB_ACCESS_TOKEN || "",
+    tmdbToken: import.meta.env["TMDB_ACCESS_TOKEN"] || "",
     mode: "csv",
   }),
 });
@@ -95,7 +96,7 @@ const movies = defineCollection({
 const moviesRss = defineCollection({
   loader: letterboxdLoader({
     rssUrl: "https://letterboxd.com/alfirous/rss/",
-    tmdbToken: import.meta.env.TMDB_ACCESS_TOKEN || "",
+    tmdbToken: import.meta.env["TMDB_ACCESS_TOKEN"] || "",
     mode: "rss",
   }),
 });
@@ -118,9 +119,25 @@ const labs = defineCollection({
 
 const bookmarks = defineCollection({
   loader: raindropLoader({
-    token: import.meta.env.RAINDROP_TOKEN || "",
+    token: import.meta.env["RAINDROP_TOKEN"] || "",
   }),
 });
+
+const inspiration = defineCollection({
+  loader: cosmosLoader({
+    username: "alfirous",
+    slugs: ["poster", "cinematography", "film", "editorial", "photography", "layout", "logo", "branding"],
+  }),
+});
+
+const vaultPath = import.meta.env["OBSIDIAN_VAULT_PATH"] || "";
+const obsidian = vaultPath
+  ? defineCollection({
+      loader: obsidianVaultLoader({ vaultPath }),
+    })
+  : defineCollection({
+      loader: async () => [],
+    });
 
 export const collections = {
   quotes,
@@ -133,4 +150,6 @@ export const collections = {
   movies,
   moviesRss,
   bookmarks,
+  inspiration,
+  obsidian,
 };

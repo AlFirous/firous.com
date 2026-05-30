@@ -2,19 +2,47 @@
 import { getCollection } from "astro:content";
 import Head from "../components/Head.astro";
 
-const collections = (await getCollection("bookmarks")) || [];
+interface CollectionData {
+  collectionId: number;
+  title: string;
+  slug: string;
+  parentId: number | null;
+  parentTitle: string | null;
+  color: string;
+  cover: string[];
+  count: number;
+  sort: number;
+  view: string;
+  raindrops: Raindrop[];
+}
+
+interface Raindrop {
+  raindropId: number;
+  collectionId: number;
+  title: string;
+  link: string;
+  domain: string;
+  excerpt: string;
+  note: string;
+  tags: string[];
+  cover: string;
+  created: string;
+  type: string;
+}
+
+const collections: { data: CollectionData }[] = (await getCollection("bookmarks")) as any || [];
 
 const rootCollections = collections
-  .filter((c) => !c.data.parentId)
-  .sort((a, b) => a.data.sort - b.data.sort);
+  .filter((c: { data: CollectionData }) => !c.data.parentId)
+  .sort((a: { data: CollectionData }, b: { data: CollectionData }) => a.data.sort - b.data.sort);
 
 const childCollections = collections
-  .filter((c) => c.data.parentId)
-  .sort((a, b) => a.data.sort - b.data.sort);
+  .filter((c: { data: CollectionData }) => c.data.parentId)
+  .sort((a: { data: CollectionData }, b: { data: CollectionData }) => a.data.sort - b.data.sort);
 
-const allRaindrops = collections
-  .flatMap((c) => c.data.raindrops)
-  .sort((a, b) => new Date(b.created).getTime() - new Date(a.created).getTime());
+const allRaindrops: Raindrop[] = collections
+  .flatMap((c: { data: CollectionData }) => c.data.raindrops)
+  .sort((a: Raindrop, b: Raindrop) => new Date(b.created).getTime() - new Date(a.created).getTime());
 
 const PER_PAGE = 48;
 const totalPages = Math.max(1, Math.ceil(allRaindrops.length / PER_PAGE));

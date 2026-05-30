@@ -31,3 +31,8 @@ sync.ffs_db
 
 # agent
 GEMINI.md.bak
+
+# cached remote images
+public/_cache/
+src/data/garden/Stack.mdx
+src/data/inspiration/

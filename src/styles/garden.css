@@ -2,7 +2,8 @@
 :root {
   --serif: var(--font-garamond);
   --serif-transitional: var(--font-source-serif);
-  --sans: var(--font-plex-sans);
+  --sans: var(--font-neue-montreal);
+  --serif-mono: var(--font-lettra-mono);
   --mono: var(--font-lilex);
   --mono-adjust: 0.58;
   --secondary: #00332df2;
@@ -393,6 +394,7 @@ h6 {
   color: var(--text);
   line-height: 1.5em;
   text-wrap-style: pretty;
+  font-size: var(--fs-s);
 }
 
 .single article a[href^="https://firous.com"],
@@ -563,7 +565,7 @@ post-footer {
   --text: var(--blue-50);
   --muted: var(--400);
   --highlight: var(--orange-50);
-  font-family: var(--sans);
+  font-family: var(--mono);
   font-weight: 300;
   line-height: 1.2em;
 }
@@ -663,8 +665,7 @@ post-footer {
 
 .tech.single strong,
 .tech.single em {
-  font-family: var(--mono);
-  font-size-adjust: var(--mono-adjust);
+  font-family: var(--sans);
 }
 
 .tech.single .astro-code {

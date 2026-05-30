@@ -79,7 +79,7 @@ import "../assets/images/The Thinker Painting SQUOOSH.jpg";
           const text = blockquote ? blockquote.innerText.trim() : "";
 
           // Try to find attribution in figcaption or a paragraph following the figure
-          const attribution = container.querySelector("figcaption")?.innerText.trim() || container.querySelector("figure > p")?.innerText.trim() || "";
+          const attribution = container.querySelector("figcaption")?.textContent?.trim() || container.querySelector("figure > p")?.textContent?.trim() || "";
 
           const fullText = attribution ? `${text}\n\n— ${attribution}` : text;
 

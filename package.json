@@ -18,9 +18,11 @@
     "photoswipe": "^5.4.4",
     "probe-image-size": "^7.3.0",
     "rss-parser": "^3.13.0",
+    "typescript": "^6.0.3",
     "unist-util-visit": "^5.1.0"
   },
   "devDependencies": {
+    "@astrojs/check": "^0.9.9",
     "@types/probe-image-size": "^7.2.5",
     "prettier": "^3.8.3",
     "prettier-plugin-astro": "^0.14.1"
